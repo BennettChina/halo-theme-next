@@ -22,10 +22,7 @@
       />
     </th:block>
     <th:block th:unless="${theme.config.basic.darkmode == 1}">
-      <meta
-        name="theme-color"
-        th:content="${theme.config.other?.theme_color?.light ?: '#222'}"
-      />
+      <meta name="theme-color" th:content="${theme.config.other?.theme_color?.light ?: '#222'}" />
     </th:block>
 
     <slot name="head">
@@ -38,27 +35,17 @@
       rel="stylesheet"
       th:href="@{/assets/css/scheme/{scheme}/{scheme}_{position}.css?v={version}(scheme=${scheme},position=${sidePosition},version=${theme.spec.version})}"
     />
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-      integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA="
-      crossorigin="anonymous"
+      th:href="@{/assets/vendor/font-awesome/6.5.2/css/all.min.css?v={version}(version=${theme.spec.version})}"
     />
     <link
       th:if="${theme.config.other?.motion?.enabled != 0}"
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css"
-      integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE="
-      crossorigin="anonymous"
+      th:href="@{/assets/vendor/animate.css/3.1.1/animate.min.css?v={version}(version=${theme.spec.version})}"
     />
 
-    <script
-      class="next-config"
-      data-name="main"
-      type="application/json"
-      th:inline="javascript"
-    >
+    <script class="next-config" data-name="main" type="application/json" th:inline="javascript">
       {
         "hostname": /*[[${site.url}]]*/ "",
         "root": "/",
@@ -121,12 +108,7 @@
       }
     </script>
     <slot name="pageConfig">
-      <script
-        class="next-config"
-        data-name="page"
-        type="application/json"
-        th:inline="javascript"
-      >
+      <script class="next-config" data-name="page" type="application/json" th:inline="javascript">
         {
           "sidebar": "",
           "isHome": false,
@@ -139,9 +121,7 @@
         }
       </script>
     </slot>
-    <script
-      th:src="@{/assets/js/config.js?v={version}(version=${theme.spec.version})}"
-    ></script>
+    <script th:src="@{/assets/js/config.js?v={version}(version=${theme.spec.version})}"></script>
     <script type="module" src="/js/main.ts"></script>
   </head>
   <body

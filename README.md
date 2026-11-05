@@ -1,182 +1,203 @@
-# Halo Theme Next
+<div align="center">
 
-面向 [Halo 2](https://halo.run) 的 NexT 主题重写版，视觉与交互参考 [hexo-theme-next](https://github.com/next-theme/hexo-theme-next)。
+# NexT
 
-主题使用 Halo Thymeleaf 渲染页面，以官方 [theme-vite-starter](https://github.com/halo-dev/theme-vite-starter) 的 Vite 工程管理模板拼接、前端资源和主题打包。
+**为 Halo 2 重写的经典 NexT 主题。**
 
-> 当前版本为 `1.0.0-alpha.1` 开发预览。许可证方案尚未最终确认，请勿直接用于正式发布。
+延续 hexo-theme-next 克制的排版、清晰的层次与安静的阅读体验，
+同时接入 Halo 的菜单、评论与插件生态。
 
-## 状态
+[![Halo](https://img.shields.io/badge/Halo-2.26%2B-blue?style=flat-square)](https://halo.run)
+[![Version](https://img.shields.io/badge/Version-1.0.0-orange?style=flat-square)](./theme.yaml)
+[![License](https://img.shields.io/badge/License-AGPL--3.0--only-green?style=flat-square)](./LICENSE)
+[![GitHub Stars](https://img.shields.io/github/stars/BennettChina/halo-theme-next?style=flat-square&label=Stars)](https://github.com/BennettChina/halo-theme-next)
 
-| 项目               | 状态                                                    |
-| ------------------ | ------------------------------------------------------- |
-| 目标 Halo          | `2.27.2`，最低声明 `>=2.26.0`                           |
-| 页面布局契约       | `SUPPORTED`                                             |
-| 核心路由           | 已实现并通过 Halo smoke test                            |
-| 首页富文本文章流   | 已实现，支持 Markdown/HTML 正文与图片                   |
-| 友链 / 图库 / 瞬间 | 已实现，对应 Links / Photos / Moments 插件              |
-| 友链申请           | 已实现，支持验证码、CSRF、审核回跳                      |
-| 多级菜单/分类      | 已实现                                                  |
-| 四套 scheme        | 首页桌面/移动端抽查通过，全量视觉回归待完成             |
-| Halo 2.26.x        | 待回归                                                  |
-| 自动化检查         | `pnpm check:config` 配置校验，`pnpm smoke` 真实路由检查 |
+[功能特性](#-功能特性) · [安装](#-安装) · [主题设置](#-主题设置) · [插件支持](#-插件支持) · [常见问题](#-常见问题)
 
-## 已支持
+</div>
 
-- 首页、文章、单页、归档、标签、分类、作者页面
-- 首页文章流渲染 Halo 已生成的正文 HTML，保留图片、标题、链接、列表、引用等 Markdown 结果
-- 友链页面（`/links`，Links 插件）
-- 友链申请（Links 插件原生表单，含图形验证码、CSRF 和后台审核）
-- 图库列表与详情（`/photos`、`/photos/{name}`，Photos 插件）
-- 瞬间列表与详情（`/moments`、`/moments/{name}`，Moments 插件）
-- 4xx/5xx 错误页
-- Halo 原生评论组件
-- Halo 菜单任意层级递归
-- 分类树任意层级递归
-- 分页、空状态、上一篇/下一篇
-- Muse、Mist、Pisces、Gemini scheme 资源
-- 浅色/暗色模式
-- 侧栏头像（自定义地址、圆角、悬浮旋转）、统计、目录、社交链接、版权协议
-- 侧栏目录深度、编号和默认展开层级
-- 版权协议尺寸、许可证语言和逐文章关闭版权声明
-- 文章导航方向、首页阅读更多开关、标签云字号与数量配置
-- 首页标题副标题、公安备案图标
-- 代码块复制、折叠和语言名称配置；Shiki 代码块由插件处理，不会重复增强
-- 阅读进度条、返回顶部位置与百分比显示
-- 文章标签图标、原生分享（Web Share API 或复制链接）
-- 字数统计、阅读时长、相关文章、打赏和原生图片放大
-- canonical、Open Graph、Twitter Card 和文章 JSON-LD，可独立关闭
-- 文章 annotation：侧栏开关、版权声明开关、右到左正文方向
-- 菜单 annotation：图标选择器
-- Halo 插件 footer 注入
+---
 
-## 环境
+## ✨ 功能特性
 
-- Halo `2.27.2`
-- Node.js 20+
-- pnpm `10.33.0`
+- 🎨 **四套经典布局** —— 支持 Muse、Mist、Pisces、Gemini，随时切换你喜欢的侧栏与页面结构
+- 🌓 **明暗模式** —— 支持浅色与暗色样式，并可跟随系统 `prefers-color-scheme` 自动切换
+- ✍️ **舒适的阅读体验** —— 文章目录、阅读进度、字数与阅读时长估算、上一篇/下一篇、相关文章
+- 🖼️ **完整的内容支持** —— 首页正文渲染、代码块复制与折叠、图片点击放大、原生分享
+- 🧭 **灵活的侧栏** —— 左右侧栏、头像、作者简介、站点统计、社交链接和文章目录
+- 🧩 **插件友好** —— 支持 Links、Photos、Moments、Halo 官方搜索和 Shiki 等插件
+- 🔗 **多级导航** —— 菜单与分类均支持多级嵌套，菜单项可使用图标选择器
+- 💬 **文章互动** —— 兼容 Halo 评论组件，支持打赏、版权声明和知识共享协议
+- 🔍 **SEO 支持** —— 可输出 canonical、Open Graph、Twitter Card 和文章结构化数据
+- 📱 **响应式设计** —— 适配桌面、平板与移动设备
 
-主题的 `metadata.name` 为 `theme-halo-next`。安装目录或挂载目录必须使用 `theme-halo-next`。
+## 📸 预览
 
-## 安装主题包
+<div align="center">
+  <img src="./screenshot.png" alt="NexT 主题预览" width="900">
+</div>
+
+> 预览图为 Pisces 布局、左侧栏与浅色模式。
+
+## 🚀 安装
+
+### 环境要求
+
+- Halo `2.26.0` 或更高版本
+
+### 从 GitHub Releases 安装
+
+1. 打开 [Releases](https://github.com/BennettChina/halo-theme-next/releases) 页面，下载最新的 `theme-halo-next-x.y.z.zip`
+2. 进入 Halo Console，在「主题」页面点击「安装主题」
+3. 选择「本地上传」，上传下载的 ZIP 文件
+4. 安装完成后启用主题，再进入主题设置完成站点配置
+
+### 从源码构建
+
+如果暂时没有可用的 Release 包，也可以自行构建：
 
 ```bash
-pnpm install
+git clone https://github.com/BennettChina/halo-theme-next.git
+cd halo-theme-next
+pnpm install --frozen-lockfile
 pnpm build
 ```
 
-构建产物：
+需要 Node.js 20+ 与 pnpm 10+。构建完成后，在 Console 中上传 `dist/` 目录下生成的主题 ZIP。
 
-```text
-dist/theme-halo-next-1.0.0-alpha.1.zip
-```
+> 通过源码或手动解压部署时，主题目录名必须为 `theme-halo-next`。
 
-在 Halo Console 的“主题”页面上传 ZIP，安装并启用。
+### 升级与卸载
 
-## 本地开发
+**升级**
 
-把仓库挂载为 Halo 的主题目录：
+1. 备份当前主题设置和站点数据
+2. 在 Console → 主题 → 安装主题中上传新版本 ZIP，覆盖安装
+3. 重新加载主题，并检查菜单、侧栏、暗色模式和插件入口
 
-```bash
-docker run -d \
-  --name halo-next-dev \
-  -p 8090:8090 \
-  -e SPRING_THYMELEAF_CACHE=false \
-  -v "$HOME/.halo2-next-dev:/root/.halo2" \
-  -v "$PWD:/root/.halo2/themes/theme-halo-next" \
-  halohub/halo:2.27.2
-```
+**卸载**
 
-启动监听构建：
+1. 先将站点切换到其他可用主题
+2. 在 Console → 主题中卸载 NexT
 
-```bash
-pnpm dev
-```
+卸载主题不会删除文章、页面、评论、菜单、图库、瞬间或友链等数据，这些内容由 Halo 和对应插件管理。
 
-`pnpm dev` 只监听 `src/` 并重新生成 `templates/`，不会启动 Halo。Halo 实际读取的是 `templates/`，因此刷新页面前需等待构建完成。
+## ⚙️ 主题设置
 
-常用命令：
+启用主题后，进入 **Console → 主题 → NexT → 设置**。主题设置按以下分组组织：
 
-| 命令                              | 作用                                   |
-| --------------------------------- | -------------------------------------- |
-| `pnpm dev`                        | 监听 `src/` 并持续构建                 |
-| `pnpm build-only`                 | 只生成 `templates/`                    |
-| `pnpm build`                      | 类型检查、构建并生成 ZIP               |
-| `pnpm package`                    | 使用现有 `templates/` 打包             |
-| `pnpm check:config <export.json>` | 检查旧主题导出配置并生成迁移结果       |
-| `pnpm smoke`                      | 对运行中的 Halo 检查核心路由和主题资源 |
+| 分组       | 可以配置                                                           |
+| ---------- | ------------------------------------------------------------------ |
+| 基础设置   | 站点标题与副标题、布局方案、暗黑模式、LOGO、知识共享协议、菜单     |
+| 侧栏设置   | 显示方式与位置、头像、作者信息、站点统计、社交链接、文章目录       |
+| 页脚设置   | 版权信息、建站时间、ICP 备案、公安备案                             |
+| 文章设置   | 首页文章样式、元数据、分享、标签云、打赏、相关文章、字数与阅读时长 |
+| 其他设置   | 主题色、入场动画、代码块、阅读进度条、返回顶部、图片放大、SEO      |
+| 第三方插件 | Halo 官方搜索插件入口                                              |
 
-## 目录
+### 菜单与页面入口
 
-```text
-src/                   主题源码
-├── *.html             页面入口
-├── error/             错误页
-├── partials/          构建期片段
-├── modules/           运行时 Thymeleaf 递归片段
-├── css/               Halo 适配样式
-└── js/                主题脚本入口
+主题不单独维护一套菜单，所有导航都来自 Halo 菜单。
 
-public/                原样复制的上游静态资源
-scripts/               配置迁移校验与真实路由 smoke 检查
-templates/             Vite 构建产物，禁止手改
-dist/                  主题包
-```
+1. 在 **Console → 菜单** 中创建菜单项
+2. 在 **主题设置 → 基础设置 → 菜单设置** 中选择要展示的 Halo 菜单
+3. 菜单支持多级嵌套，菜单项可在编辑时设置图标
 
-## 配置
+图库、瞬间、友链等入口需要先安装对应插件，再在菜单中添加路径：
 
-主题配置在 Halo Console 的“主题设置”中完成，主要包括：
+| 页面 | 路径          | 依赖         |
+| ---- | ------------- | ------------ |
+| 归档 | `/archives`   | Halo 内置    |
+| 分类 | `/categories` | Halo 内置    |
+| 标签 | `/tags`       | Halo 内置    |
+| 图库 | `/photos`     | Photos 插件  |
+| 瞬间 | `/moments`    | Moments 插件 |
+| 友链 | `/links`      | Links 插件   |
 
-- 基础：站点信息、scheme、暗色模式、LOGO、菜单、版权协议
-- 侧栏：位置、宽度、作者、统计、社交链接、目录
-- 页脚：备案、版权
-- 文章：元信息、首页正文模式、首页封面、摘要、阅读量、关注入口、标签图标、原生分享、阅读统计、相关文章、打赏
-- 其他：主题色、动画、代码块、阅读进度条、返回顶部、图片放大、SEO
-- 第三方：搜索入口
+### 文章级设置
 
-菜单统一使用 Halo 菜单，主题通过 FormKit `menuRadio` 选择要展示的菜单，支持任意层级。
+编辑文章时，可以在文章扩展设置中单独调整当前文章：
 
-友链、图库、瞬间没有独立的页面开关，入口由 Halo 菜单统一控制：
+| 扩展项                  | 作用                            |
+| ----------------------- | ------------------------------- |
+| 是否显示侧边栏 - Next   | 单独隐藏当前文章的侧栏          |
+| 是否显示版权声明 - Next | 单独关闭当前文章的版权声明      |
+| direction - Next        | 设为 `rtl` 时，正文从右到左排版 |
 
-- 在 Console → 菜单中添加图库 `/photos`、瞬间 `/moments`、友联 `/links`。
-- 在“基础设置 → 菜单设置”中选择需要展示的 Halo 菜单。
-- 插件依赖：图库、瞬间、友联分别需要启用 Photos、Moments、Links 插件；未安装插件时不要添加对应入口。
-- 旧版自定义菜单配置不再读取，升级后需在 Console 中重建菜单并在主题设置中重新选择。
+## 🧩 插件支持
 
-旧配置迁移可先用检查脚本验证，详见 [旧主题配置迁移说明](docs/CONFIG-MIGRATION.md)：
+安装并启用对应插件后，主题会自动接管相关页面和入口。
 
-```bash
-pnpm check:config export-theme-next-config-1793770166122.json \
-  --migrate /tmp/theme-next-config-migrated.json
-```
+| 功能   | 支持内容             | 使用方式                                                                                 |
+| ------ | -------------------- | ---------------------------------------------------------------------------------------- |
+| 友链   | 友链展示、友链申请   | [Links](https://github.com/halo-sigs/plugin-links) 插件，安装后在菜单添加 `/links`       |
+| 图库   | 图库列表、照片详情   | [Photos](https://github.com/halo-sigs/plugin-photos) 插件，安装后在菜单添加 `/photos`    |
+| 瞬间   | 瞬间列表、瞬间详情   | [Moments](https://github.com/halo-sigs/plugin-moments) 插件，安装后在菜单添加 `/moments` |
+| 搜索   | 顶部搜索入口         | Halo 官方搜索插件，安装后在主题设置中开启                                                |
+| 代码块 | 代码高亮、复制、折叠 | Shiki 插件，安装后自动接管代码块渲染                                                     |
+| 评论   | 文章评论             | Halo 内置评论组件，在 Halo 中开启评论并允许文章评论                                      |
 
-`pnpm smoke` 默认检查 `/`、`/archives`、`/categories`、`/tags` 及首页发现的站内链接。可通过环境变量补充路由：
+友链申请由 Links 插件控制。在 **Console → 插件 → 链接管理 → 设置 → 友链申请** 中同时开启“启用友链申请”和“允许访客提交”后，`/links` 页面会自动显示申请表单，包含验证码与后台审核。
 
-```bash
-HALO_URL=http://localhost:8090 \
-SMOKE_ROUTES='/page/2,/authors/admin,/photos,/moments,/links' \
-pnpm smoke
-```
+安装 Halo 官方搜索插件并在 **主题设置 → 第三方插件 → 搜索插件** 中开启后，顶部菜单会自动出现搜索入口。
 
-友链申请由 Links 插件控制。在 `Console → 插件 → 链接管理 → 设置 → 友链申请` 中同时开启“启用友链申请”和“允许访客提交”后，`/links` 页面会自动显示申请表单。
+已安装 Shiki 插件时，代码块由插件负责高亮、复制和折叠；主题中的代码块设置仅用于未经 Shiki 处理的代码块。
 
-表单使用插件提供的同源接口 `/links/apply/captcha` 和 `/links/apply/submit`，提交成功后通过 `applied=success` 回跳。提交失败时会自动展开表单、回填插件返回的字段值，并聚焦错误字段。
+如果已使用灯箱类插件，可以在 **其他设置 → 图片放大** 中关闭主题自带的图片放大功能，避免效果重复。
 
-文章额外支持：
+## ❓ 常见问题
 
-- `sidebar`：显示或隐藏侧栏
-- `direction=rtl`：将正文设置为从右到左
+**启用后页面空白或样式没有生效？**
 
-菜单项额外支持 `icon_class`，可在 Console 的菜单编辑中通过图标选择器选择；旧版 Font Awesome class 仍兼容。
+确认主题已经启用。如果通过源码或手动解压部署，请确认已执行构建、主题目录名为 `theme-halo-next`，并在 Halo Console 中重新加载主题。
 
-## 文档
+**图库、瞬间或友链页面 404？**
 
-- [Halo 适配开发文档](docs/HALO-ADAPTATION.md)
-- [上游来源与资产说明](docs/UPSTREAM.md)
-- [上游 NexT 功能差异清单](docs/UPSTREAM-DIFFERENCES.md)
+先安装并启用对应的 Photos、Moments 或 Links 插件，再在 Halo 菜单中添加 `/photos`、`/moments` 或 `/links`。
 
-## 许可证
+**顶部没有搜索入口？**
 
-当前根目录 `LICENSE` 和 `theme.yaml` 仍为 GPL-3.0，这是开发期的临时状态。上游 NexT 使用 `AGPL-3.0-only`，并包含附加署名和官网链接要求。正式发布前必须确认并统一许可证方案，详见 [上游来源与资产说明](docs/UPSTREAM.md)。
+确认已安装 Halo 官方搜索插件，并在 **主题设置 → 第三方插件 → 搜索插件** 中开启，同时检查菜单设置是否启用。
 
-页脚保留 NexT 官网链接：<https://theme-next.js.org>。
+**文章页不显示评论？**
+
+请在 Halo 中确认评论功能已开启，并检查当前文章是否允许评论。
+
+**图标、动画或版权徽章不显示？**
+
+这些资源已经随主题打包，不依赖外部 CDN。如果仍不显示，请确认主题包完整，并在 Halo Console 中重新加载主题。
+
+## 🔒 隐私与外部资源
+
+主题本身不包含遥测、广告、统计上报或远程配置，不主动收集站点数据。字数、阅读时长和阅读进度均在浏览器本地计算。
+
+Font Awesome、animate.css、anime.js 和 Creative Commons 许可证图标均已随主题本地打包，页面加载不需要请求第三方 CDN。评论、搜索、图库、瞬间和友链数据由对应的 Halo 插件处理；文章中的外部链接和第三方插件资源仍遵循各自的隐私说明。
+
+## 📄 许可证与致谢
+
+本项目采用 [AGPL-3.0-only](./LICENSE) 许可证。
+
+主题的视觉、部分模板思路和资产来自 [hexo-theme-next](https://github.com/next-theme/hexo-theme-next)，同样使用 `AGPL-3.0-only` 许可证。根据上游许可要求，需要保留页脚 [NexT 官网](https://theme-next.js.org) 链接和上游版权署名。
+
+本项目是针对 Halo 2 的独立适配实现，并非 NexT 官方项目，也未获得 NexT 团队背书。
+
+- 上游项目：[next-theme/hexo-theme-next](https://github.com/next-theme/hexo-theme-next)
+- 上游许可证与作者：[LICENSE-NEXT.md](./LICENSE-NEXT.md)、[AUTHORS-NEXT.md](./AUTHORS-NEXT.md)
+- 上游来源与资产说明：[docs/UPSTREAM.md](./docs/UPSTREAM.md)
+- 建站工具：[Halo](https://halo.run)
+
+## 💬 反馈与建议
+
+遇到问题或有功能建议，欢迎提交 [GitHub Issue](https://github.com/BennettChina/halo-theme-next/issues)。
+
+反馈时请附上 Halo 版本、主题版本、布局方案、侧栏位置、浏览器和复现步骤，方便快速定位问题。
+
+---
+
+<div align="center">
+
+如果这个主题对你有帮助，欢迎给一个 Star ⭐
+
+Made with ❤️ by [Bennett](https://github.com/BennettChina)
+
+</div>

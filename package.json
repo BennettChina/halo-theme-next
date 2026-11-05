@@ -1,13 +1,14 @@
 {
   "name": "halo-theme-next",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0",
   "private": true,
   "description": "NexT theme for Halo 2, rebuilt with Vite and Thymeleaf.",
+  "license": "AGPL-3.0-only",
   "type": "module",
   "scripts": {
-    "build": "tsc && vp build && theme-package",
+    "build": "tsc && vp build && npx @halo-dev/theme-package-cli",
     "build-only": "tsc && vp build",
-    "package": "theme-package",
+    "package": "npx @halo-dev/theme-package-cli",
     "dev": "vp build --watch",
     "check": "vp check --fix",
     "check:config": "node scripts/check-config.mjs",

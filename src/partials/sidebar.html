@@ -129,7 +129,7 @@
             th:title="${#strings.toUpperCase(license)}"
           >
             <img
-              th:src="|https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/${size}/${#strings.replace(license, '-', '_')}.svg|"
+              th:src="@{/assets/vendor/creativecommons-vocabulary/2020.11.3/license_badges/{size}/{badge}.svg?v={version}(size=${size},badge=${#strings.replace(license, '-', '_')},version=${theme.spec.version})}"
               alt="Creative Commons"
             />
           </a>

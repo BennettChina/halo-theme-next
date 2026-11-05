@@ -1,0 +1,30 @@
+# NOTICE
+
+Halo Theme Next
+Copyright (C) 2026 Bennett
+
+This project is licensed under the GNU Affero General Public License,
+version 3 only (AGPL-3.0-only). See LICENSE for the complete license text.
+
+## Upstream attribution
+
+This project contains code and assets derived from «NexT»:
+
+- <https://github.com/next-theme/hexo-theme-next>
+- Copyright © 2017 «NexT»
+- Licensed under AGPL-3.0-only with additional terms under Section 7(b).
+- Upstream license text: LICENSE-NEXT.md
+- Upstream authors and contributors: AUTHORS-NEXT.md
+
+The upstream additional terms require every site using this theme to retain
+the «NexT» official website link (<https://theme-next.js.org>) in the footer.
+
+## Related projects
+
+The Halo integration and vendored assets were adapted with reference to:
+
+- halo-dev/halo-theme-next (MIT)
+- bit15k/halo-theme-next (GPL-3.0)
+
+Those components remain subject to their original licenses where applicable.
+See docs/UPSTREAM.md for asset provenance.

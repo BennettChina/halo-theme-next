@@ -8,14 +8,14 @@ spec:
     name: Bennett
     website: https://github.com/BennettChina
   description: NexT 主题的 Halo 2 重写版，延续 hexo-theme-next 的视觉与交互。
-  logo: https://cdn.jsdelivr.net/gh/BennettChina/halo-theme-next@main/public/assets/imgs/default/logo.svg
+  logo: /themes/theme-halo-next/assets/imgs/default/logo.svg
   homepage: https://github.com/BennettChina/halo-theme-next
   repo: https://github.com/BennettChina/halo-theme-next
   issues: https://github.com/BennettChina/halo-theme-next/issues
   settingName: "theme-halo-next-setting"
   configMapName: "theme-halo-next-configMap"
-  version: 1.0.0-alpha.1
+  version: 1.0.0
   requires: ">=2.26.0"
   license:
-    - name: "GPL-3.0"
+    - name: "AGPL-3.0-only"
       url: "https://github.com/BennettChina/halo-theme-next/blob/main/LICENSE"

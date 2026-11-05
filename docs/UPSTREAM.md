@@ -2,13 +2,13 @@
 
 ## 1. 上游项目
 
-| 项目 | 内容 |
-| --- | --- |
-| 项目 | `next-theme/hexo-theme-next` |
-| 仓库 | <https://github.com/next-theme/hexo-theme-next> |
-| 参考版本 | `v8.29.0` |
-| 许可证 | `AGPL-3.0-only` |
-| 官网 | <https://theme-next.js.org> |
+| 项目     | 内容                                            |
+| -------- | ----------------------------------------------- |
+| 项目     | `next-theme/hexo-theme-next`                    |
+| 仓库     | <https://github.com/next-theme/hexo-theme-next> |
+| 参考版本 | `v8.29.0`                                       |
+| 许可证   | `AGPL-3.0-only`                                 |
+| 官网     | <https://theme-next.js.org>                     |
 
 上游 `v8.29.0` 作为功能、DOM、class 命名、视觉规范和升级对比的参考基线。它不代表当前仓库的每个 vendored 文件都已逐字节同步到该 tag。
 
@@ -18,14 +18,28 @@
 
 当前 `public/assets/` 主要来自旧 Halo NexT 项目的 vendored 资产，并已在 Halo 版本中做过局部修复。
 
-| 路径 | 内容 | 说明 |
-| --- | --- | --- |
-| `public/assets/css/scheme/` | Muse、Mist、Pisces、Gemini 预编译 CSS | 共 12 个文件，包含通用、`left`、`right` 变体 |
-| `public/assets/js/` | NexT 通用脚本 | 当前保留 `utils.js`、`motion.js`、`sidebar.js`、`next-boot.js`、`tocbot.js`、`config.js` |
-| `public/assets/js/third-party/` | 搜索、统计、评论、数学公式等第三方适配脚本 | 已在 2026-11-05 清理；未接入的脚本不再随包分发 |
-| `public/assets/imgs/default/` | 默认 LOGO、NexT schemes 图、联系图片 | 主题展示资源 |
+| 路径                            | 内容                                       | 说明                                                                                     |
+| ------------------------------- | ------------------------------------------ | ---------------------------------------------------------------------------------------- |
+| `public/assets/css/scheme/`     | Muse、Mist、Pisces、Gemini 预编译 CSS      | 共 12 个文件，包含通用、`left`、`right` 变体                                             |
+| `public/assets/js/`             | NexT 通用脚本                              | 当前保留 `utils.js`、`motion.js`、`sidebar.js`、`next-boot.js`、`tocbot.js`、`config.js` |
+| `public/assets/js/third-party/` | 搜索、统计、评论、数学公式等第三方适配脚本 | 已在 2026-11-05 清理；未接入的脚本不再随包分发                                           |
+| `public/assets/imgs/default/`   | 默认 LOGO、NexT schemes 图、联系图片       | 主题展示资源                                                                             |
+| `public/assets/vendor/`         | 随主题分发的第三方前端资源                 | 见下方“第三方前端资源”                                                                   |
 
 当前未包含上游 Stylus 源码。首轮直接使用预编译 scheme CSS，新适配样式写入 `src/css/main.css`。
+
+### 第三方前端资源
+
+页面运行所需的第三方资源均已本地化，不再从 CDN 加载。
+
+| 资源                        | 版本      | 来源                                            | 许可证                                     |
+| --------------------------- | --------- | ----------------------------------------------- | ------------------------------------------ |
+| Font Awesome Free           | 6.5.2     | <https://fontawesome.com/download>              | 图标 CC BY 4.0、字体 SIL OFL 1.1、代码 MIT |
+| animate.css                 | 3.1.1     | <https://github.com/animate-css/animate.css>    | MIT                                        |
+| anime.js                    | 3.2.1     | <https://github.com/juliangarnier/anime>        | MIT                                        |
+| Creative Commons Vocabulary | 2020.11.3 | <https://github.com/creativecommons/vocabulary> | CC0 1.0                                    |
+
+升级这些资源时，需要同步更新版本目录、模板引用和本表，并重新检查主题包中的字体文件是否完整。
 
 ## 3. 已知本地修改
 
@@ -80,14 +94,15 @@
 Theme <a href="https://theme-next.js.org">NexT</a>
 ```
 
-但本仓库许可证仍待维护者确认：
+本项目已统一采用 `AGPL-3.0-only`：
 
-- 当前 `LICENSE` 和 `theme.yaml` 声明 GPL-3.0。
-- 上游为 `AGPL-3.0-only`，两者并不等价。
-- 在正式发布前，应改为符合上游要求的 AGPL-3.0 方案，或取得明确授权。
-- 还应保留上游作者、版权声明和相关许可文本。
+- 根目录 `LICENSE` 为 AGPL-3.0 完整文本。
+- `LICENSE-NEXT.md` 保留上游 NexT 许可证及 Section 7(b) 附加条款。
+- `AUTHORS-NEXT.md` 保留上游作者与贡献者列表。
+- `NOTICE` 记录本项目版权、上游归属和资产说明。
+- `theme.yaml` 的 license 声明为 `AGPL-3.0-only`。
 
-在此之前，本仓库只能作为内部开发预览，不应发布为正式主题包。
+上游附加条款要求保留 NexT 官方链接，当前主题页脚已经满足该要求。
 
 ## 6. 核对清单
 
@@ -95,6 +110,6 @@ Theme <a href="https://theme-next.js.org">NexT</a>
 - [ ] 对比 `v8.29.0` 与当前 JS，决定同步、冻结或移除。
 - [ ] 确认预编译 scheme CSS 的生成来源。
 - [ ] 决定是否恢复 Stylus 构建链。
-- [ ] 确认许可证和附加署名方案。
-- [ ] 将 `theme.yaml` 的 license 与根目录 LICENSE 改为最终方案。
-- [ ] 保留 NexT 官网链接。
+- [x] 确认许可证和附加署名方案。
+- [x] 将 `theme.yaml` 的 license 与根目录 LICENSE 改为最终方案。
+- [x] 保留 NexT 官网链接。
