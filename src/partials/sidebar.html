@@ -95,14 +95,18 @@
               rel="noopener me"
               target="_blank"
             >
-              <i
-                th:if="${socialIconEnabled and not #strings.isEmpty(account.icon)}"
-                th:class="${account.icon} + ' fa-fw'"
-              ></i>
-              <span
-                th:if="${socialShowText}"
-                th:text="${account.name}"
-              ></span>
+              <th:block th:if="${socialIconEnabled and not #strings.isEmpty(account.icon)}">
+                <span
+                  th:if="${#strings.startsWith(#strings.trim(account.icon), '<svg')}"
+                  class="theme-icon-svg social-icon-svg"
+                  th:utext="${account.icon}"
+                ></span>
+                <i
+                  th:unless="${#strings.startsWith(#strings.trim(account.icon), '<svg')}"
+                  th:class="${account.icon + ' fa-fw'}"
+                ></i>
+              </th:block>
+              <span th:if="${socialShowText}" th:text="${account.name}"></span>
             </a>
           </span>
         </div>

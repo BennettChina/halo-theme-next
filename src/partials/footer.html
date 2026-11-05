@@ -40,11 +40,23 @@
   <span
     class="with-love"
     th:if="${theme.config.footer.copyright?.icon?.enabled == 1}"
+    th:with="loveIcon=${#strings.isEmpty(theme.config.footer.copyright?.icon?.name) ? 'fa fa-heart' : theme.config.footer.copyright?.icon?.name}"
   >
-    <i
-      th:class="${(theme.config.footer.copyright?.icon?.name ?: 'fa fa-heart') + (theme.config.footer.copyright?.icon?.animated == 1 ? ' animated heartBeat' : '')}"
+    <span
+      class="with-love-icon"
+      th:classappend="${theme.config.footer.copyright?.icon?.animated == 1 ? ' animated heartBeat' : ''}"
       th:style="|color: ${theme.config.footer.copyright?.icon?.color ?: '#ff0000'}|"
-    ></i>
+    >
+      <span
+        th:if="${#strings.startsWith(#strings.trim(loveIcon), '<svg')}"
+        class="theme-icon-svg"
+        th:utext="${loveIcon}"
+      ></span>
+      <i
+        th:unless="${#strings.startsWith(#strings.trim(loveIcon), '<svg')}"
+        th:class="${loveIcon}"
+      ></i>
+    </span>
   </span>
   <span
     class="author"

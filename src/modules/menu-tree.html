@@ -4,15 +4,20 @@
     class="menu-item animated fadeInDown"
     th:classappend="${item.status.href == '/' ? ' menu-item-home' : ''}"
   >
-    <a
-      th:href="@{${item.status.href}}"
-      th:target="${item.spec.target?.value}"
-      rel="section"
-    >
-      <i
-        th:if="${iconEnabled and not #strings.isEmpty(#annotations.getOrDefault(item, 'icon_class', ''))}"
-        th:class="${#annotations.getOrDefault(item, 'icon_class', '')} + ' fa-fw'"
-      ></i>
+    <a th:href="@{${item.status.href}}" th:target="${item.spec.target?.value}" rel="section">
+      <th:block th:with="iconClass=${#annotations.getOrDefault(item, 'icon_class', '')}">
+        <th:block th:if="${iconEnabled and not #strings.isEmpty(iconClass)}">
+          <span
+            th:if="${#strings.startsWith(#strings.trim(iconClass), '<svg')}"
+            class="theme-icon-svg menu-icon-svg"
+            th:utext="${iconClass}"
+          ></span>
+          <i
+            th:unless="${#strings.startsWith(#strings.trim(iconClass), '<svg')}"
+            th:class="${iconClass + ' fa-fw'}"
+          ></i>
+        </th:block>
+      </th:block>
       <span th:text="${item.status.displayName}"></span>
     </a>
     <th:block th:if="${item.children != null and not #lists.isEmpty(item.children)}">

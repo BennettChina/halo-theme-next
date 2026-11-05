@@ -12,7 +12,17 @@
       <th:block th:if="${isImage}">
         <span class="social-link">
           <span class="icon">
-            <i th:if="${not #strings.isEmpty(account.icon)}" th:class="${account.icon}"></i>
+            <th:block th:if="${not #strings.isEmpty(account.icon)}">
+              <span
+                th:if="${#strings.startsWith(#strings.trim(account.icon), '<svg')}"
+                class="theme-icon-svg social-icon-svg"
+                th:utext="${account.icon}"
+              ></span>
+              <i
+                th:unless="${#strings.startsWith(#strings.trim(account.icon), '<svg')}"
+                th:class="${account.icon}"
+              ></i>
+            </th:block>
           </span>
           <span class="label" th:text="${account.name}"></span>
         </span>
@@ -30,7 +40,17 @@
         th:href="@{${account.url}}"
       >
         <span class="icon">
-          <i th:if="${not #strings.isEmpty(account.icon)}" th:class="${account.icon}"></i>
+          <th:block th:if="${not #strings.isEmpty(account.icon)}">
+            <span
+              th:if="${#strings.startsWith(#strings.trim(account.icon), '<svg')}"
+              class="theme-icon-svg social-icon-svg"
+              th:utext="${account.icon}"
+            ></span>
+            <i
+              th:unless="${#strings.startsWith(#strings.trim(account.icon), '<svg')}"
+              th:class="${account.icon}"
+            ></i>
+          </th:block>
         </span>
         <span class="label" th:text="${account.name}"></span>
       </a>

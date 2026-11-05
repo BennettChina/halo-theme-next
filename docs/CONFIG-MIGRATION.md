@@ -35,13 +35,13 @@ pnpm check:config export-theme-next-config-1793770166122.json \
 
 结论：**旧配置可以导入，但自定义菜单字段会被忽略，需要改用 Halo 菜单。**
 
-| 项目 | 结果 |
-| --- | --- |
-| 配置分组 | `basic`、`sidebar`、`footer`、`post`、`other`、`third` 均存在 |
-| 阻断错误 | 0 |
-| 已移除字段 | `basic.favicon`、`basic.menu.type`、`basic.menu.custom_menu` |
+| 项目          | 结果                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 配置分组      | `basic`、`sidebar`、`footer`、`post`、`other`、`third` 均存在                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| 阻断错误      | 0                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| 已移除字段    | `basic.favicon`、`basic.menu.type`、`basic.menu.custom_menu`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
 | Halo 自动补齐 | `post.index_image=1`、`post.index_content="html"`、`other.motion.enabled=1`，以及 2026-11-05 新增的 `basic.index_with_subtitle=0`、`basic.creative_commons.language=""`、`sidebar.toc.number=1`、`sidebar.toc.expand_all=0`、`footer.beian.gongan_icon_url=""`、`post.read_more_btn=1`、`post.post_navigation="left"`、`post.tag_icon=0`、`post.share={enabled:0}`、`post.reward={enabled:0,comment:"...",wechatpay:"",alipay:"",paypal:"",bitcoin:""}`、`post.related={enabled:0,count:3}`、`post.reading_stats={enabled:0,word_count:1,read_time:1,wpm:300}`、`post.post_meta.item_text=1`、`post.post_meta.another_day=1`、`post.tagcloud={min:12,max:30,amount:200}`、`other.codeblock={copy_button:{enable:0,style:"default"},fold:{enable:0,height:500},language:0}`、`other.reading_progress={enable:0,start_at:"left",position:"top"}`、`other.back2top={enable:1,sidebar:1,scrollpercent:1}`、`other.image_zoom={enabled:0}`、`other.seo={enable_metadata:true,enable_structured_data:true}` |
-| 菜单迁移 | 旧自定义菜单内容需在 Console 的“菜单”中重建 |
+| 菜单迁移      | 旧自定义菜单内容需在 Console 的“菜单”中重建                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 
 字段说明：
 
@@ -52,6 +52,8 @@ pnpm check:config export-theme-next-config-1793770166122.json \
 - 自定义菜单已移除，图库、瞬间、友联入口需要在 Console → 菜单中重建，并在“基础设置 → 菜单设置”中选择该菜单。
 - `sidebar.social.icons_only` 已迁移到 `sidebar.social_icons.icons_only`；同时新增 `sidebar.social_icons.enable` 和 `sidebar.social_icons.transition`，对应上游 `social_icons` 配置。新默认值为显示图标和名称、关闭过渡，即上游默认观感。
 - `post.follow_me.icons_only` 已移除；Follow me 按上游行为始终显示账号名称。图片项继续支持原来的 `type: img` + `img_url`，同时新增上游规则：地址以 `.png` 或 `.jpg` 结尾时自动作为图片项处理。
+- 社交账号、文章底部社交账号、页脚版权图标和菜单 `icon_class` 已改为图标选择器，值以 SVG 字符串保存；旧配置中的 Font Awesome class 仍可正常显示，无需立即迁移。
+- 社交账号列表只显示账号名称，避免旧 Font Awesome 编码被 Iconify 预览组件当作文本渲染；图标可在展开的编辑项中选择和预览。
 - `post.tag_icon` 默认关闭；开启后在文章底部每个标签前显示图标。
 - `post.share` 默认关闭；开启后使用浏览器 Web Share API，不支持时复制文章链接。
 - `other.codeblock` 默认关闭复制和折叠。只增强未经 Shiki 插件处理的代码块；Shiki 代码块继续使用插件自带的复制、折叠和语言名。
@@ -67,15 +69,15 @@ pnpm check:config export-theme-next-config-1793770166122.json \
 
 已在 Halo `2.27.2` 中导入该配置并验证：
 
-| 页面 | 结果 |
-| --- | --- |
-| `/`、`/page/2` | 200 |
-| `/archives`、`/archives/:slug`、`/archives/page/2` | 200 |
-| `/categories`、`/categories/:slug` | 200 |
-| `/tags`、`/tags/:slug` | 200 |
-| `/authors/:name` | 200 |
-| `/links`、`/photos`、`/moments` 及详情页 | 200 |
-| 四套 scheme 首页桌面/移动端 | 无横向溢出，动画结束后布局正常 |
+| 页面                                               | 结果                           |
+| -------------------------------------------------- | ------------------------------ |
+| `/`、`/page/2`                                     | 200                            |
+| `/archives`、`/archives/:slug`、`/archives/page/2` | 200                            |
+| `/categories`、`/categories/:slug`                 | 200                            |
+| `/tags`、`/tags/:slug`                             | 200                            |
+| `/authors/:name`                                   | 200                            |
+| `/links`、`/photos`、`/moments` 及详情页           | 200                            |
+| 四套 scheme 首页桌面/移动端                        | 无横向溢出，动画结束后布局正常 |
 
 同时确认：
 

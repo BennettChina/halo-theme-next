@@ -53,7 +53,7 @@
 }
 
 .post-toc.toc-numbered .nav-item > a::before {
-  content: counters(toc-item, '.') '. ';
+  content: counters(toc-item, ".") ". ";
   display: inline-block;
   margin-right: 0.15em;
 }
@@ -195,6 +195,36 @@
   z-index: 1;
 }
 
+/* Iconify 图标以 SVG 字符串保存，按 1em 渲染以对齐 Font Awesome 图标。 */
+.theme-icon-svg {
+  align-items: center;
+  display: inline-flex;
+  height: 1em;
+  justify-content: center;
+  line-height: 1;
+  vertical-align: -0.125em;
+  width: 1em;
+}
+
+.theme-icon-svg svg {
+  fill: currentColor;
+  height: 1em;
+  width: 1em;
+}
+
+.menu-item .menu-icon-svg {
+  margin-right: 8px;
+}
+
+.links-of-author.links-of-author-with-text .social-icon-svg {
+  margin-right: 2px;
+}
+
+.with-love-icon {
+  display: inline-flex;
+  vertical-align: -0.125em;
+}
+
 .sidebar-remove .column,
 .sidebar-remove .sidebar,
 .sidebar-hidden .sidebar,
@@ -303,7 +333,9 @@
   gap: 0.85rem;
   min-height: 5.25rem;
   padding: 0.9rem 1rem;
-  transition: border-color 0.2s ease, transform 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .link-card:hover {
@@ -801,7 +833,9 @@
   padding: 0 0.5rem;
   position: fixed;
   right: 24px;
-  transition: opacity 0.2s ease, visibility 0.2s ease;
+  transition:
+    opacity 0.2s ease,
+    visibility 0.2s ease;
   visibility: hidden;
   width: auto;
   z-index: 100;
@@ -873,8 +907,10 @@
 .codeblock-mac::before {
   background: #fc625d;
   border-radius: 50%;
-  box-shadow: 20px 0 #fdbc40, 40px 0 #35cd4b;
-  content: '';
+  box-shadow:
+    20px 0 #fdbc40,
+    40px 0 #35cd4b;
+  content: "";
   height: 12px;
   left: 12px;
   position: absolute;
@@ -882,7 +918,7 @@
   width: 12px;
 }
 
-.codeblock-mac[class*='copy-btn-mac'] {
+.codeblock-mac[class*="copy-btn-mac"] {
   padding-top: 2.25rem;
 }
 

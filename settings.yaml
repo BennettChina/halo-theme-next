@@ -62,8 +62,8 @@ spec:
               value: "Pisces"
             - label: Gemini
               value: "Gemini"
-#            - label: Gemini
-#              value: "Gemini"
+        #            - label: Gemini
+        #              value: "Gemini"
         # 暗黑模式
         - $formkit: select
           name: darkmode
@@ -84,7 +84,7 @@ spec:
           value:
             enabled: 0
             custom_enabled: 0
-            url: ''
+            url: ""
           children:
             - $formkit: select
               name: enabled
@@ -190,29 +190,29 @@ spec:
                 - label: 不显示
                   value: 0
         # open graph
-#        - $formkit: repeater
-#          name: open_graph
-#          label: open_graph
-#          help: ""
-#          value: [ { "enabled": 1 } ]
-#          max: 5
-#          min: 1
-#          addButton: false
-#          removeControl: false
-#          insertControl: false
-#          upControl: false
-#          downControl: false
-#          children:
-#            - $formkit: select
-#              name: enabled
-#              id: enabled
-#              label: 是否启用
-#              value: 1
-#              options:
-#                - label: 启用
-#                  value: 1
-#                - label: 关闭
-#                  value: 0
+        #        - $formkit: repeater
+        #          name: open_graph
+        #          label: open_graph
+        #          help: ""
+        #          value: [ { "enabled": 1 } ]
+        #          max: 5
+        #          min: 1
+        #          addButton: false
+        #          removeControl: false
+        #          insertControl: false
+        #          upControl: false
+        #          downControl: false
+        #          children:
+        #            - $formkit: select
+        #              name: enabled
+        #              id: enabled
+        #              label: 是否启用
+        #              value: 1
+        #              options:
+        #                - label: 启用
+        #                  value: 1
+        #                - label: 关闭
+        #                  value: 0
         # 菜单设置
         - $formkit: group
           name: menu
@@ -396,7 +396,7 @@ spec:
               value: 1
             - label: 隐藏
               value: 0
-#        # 侧栏社交链接
+        #        # 侧栏社交链接
         - $formkit: group
           name: social
           label: 社交链接
@@ -420,8 +420,6 @@ spec:
               label: 社交账号
               value: []
               itemLabels:
-                - type: iconify
-                  label: $value.icon
                 - type: text
                   label: $value.name
               children:
@@ -434,10 +432,13 @@ spec:
                   name: url
                   label: 地址
                   value: ""
-                - $formkit: text
+                - $formkit: iconify
                   name: icon
                   label: 图标
                   value: ""
+                  format: svg
+                  value-only: true
+                  help: "点击图标按钮选择；旧版 Font Awesome 编码仍兼容。"
         # 侧栏社交图标（对应上游 social_icons）
         - $formkit: group
           name: social_icons
@@ -479,53 +480,53 @@ spec:
                   value: 1
                 - label: 关闭
                   value: 0
-#        # 侧栏友链
-#        - $formkit: group
-#          name: links
-#          label: 友链栏
-#          value: []
-#          children:
-#            - $formkit: select
-#              name: enabled
-#              label: ""
-#              value: 1
-#              options:
-#                - label: 开启
-#                  value: 1
-#                - label: 关闭
-#                  value: 0
-#            - $formkit: select
-#              if: "$value.enabled === 1"
-#              name: layout
-#              label: 样式
-#              value: "block"
-#              options:
-#                - label: 块状
-#                  value: "block"
-#                - label: 内联
-#                  value: "inline"
-#            - $formkit: repeater
-#              if: "$value.enabled === 1"
-#              name: social
-#              label: 友链添加
-#              value: [ ]
-#              max: 5
-#              min: 1
-#              children:
-#                - $formkit: text
-#                  # 在 Repeater 中进行条件判断的方式，当 enabled 为 true 时才显示
-#                  name: name
-#                  label: 名称
-#                  value: ""
-#                - $formkit: text
-#                  name: url
-#                  label: 地址
-#                  value: ""
-#                - $formkit: text
-#                  name: icon
-#                  label: 图标
-#                  value: ""
-#        # 侧栏目录
+        #        # 侧栏友链
+        #        - $formkit: group
+        #          name: links
+        #          label: 友链栏
+        #          value: []
+        #          children:
+        #            - $formkit: select
+        #              name: enabled
+        #              label: ""
+        #              value: 1
+        #              options:
+        #                - label: 开启
+        #                  value: 1
+        #                - label: 关闭
+        #                  value: 0
+        #            - $formkit: select
+        #              if: "$value.enabled === 1"
+        #              name: layout
+        #              label: 样式
+        #              value: "block"
+        #              options:
+        #                - label: 块状
+        #                  value: "block"
+        #                - label: 内联
+        #                  value: "inline"
+        #            - $formkit: repeater
+        #              if: "$value.enabled === 1"
+        #              name: social
+        #              label: 友链添加
+        #              value: [ ]
+        #              max: 5
+        #              min: 1
+        #              children:
+        #                - $formkit: text
+        #                  # 在 Repeater 中进行条件判断的方式，当 enabled 为 true 时才显示
+        #                  name: name
+        #                  label: 名称
+        #                  value: ""
+        #                - $formkit: text
+        #                  name: url
+        #                  label: 地址
+        #                  value: ""
+        #                - $formkit: text
+        #                  name: icon
+        #                  label: 图标
+        #                  value: ""
+        #        # 侧栏目录
         - $formkit: group
           name: toc
           label: 文章目录
@@ -597,7 +598,7 @@ spec:
             copyright: ""
             icon:
               enabled: 1
-              name: "fa fa-heart"
+              name: ""
               animated: 1
               color: "#ff0000"
 
@@ -625,7 +626,7 @@ spec:
               label: 页脚图标设置
               value:
                 enabled: 1
-                name: "fa fa-heart"
+                name: ""
                 animated: 1
                 color: "#ff0000"
               children:
@@ -638,11 +639,14 @@ spec:
                       value: 1
                     - label: 关闭
                       value: 0
-                - $formkit: text
+                - $formkit: iconify
                   if: "$value.enabled === 1"
                   name: name
-                  label: 图标样式
-                  value: "fa fa-heart"
+                  label: 图标
+                  value: ""
+                  format: svg
+                  value-only: true
+                  help: "点击图标按钮选择；留空时显示默认爱心，旧版 Font Awesome 编码仍兼容。"
                 - $formkit: radio
                   if: "$value.enabled === 1"
                   name: animated
@@ -870,19 +874,19 @@ spec:
         # 访问量统计
         - $formkit: group
           name: visitor
-          label: ''
+          label: ""
           value:
             enabled: 1
           children:
-          - $formkit: radio
-            name: enabled
-            label: 访问量显示
-            value: 1
-            options:
-              - label: 开启
-                value: 1
-              - label: 关闭
-                value: 0
+            - $formkit: radio
+              name: enabled
+              label: 访问量显示
+              value: 1
+              options:
+                - label: 开启
+                  value: 1
+                - label: 关闭
+                  value: 0
         # 文章底栏社交链接
         - $formkit: group
           name: follow_me
@@ -905,8 +909,6 @@ spec:
               name: account
               label: 社交账号
               itemLabels:
-                - type: iconify
-                  label: $value.icon
                 - type: text
                   label: $value.name
               children:
@@ -934,10 +936,13 @@ spec:
                   name: img_url
                   label: 图片地址
                   value: ""
-                - $formkit: text
+                - $formkit: iconify
                   name: icon
                   label: 图标
                   value: ""
+                  format: svg
+                  value-only: true
+                  help: "点击图标按钮选择；旧版 Font Awesome 编码仍兼容。"
         - $formkit: group
           name: reward
           label: 文章打赏
@@ -1279,15 +1284,15 @@ spec:
               help: "为文章页输出 BlogPosting JSON-LD；与插件冲突时关闭。"
               value: true
         # 预链接
-#        - $formkit: radio
-#          name: preconnect
-#          label: 预链接是否启用
-#          value: 0
-#          options:
-#            - label: 开启
-#              value: 1
-#            - label: 关闭
-#              value: 0
+    #        - $formkit: radio
+    #          name: preconnect
+    #          label: 预链接是否启用
+    #          value: 0
+    #          options:
+    #            - label: 开启
+    #              value: 1
+    #            - label: 关闭
+    #              value: 0
 
     # 第三方插件
     - group: third
@@ -1339,7 +1344,7 @@ spec:
 #                  value: 1
 #                - label: 关闭
 #                  value: 0
-        # fancybox_css 灯箱脚本
+# fancybox_css 灯箱脚本
 #        - $formkit: group
 #          name: fancybox_css
 #          label: fancybox.css
@@ -1356,7 +1361,7 @@ spec:
 #                  value: 1
 #                - label: 关闭
 #                  value: 0
-        # pace.js
+# pace.js
 #        - $formkit: group
 #          name: pace
 #          label: pace.js

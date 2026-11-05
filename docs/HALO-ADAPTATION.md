@@ -1,15 +1,15 @@
 # Halo Theme Next 开发文档
 
-| 项目 | 内容 |
-| --- | --- |
-| 文档状态 | Alpha v0.1 |
-| 最后更新 | 2026-11-04 |
-| 目标 Halo | `2.27.2` |
-| 最低兼容版本 | `>=2.26.0`（待完成 2.26.x 回归） |
-| 目标 Thymeleaf | `3.1.3` |
+| 项目               | 内容                                                                                  |
+| ------------------ | ------------------------------------------------------------------------------------- |
+| 文档状态           | Alpha v0.1                                                                            |
+| 最后更新           | 2026-11-04                                                                            |
+| 目标 Halo          | `2.27.2`                                                                              |
+| 最低兼容版本       | `>=2.26.0`（待完成 2.26.x 回归）                                                      |
+| 目标 Thymeleaf     | `3.1.3`                                                                               |
 | 上游视觉与资源基线 | [next-theme/hexo-theme-next](https://github.com/next-theme/hexo-theme-next) `v8.29.0` |
-| 工程基线 | [halo-dev/theme-vite-starter](https://github.com/halo-dev/theme-vite-starter) |
-| 当前主题版本 | `1.0.0-alpha.1` |
+| 工程基线           | [halo-dev/theme-vite-starter](https://github.com/halo-dev/theme-vite-starter)         |
+| 当前主题版本       | `1.0.0-alpha.1`                                                                       |
 
 ## 1. 项目定位
 
@@ -39,13 +39,13 @@
 
 明确边界：
 
-| 能力 | Vite 构建期 | Thymeleaf 运行时 |
-| --- | --- | --- |
-| 页面壳层复用 | `<include>`、`<slot>` | `th:replace`、`th:insert` |
-| 静态资源 | 打包、hash、复制 `public/` | `@{...}`、`#theme.assets()` |
-| 内容数据 | 不可用 | `post`、`singlePage`、`posts`、Finder API |
-| 菜单/分类层级 | 不可用 | `children` 递归 |
-| 评论与插件注入 | 不可用 | `<halo:comment>`、`<halo:footer />` |
+| 能力           | Vite 构建期                | Thymeleaf 运行时                          |
+| -------------- | -------------------------- | ----------------------------------------- |
+| 页面壳层复用   | `<include>`、`<slot>`      | `th:replace`、`th:insert`                 |
+| 静态资源       | 打包、hash、复制 `public/` | `@{...}`、`#theme.assets()`               |
+| 内容数据       | 不可用                     | `post`、`singlePage`、`posts`、Finder API |
+| 菜单/分类层级  | 不可用                     | `children` 递归                           |
+| 评论与插件注入 | 不可用                     | `<halo:comment>`、`<halo:footer />`       |
 
 Vite 不会把 Nunjucks 自动转换成 Thymeleaf，也不会替代 Halo 的权限、路由、评论和插件能力。
 
@@ -93,10 +93,7 @@ dist/                  主题包输出，禁止手改
 `src/partials/shell.html` 声明：
 
 ```html
-<html
-  xmlns:th="https://www.thymeleaf.org"
-  th:fragment="html(head, content)"
->
+<html xmlns:th="https://www.thymeleaf.org" th:fragment="html(head, content)"></html>
 ```
 
 `src/layout.html` 通过 `<include>` 生成 `templates/layout.html`。Halo 当前返回：
@@ -113,23 +110,23 @@ dist/                  主题包输出，禁止手改
 
 ### 4.2 核心路由
 
-| 模板 | 路由示例 | 主要变量 | 状态 |
-| --- | --- | --- | --- |
-| `index.html` | `/` | `posts` | 已实现 |
-| `post.html` | `/archives/{slug}` | `post`、`haloCommentEnabled` | 已实现 |
-| `page.html` | 自定义单页地址 | `singlePage`、`haloCommentEnabled` | 已实现 |
-| `archives.html` | `/archives` | `archives` | 已实现 |
-| `tags.html` | `/tags` | `tags` | 已实现 |
-| `tag.html` | `/tags/{slug}` | `tag`、`posts` | 已实现 |
-| `categories.html` | `/categories` | `categories` | 已实现 |
-| `category.html` | `/categories/{slug}` | `category`、`posts` | 已实现 |
-| `author.html` | `/authors/{name}` | `author`、`posts` | 已实现 |
-| `links.html` | `/links`、`/links?group=...` | `groups`、`simpleGroups`、`links`、`group`、`linkApplicationEnabled`、`csrfToken` | 已实现，依赖 Links 插件 |
-| `photos.html` | `/photos` | `photos`、`groups`、`photoUrl` | 已实现，依赖 Photos 插件 |
-| `photo.html` | `/photos/{name}` | `photo`、`prev`、`next`、`neighbors`、`position` | 已实现，依赖 Photos 插件 |
-| `moments.html` | `/moments`、`/moments?tag=...` | `moments`、`tags`、`title` | 已实现，依赖 Moments 插件 |
-| `moment.html` | `/moments/{name}` | `moment`、`title` | 已实现，依赖 Moments 插件 |
-| `error/*.html` | HTTP 4xx/5xx | `error` | 已实现 |
+| 模板              | 路由示例                       | 主要变量                                                                          | 状态                      |
+| ----------------- | ------------------------------ | --------------------------------------------------------------------------------- | ------------------------- |
+| `index.html`      | `/`                            | `posts`                                                                           | 已实现                    |
+| `post.html`       | `/archives/{slug}`             | `post`、`haloCommentEnabled`                                                      | 已实现                    |
+| `page.html`       | 自定义单页地址                 | `singlePage`、`haloCommentEnabled`                                                | 已实现                    |
+| `archives.html`   | `/archives`                    | `archives`                                                                        | 已实现                    |
+| `tags.html`       | `/tags`                        | `tags`                                                                            | 已实现                    |
+| `tag.html`        | `/tags/{slug}`                 | `tag`、`posts`                                                                    | 已实现                    |
+| `categories.html` | `/categories`                  | `categories`                                                                      | 已实现                    |
+| `category.html`   | `/categories/{slug}`           | `category`、`posts`                                                               | 已实现                    |
+| `author.html`     | `/authors/{name}`              | `author`、`posts`                                                                 | 已实现                    |
+| `links.html`      | `/links`、`/links?group=...`   | `groups`、`simpleGroups`、`links`、`group`、`linkApplicationEnabled`、`csrfToken` | 已实现，依赖 Links 插件   |
+| `photos.html`     | `/photos`                      | `photos`、`groups`、`photoUrl`                                                    | 已实现，依赖 Photos 插件  |
+| `photo.html`      | `/photos/{name}`               | `photo`、`prev`、`next`、`neighbors`、`position`                                  | 已实现，依赖 Photos 插件  |
+| `moments.html`    | `/moments`、`/moments?tag=...` | `moments`、`tags`、`title`                                                        | 已实现，依赖 Moments 插件 |
+| `moment.html`     | `/moments/{name}`              | `moment`、`title`                                                                 | 已实现，依赖 Moments 插件 |
+| `error/*.html`    | HTTP 4xx/5xx                   | `error`                                                                           | 已实现                    |
 
 #### 首页文章流
 
@@ -170,7 +167,7 @@ Halo 菜单使用 `MenuFinder` 获取，`MenuItem` 通过 `children` 表达层�
 约束：
 
 - 不读取旧版 `spec.parent` 手动拼树。
-- 图标来自 MenuItem annotation `icon_class`。
+- 图标来自 MenuItem annotation `icon_class`，通过 Iconify 选择器写入 SVG；旧版 Font Awesome class 仍兼容。
 - 外链同样经过 `@{...}` 处理。
 - 已用二级、三级菜单在真实 Halo 中验证。
 
@@ -229,11 +226,11 @@ th:text="${#temporals.format(post.spec.publishTime, 'yyyy-MM-dd')}"
 
 `annotation-setting.yaml` 当前提供：
 
-| 目标 | annotation | 用途 |
-| --- | --- | --- |
-| `MenuItem` | `icon_class` | 菜单图标 class |
-| `Post` | `sidebar` | 单篇显示/隐藏侧栏 |
-| `Post` | `direction` | 正文 `rtl` 方向 |
+| 目标       | annotation   | 用途                                             |
+| ---------- | ------------ | ------------------------------------------------ |
+| `MenuItem` | `icon_class` | 菜单图标（Iconify SVG，兼容 Font Awesome class） |
+| `Post`     | `sidebar`    | 单篇显示/隐藏侧栏                                |
+| `Post`     | `direction`  | 正文 `rtl` 方向                                  |
 
 `direction` 最终输出到文章正文的 `dir` 属性，已实测 `rtl` 生效。
 
@@ -319,53 +316,53 @@ pnpm build-only
 
 验证环境：Halo `2.27.2`，主题 `1.0.0-alpha.1`，页面布局契约 `SUPPORTED`。
 
-| 检查项 | 结果 |
-| --- | --- |
-| `pnpm build-only` | 通过 |
-| `templates/modules/menu-tree.html` 生成 | 通过 |
-| `templates/modules/category-tree.html` 生成 | 通过 |
-| 首页 `/` | 200 |
-| 归档 `/archives` | 200 |
-| 文章 `/archives/hello-halo` | 200 |
-| 测试文章 `/archives/test-1` | 200 |
-| 单页 `/about`、`/privacy-policy` | 200 |
-| 标签列表与详情 | 200 |
-| 分类列表与详情 | 200 |
-| 作者页 | 200 |
-| 不存在的页面（HTML 请求） | 404 错误页 |
-| 三级 Halo 菜单 | 正确递归 |
-| 二级分类 | 正确递归 |
-| 文章 `direction=rtl` | 正文输出 `dir="rtl"` |
-| 主题 CSS/JS/字体 | 资源请求正常 |
-| 测试后 Halo 日志 | 无模板异常 |
+| 检查项                                      | 结果                 |
+| ------------------------------------------- | -------------------- |
+| `pnpm build-only`                           | 通过                 |
+| `templates/modules/menu-tree.html` 生成     | 通过                 |
+| `templates/modules/category-tree.html` 生成 | 通过                 |
+| 首页 `/`                                    | 200                  |
+| 归档 `/archives`                            | 200                  |
+| 文章 `/archives/hello-halo`                 | 200                  |
+| 测试文章 `/archives/test-1`                 | 200                  |
+| 单页 `/about`、`/privacy-policy`            | 200                  |
+| 标签列表与详情                              | 200                  |
+| 分类列表与详情                              | 200                  |
+| 作者页                                      | 200                  |
+| 不存在的页面（HTML 请求）                   | 404 错误页           |
+| 三级 Halo 菜单                              | 正确递归             |
+| 二级分类                                    | 正确递归             |
+| 文章 `direction=rtl`                        | 正文输出 `dir="rtl"` |
+| 主题 CSS/JS/字体                            | 资源请求正常         |
+| 测试后 Halo 日志                            | 无模板异常           |
 
 ### 6.2 发布前必须补齐
 
-| 检查项 | 原因 |
-| --- | --- |
-| Halo `2.26.x` 回归 | 当前只验证 2.27.2 |
-| Muse、Mist、Pisces、Gemini 四套 scheme | 当前主验证为 Pisces |
-| 左右侧栏 | 需覆盖 `left` / `right` 资源路径和布局 |
-| 亮色、暗色、跟随系统 | 当前只确认页面可渲染 |
-| 桌面、平板、移动端 | 需检查导航、侧栏和正文溢出 |
-| 分页 2 页以上 | 当前测试数据只有 1 页 |
-| 空列表页 | 标签、分类、作者、归档 |
-| 有评论、无评论、评论插件关闭 | 需分别验证 |
-| 搜索插件开启/关闭 | 当前只做条件渲染判断 |
-| 从干净 checkout 安装与打包 | 需清除缓存后重跑 |
+| 检查项                                 | 原因                                   |
+| -------------------------------------- | -------------------------------------- |
+| Halo `2.26.x` 回归                     | 当前只验证 2.27.2                      |
+| Muse、Mist、Pisces、Gemini 四套 scheme | 当前主验证为 Pisces                    |
+| 左右侧栏                               | 需覆盖 `left` / `right` 资源路径和布局 |
+| 亮色、暗色、跟随系统                   | 当前只确认页面可渲染                   |
+| 桌面、平板、移动端                     | 需检查导航、侧栏和正文溢出             |
+| 分页 2 页以上                          | 当前测试数据只有 1 页                  |
+| 空列表页                               | 标签、分类、作者、归档                 |
+| 有评论、无评论、评论插件关闭           | 需分别验证                             |
+| 搜索插件开启/关闭                      | 当前只做条件渲染判断                   |
+| 从干净 checkout 安装与打包             | 需清除缓存后重跑                       |
 
 ## 7. 配置模型
 
 `settings.yaml` 按以下分组组织：
 
-| Group | 内容 |
-| --- | --- |
-| `basic` | 站点标题、scheme、暗色模式、LOGO、版权协议、菜单 |
-| `sidebar` | 侧栏位置、宽度、作者、站点统计、社交链接、目录 |
-| `footer` | 备案、版权与主题署名 |
-| `post` | 文章元信息、摘要、阅读量、关注入口 |
-| `other` | 主题色、动画 |
-| `third` | 搜索等可选能力 |
+| Group     | 内容                                             |
+| --------- | ------------------------------------------------ |
+| `basic`   | 站点标题、scheme、暗色模式、LOGO、版权协议、菜单 |
+| `sidebar` | 侧栏位置、宽度、作者、站点统计、社交链接、目录   |
+| `footer`  | 备案、版权与主题署名                             |
+| `post`    | 文章元信息、摘要、阅读量、关注入口               |
+| `other`   | 主题色、动画                                     |
+| `third`   | 搜索等可选能力                                   |
 
 侧栏社交链接拆分为 `sidebar.social`（账号列表）和 `sidebar.social_icons`（`enable`、`icons_only`、`transition`），后者对应上游 `social_icons`；文章底部 Follow me 位于 `post.follow_me`，按上游规则始终显示名称，并以 `.png` / `.jpg` 后缀识别图片项。
 

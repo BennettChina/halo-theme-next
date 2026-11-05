@@ -8,18 +8,18 @@
 
 ## 状态
 
-| 项目 | 状态 |
-| --- | --- |
-| 目标 Halo | `2.27.2`，最低声明 `>=2.26.0` |
-| 页面布局契约 | `SUPPORTED` |
-| 核心路由 | 已实现并通过 Halo smoke test |
-| 首页富文本文章流 | 已实现，支持 Markdown/HTML 正文与图片 |
-| 友链 / 图库 / 瞬间 | 已实现，对应 Links / Photos / Moments 插件 |
-| 友链申请 | 已实现，支持验证码、CSRF、审核回跳 |
-| 多级菜单/分类 | 已实现 |
-| 四套 scheme | 首页桌面/移动端抽查通过，全量视觉回归待完成 |
-| Halo 2.26.x | 待回归 |
-| 自动化检查 | `pnpm check:config` 配置校验，`pnpm smoke` 真实路由检查 |
+| 项目               | 状态                                                    |
+| ------------------ | ------------------------------------------------------- |
+| 目标 Halo          | `2.27.2`，最低声明 `>=2.26.0`                           |
+| 页面布局契约       | `SUPPORTED`                                             |
+| 核心路由           | 已实现并通过 Halo smoke test                            |
+| 首页富文本文章流   | 已实现，支持 Markdown/HTML 正文与图片                   |
+| 友链 / 图库 / 瞬间 | 已实现，对应 Links / Photos / Moments 插件              |
+| 友链申请           | 已实现，支持验证码、CSRF、审核回跳                      |
+| 多级菜单/分类      | 已实现                                                  |
+| 四套 scheme        | 首页桌面/移动端抽查通过，全量视觉回归待完成             |
+| Halo 2.26.x        | 待回归                                                  |
+| 自动化检查         | `pnpm check:config` 配置校验，`pnpm smoke` 真实路由检查 |
 
 ## 已支持
 
@@ -47,7 +47,7 @@
 - 字数统计、阅读时长、相关文章、打赏和原生图片放大
 - canonical、Open Graph、Twitter Card 和文章 JSON-LD，可独立关闭
 - 文章 annotation：侧栏开关、版权声明开关、右到左正文方向
-- 菜单 annotation：图标 class
+- 菜单 annotation：图标选择器
 - Halo 插件 footer 注入
 
 ## 环境
@@ -97,14 +97,14 @@ pnpm dev
 
 常用命令：
 
-| 命令 | 作用 |
-| --- | --- |
-| `pnpm dev` | 监听 `src/` 并持续构建 |
-| `pnpm build-only` | 只生成 `templates/` |
-| `pnpm build` | 类型检查、构建并生成 ZIP |
-| `pnpm package` | 使用现有 `templates/` 打包 |
-| `pnpm check:config <export.json>` | 检查旧主题导出配置并生成迁移结果 |
-| `pnpm smoke` | 对运行中的 Halo 检查核心路由和主题资源 |
+| 命令                              | 作用                                   |
+| --------------------------------- | -------------------------------------- |
+| `pnpm dev`                        | 监听 `src/` 并持续构建                 |
+| `pnpm build-only`                 | 只生成 `templates/`                    |
+| `pnpm build`                      | 类型检查、构建并生成 ZIP               |
+| `pnpm package`                    | 使用现有 `templates/` 打包             |
+| `pnpm check:config <export.json>` | 检查旧主题导出配置并生成迁移结果       |
+| `pnpm smoke`                      | 对运行中的 Halo 检查核心路由和主题资源 |
 
 ## 目录
 
@@ -167,7 +167,7 @@ pnpm smoke
 - `sidebar`：显示或隐藏侧栏
 - `direction=rtl`：将正文设置为从右到左
 
-菜单项额外支持 `icon_class`，用于填写 Font Awesome class。
+菜单项额外支持 `icon_class`，可在 Console 的菜单编辑中通过图标选择器选择；旧版 Font Awesome class 仍兼容。
 
 ## 文档
 

@@ -8,12 +8,14 @@ spec:
     kind: MenuItem
   formSchema:
     # 菜单项扩展
-    - $formkit: "text"
+    - $formkit: "iconify"
       name: "icon_class"
-      label: "图标样式 - Next"
+      label: "图标 - Next"
+      help: "点击图标按钮选择；旧版 Font Awesome 编码仍兼容。"
+      format: "svg"
+      value-only: true
 
 ---
-
 # 文章元数据扩展 see https://theme-next.js.org/docs/advanced-settings/front-matter.html?highlight=sticky
 apiVersion: v1alpha1
 kind: AnnotationSetting
