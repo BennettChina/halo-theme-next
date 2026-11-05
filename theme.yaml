@@ -1,7 +1,7 @@
 apiVersion: theme.halo.run/v1alpha1
 kind: Theme
 metadata:
-  name: theme-next
+  name: theme-halo-next
 spec:
   displayName: NexT
   author:
@@ -12,8 +12,8 @@ spec:
   homepage: https://github.com/BennettChina/halo-theme-next
   repo: https://github.com/BennettChina/halo-theme-next
   issues: https://github.com/BennettChina/halo-theme-next/issues
-  settingName: "theme-next-setting"
-  configMapName: "theme-next-configMap"
+  settingName: "theme-halo-next-setting"
+  configMapName: "theme-halo-next-configMap"
   version: 1.0.0-alpha.1
   requires: ">=2.26.0"
   license:

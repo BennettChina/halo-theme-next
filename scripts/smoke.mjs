@@ -68,7 +68,10 @@ function extractThemeAssets(html) {
   for (const pattern of patterns) {
     for (const match of html.matchAll(pattern)) {
       const url = absolute(match[1]);
-      if (url.origin === absolute("/").origin && url.pathname.startsWith("/themes/theme-next/")) {
+      if (
+        url.origin === absolute("/").origin &&
+        url.pathname.startsWith("/themes/theme-halo-next/")
+      ) {
         assets.add(`${url.pathname}${url.search}`);
       }
     }
@@ -112,7 +115,7 @@ async function main() {
   }
 
   if (assets.size === 0) {
-    failures.push("未发现任何 /themes/theme-next/ 静态资源引用");
+    failures.push("未发现任何 /themes/theme-halo-next/ 静态资源引用");
   }
   for (const asset of assets) {
     try {

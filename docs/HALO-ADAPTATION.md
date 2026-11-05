@@ -84,7 +84,7 @@ dist/                  主题包输出，禁止手改
 3. `src/modules/` 使用 Thymeleaf `th:fragment`，构建后输出到 `templates/modules/`。
 4. `public/` 只放需要原样发布的静态资源。
 5. `templates/` 可以通过 `pnpm build-only` 重复生成，不纳入修复范围。
-6. 主题安装目录名必须是 `theme-next`，与 `theme.yaml` 的 `metadata.name` 一致。
+6. 主题安装目录名必须是 `theme-halo-next`，与 `theme.yaml` 的 `metadata.name` 一致。
 
 ## 4. Halo 契约
 
@@ -275,12 +275,12 @@ pnpm package
 主题包输出：
 
 ```text
-dist/theme-next-1.0.0-alpha.1.zip
+dist/theme-halo-next-1.0.0-alpha.1.zip
 ```
 
 ### 5.3 接入 Halo
 
-开发时把仓库挂载到 Halo 主题目录，目录名必须为 `theme-next`：
+开发时把仓库挂载到 Halo 主题目录，目录名必须为 `theme-halo-next`：
 
 ```bash
 docker run -d \
@@ -288,11 +288,11 @@ docker run -d \
   -p 8090:8090 \
   -e SPRING_THYMELEAF_CACHE=false \
   -v "$HOME/.halo2-next-dev:/root/.halo2" \
-  -v "$PWD:/root/.halo2/themes/theme-next" \
+  -v "$PWD:/root/.halo2/themes/theme-halo-next" \
   halohub/halo:2.27.2
 ```
 
-首次启动完成 Halo 初始化后，在 Console 安装并启用 `theme-next`。修改 `theme.yaml`、`settings.yaml` 或 `annotation-setting.yaml` 后，需要重载主题。
+首次启动完成 Halo 初始化后，在 Console 安装并启用 `theme-halo-next`。修改 `theme.yaml`、`settings.yaml` 或 `annotation-setting.yaml` 后，需要重载主题。
 
 ### 5.4 开发检查
 

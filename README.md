@@ -56,7 +56,7 @@
 - Node.js 20+
 - pnpm `10.33.0`
 
-主题的 `metadata.name` 为 `theme-next`。安装目录或挂载目录必须使用 `theme-next`。
+主题的 `metadata.name` 为 `theme-halo-next`。安装目录或挂载目录必须使用 `theme-halo-next`。
 
 ## 安装主题包
 
@@ -68,7 +68,7 @@ pnpm build
 构建产物：
 
 ```text
-dist/theme-next-1.0.0-alpha.1.zip
+dist/theme-halo-next-1.0.0-alpha.1.zip
 ```
 
 在 Halo Console 的“主题”页面上传 ZIP，安装并启用。
@@ -83,7 +83,7 @@ docker run -d \
   -p 8090:8090 \
   -e SPRING_THYMELEAF_CACHE=false \
   -v "$HOME/.halo2-next-dev:/root/.halo2" \
-  -v "$PWD:/root/.halo2/themes/theme-next" \
+  -v "$PWD:/root/.halo2/themes/theme-halo-next" \
   halohub/halo:2.27.2
 ```
 

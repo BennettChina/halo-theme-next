@@ -1,7 +1,7 @@
 apiVersion: v1alpha1
 kind: Setting
 metadata:
-  name: theme-next-setting
+  name: theme-halo-next-setting
 spec:
   forms:
     # 基础设置-----------------------------------------------------------------------------------------
