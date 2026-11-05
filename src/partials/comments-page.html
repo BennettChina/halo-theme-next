@@ -1,0 +1,8 @@
+<div class="comments animated fadeIn" id="comments" th:if="${haloCommentEnabled}">
+  <h2 class="comments-title" th:text="#{site.comments}">Comments</h2>
+  <halo:comment
+    group="content.halo.run"
+    kind="SinglePage"
+    th:attr="name=${singlePage.metadata.name}"
+  />
+</div>

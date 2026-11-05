@@ -1,0 +1,31 @@
+<include
+  src="/partials/shell.html"
+  bodyClass="page posts-expand"
+  pageClass="page posts-expand"
+  sidebarClass="sidebar-overview-active"
+>
+  <template name="head">
+    <title th:text="|${error?.status ?: 500} - ${site.title}|">500</title>
+  </template>
+
+  <div class="post-block animated fadeIn">
+    <div class="post-content">
+      <header class="post-header animated fadeInDown">
+        <h1 class="post-title" th:text="${error?.status ?: 500}">500</h1>
+      </header>
+      <div
+        class="post-body animated fadeInDown"
+        th:with="message=#{site.serverError}"
+      >
+        <p th:text="${#strings.defaultString(error?.title, message)}"></p>
+        <p
+          th:if="${error?.detail != null and not #strings.isEmpty(error.detail)}"
+          th:text="${error.detail}"
+        ></p>
+        <p>
+          <a class="btn" th:href="@{/}" th:text="#{site.backHome}"></a>
+        </p>
+      </div>
+    </div>
+  </div>
+</include>

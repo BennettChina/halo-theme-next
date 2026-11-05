@@ -1,0 +1,26 @@
+<th:block th:fragment="items(menuItems, iconEnabled)">
+  <li
+    th:each="item : ${menuItems}"
+    class="menu-item animated fadeInDown"
+    th:classappend="${item.status.href == '/' ? ' menu-item-home' : ''}"
+  >
+    <a
+      th:href="@{${item.status.href}}"
+      th:target="${item.spec.target?.value}"
+      rel="section"
+    >
+      <i
+        th:if="${iconEnabled and not #strings.isEmpty(#annotations.getOrDefault(item, 'icon_class', ''))}"
+        th:class="${#annotations.getOrDefault(item, 'icon_class', '')} + ' fa-fw'"
+      ></i>
+      <span th:text="${item.status.displayName}"></span>
+    </a>
+    <th:block th:if="${item.children != null and not #lists.isEmpty(item.children)}">
+      <ul class="sub-menu menu">
+        <th:block
+          th:replace="~{modules/menu-tree :: items(menuItems=${item.children}, iconEnabled=${iconEnabled})}"
+        ></th:block>
+      </ul>
+    </th:block>
+  </li>
+</th:block>

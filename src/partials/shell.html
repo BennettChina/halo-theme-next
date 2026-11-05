@@ -1,0 +1,198 @@
+<!doctype html>
+<html
+  xmlns:th="https://www.thymeleaf.org"
+  th:lang="${#locale.toLanguageTag}"
+  th:fragment="html(head, content)"
+  th:with="scheme=${theme.config.basic.scheme ?: 'Pisces'}, sidePosition=${theme.config.sidebar.sidebar?.position ?: 'left'}"
+  th:classappend="${theme.config.basic.darkmode == 1 ? ' color-scheme-auto' : ' color-scheme-light'}"
+>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <th:block th:if="${theme.config.basic.darkmode == 1}">
+      <meta
+        name="theme-color"
+        th:content="${theme.config.other?.theme_color?.light ?: '#222'}"
+        media="(prefers-color-scheme: light)"
+      />
+      <meta
+        name="theme-color"
+        th:content="${theme.config.other?.theme_color?.dark ?: '#222'}"
+        media="(prefers-color-scheme: dark)"
+      />
+    </th:block>
+    <th:block th:unless="${theme.config.basic.darkmode == 1}">
+      <meta
+        name="theme-color"
+        th:content="${theme.config.other?.theme_color?.light ?: '#222'}"
+      />
+    </th:block>
+
+    <slot name="head">
+      <th:block th:if="${head != null}" th:replace="${head}"></th:block>
+      <title th:if="${head == null}" th:text="${site.title}">Site title</title>
+    </slot>
+    <include src="/partials/seo.html"></include>
+
+    <link
+      rel="stylesheet"
+      th:href="@{/assets/css/scheme/{scheme}/{scheme}_{position}.css?v={version}(scheme=${scheme},position=${sidePosition},version=${theme.spec.version})}"
+    />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA="
+      crossorigin="anonymous"
+    />
+    <link
+      th:if="${theme.config.other?.motion?.enabled != 0}"
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css"
+      integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE="
+      crossorigin="anonymous"
+    />
+
+    <script
+      class="next-config"
+      data-name="main"
+      type="application/json"
+      th:inline="javascript"
+    >
+      {
+        "hostname": /*[[${site.url}]]*/ "",
+        "root": "/",
+        "images": "/images",
+        "scheme": /*[[${scheme}]]*/ "Pisces",
+        "darkmode": /*[[${theme.config.basic.darkmode == 1}]]*/ false,
+        "version": /*[[${theme.spec.version}]]*/ "",
+        "exturl": false,
+        "sidebar": {
+          "position": /*[[${sidePosition}]]*/ "left",
+          "width_expanded": /*[[${theme.config.sidebar.sidebar?.width_expanded ?: 320}]]*/ 320,
+          "width_dual_column": /*[[${theme.config.sidebar.sidebar?.width_dual_column ?: '240'}]]*/ "240",
+          "display": /*[[${theme.config.sidebar.sidebar?.display ?: 'always'}]]*/ "always",
+          "padding": /*[[${theme.config.sidebar.sidebar?.padding ?: '18'}]]*/ "18",
+          "offset": /*[[${theme.config.sidebar.sidebar?.offset ?: '12'}]]*/ "12"
+        },
+        "hljswrap": true,
+        "codeblock": {
+          "copy_button": {
+            "enable": /*[[${theme.config.other?.codeblock?.copy_button?.enable == 1}]]*/ false,
+            "style": /*[[${theme.config.other?.codeblock?.copy_button?.style ?: 'default'}]]*/ "default"
+          },
+          "fold": {
+            "enable": /*[[${theme.config.other?.codeblock?.fold?.enable == 1}]]*/ false,
+            "height": /*[[${theme.config.other?.codeblock?.fold?.height ?: 500}]]*/ 500
+          },
+          "language": /*[[${theme.config.other?.codeblock?.language == 1}]]*/ false
+        },
+        "mediumzoom": false,
+        "imagezoom": /*[[${theme.config.other?.image_zoom?.enabled == 1}]]*/ false,
+        "lazyload": false,
+        "pangu": false,
+        "comments": {
+          "style": "tabs",
+          "active": null,
+          "storage": true,
+          "lazyload": false,
+          "nav": null
+        },
+        "stickytabs": false,
+        "motion": {
+          "enable": /*[[${theme.config.other?.motion?.enabled != 0}]]*/ true,
+          "async": false,
+          "transition": {
+            "menu_item": "fadeInDown",
+            "post_block": "fadeIn",
+            "post_header": "fadeInDown",
+            "post_body": "fadeInDown",
+            "coll_header": "fadeInLeft",
+            "sidebar": "fadeInUp"
+          }
+        },
+        "i18n": {
+          "placeholder": "Searching...",
+          "empty": "No results",
+          "zoomClose": /*[[${#messages.msg('site.close')}]]*/ "Close",
+          "hits_time": "${hits} results found in ${time} ms",
+          "hits": "${hits} results found"
+        }
+      }
+    </script>
+    <slot name="pageConfig">
+      <script
+        class="next-config"
+        data-name="page"
+        type="application/json"
+        th:inline="javascript"
+      >
+        {
+          "sidebar": "",
+          "isHome": false,
+          "isPost": false,
+          "lang": /*[[${#locale.toLanguageTag}]]*/ "en",
+          "comments": false,
+          "permalink": "",
+          "path": "",
+          "title": ""
+        }
+      </script>
+    </slot>
+    <script
+      th:src="@{/assets/js/config.js?v={version}(version=${theme.spec.version})}"
+    ></script>
+    <script type="module" src="/js/main.ts"></script>
+  </head>
+  <body
+    class="{{bodyClass}}"
+    th:classappend="${(theme.config.other?.motion?.enabled != 0 ? ' use-motion' : '') + (theme.config.sidebar.sidebar?.display == 'remove' ? ' sidebar-remove' : '') + (theme.config.sidebar.sidebar?.display == 'post' and _templateId != 'post' and _templateId != 'page' and _templateId != 'links' and _templateId != 'photos' and _templateId != 'photo' and _templateId != 'moments' and _templateId != 'moment' ? ' sidebar-hidden' : '') + ' scheme-' + scheme}"
+  >
+    <div class="headband"></div>
+    <main class="main">
+      <div class="column">
+        <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+          <include src="/partials/header.html"></include>
+        </header>
+        <include src="/partials/sidebar.html"></include>
+      </div>
+      <div class="main-inner {{pageClass}}">
+        <slot>
+          <th:block th:if="${content != null}" th:replace="${content}"></th:block>
+        </slot>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <include src="/partials/footer.html"></include>
+      </div>
+    </footer>
+
+    <div class="toggle sidebar-toggle" role="button" aria-label="Toggle sidebar">
+      <span class="toggle-line"></span>
+      <span class="toggle-line"></span>
+      <span class="toggle-line"></span>
+    </div>
+    <div class="sidebar-dimmer"></div>
+
+    <div
+      class="back-to-top back-to-top-fixed"
+      th:if="${theme.config.other?.back2top?.enable != 0 and theme.config.other?.back2top?.sidebar == 0}"
+      role="button"
+      th:attr="aria-label=${#messages.msg('site.backToTop')}"
+    >
+      <i class="fa fa-arrow-up fa-lg"></i>
+      <span th:if="${theme.config.other?.back2top?.scrollpercent != 0}">0%</span>
+    </div>
+
+    <div
+      class="reading-progress-bar"
+      th:if="${theme.config.other?.reading_progress?.enable == 1}"
+      th:classappend="${'reading-progress-' + (theme.config.other?.reading_progress?.start_at ?: 'left') + ' reading-progress-' + (theme.config.other?.reading_progress?.position ?: 'top')}"
+    ></div>
+
+    <include src="/partials/scripts.html"></include>
+    <halo:footer />
+  </body>
+</html>

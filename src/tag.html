@@ -1,13 +1,35 @@
-<include src="layout.html">
+<include
+  src="/partials/shell.html"
+  bodyClass="tag posts-collapse"
+  pageClass="tag posts-collapse"
+  sidebarClass="sidebar-overview-active"
+>
   <template name="head">
-    <title th:text="|${tag.spec.displayName} - ${site.title}|">Tag Archive</title>
+    <title th:text="|${tag.spec.displayName} - ${site.title}|">Tag</title>
   </template>
 
-  <h1 th:text="|Tag: ${tag.spec.displayName}|"></h1>
+  <div class="post-block animated fadeIn">
+    <div class="post-content">
+      <div class="collection-title">
+        <h1 class="collection-header animated fadeInLeft">
+          <span th:text="${tag.spec.displayName}"></span>
+          <small th:text="#{site.tag}">Tag</small>
+        </h1>
+      </div>
 
-  <ul class="post-list">
-    <include src="post-card.html"></include>
-  </ul>
+      <th:block th:each="post : ${posts.items}">
+        <include src="/partials/compact-post.html"></include>
+      </th:block>
 
-  <include src="pagination.html"></include>
+      <p
+        class="post-empty"
+        th:if="${#lists.isEmpty(posts.items)}"
+        th:text="#{site.empty}"
+      >
+        No posts yet.
+      </p>
+    </div>
+  </div>
+
+  <include src="/partials/pagination.html"></include>
 </include>

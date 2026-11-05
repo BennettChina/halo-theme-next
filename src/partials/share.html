@@ -1,0 +1,77 @@
+<th:block th:if="${theme.config.post?.share?.enabled == 1}">
+  <div class="post-share">
+    <button
+      type="button"
+      class="post-share-button"
+      th:attr="
+        data-title=${post.spec.title},
+        data-url=${post.status.permalink},
+        data-copied=${#messages.msg('site.shareCopied')},
+        data-failed=${#messages.msg('site.shareFailed')},
+        aria-label=${#messages.msg('site.share')}
+      "
+    >
+      <i class="fa fa-share-alt fa-fw"></i>
+      <span th:text="#{site.share}">Share</span>
+    </button>
+    <span class="post-share-status" role="status" aria-live="polite"></span>
+  </div>
+  <script>
+    (function () {
+      var button = document.querySelector('.post-share-button');
+      if (!button) return;
+      var container = button.closest('.post-share');
+      var status = container.querySelector('.post-share-status');
+      var timer;
+      var title = button.dataset.title || document.title;
+      var url = new URL(button.dataset.url || window.location.href, window.location.href).href;
+
+      function showStatus(message) {
+        window.clearTimeout(timer);
+        status.textContent = message;
+        timer = window.setTimeout(function () {
+          status.textContent = '';
+        }, 2500);
+      }
+
+      function copyLink() {
+        function done() {
+          showStatus(button.dataset.copied);
+        }
+
+        function failed() {
+          showStatus(button.dataset.failed);
+        }
+
+        if (navigator.clipboard && window.isSecureContext) {
+          navigator.clipboard.writeText(url).then(done, failed);
+          return;
+        }
+
+        var textarea = document.createElement('textarea');
+        textarea.value = url;
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+        document.body.appendChild(textarea);
+        textarea.select();
+        try {
+          document.execCommand('copy') ? done() : failed();
+        } catch (error) {
+          failed();
+        }
+        document.body.removeChild(textarea);
+      }
+
+      button.addEventListener('click', function () {
+        if (navigator.share) {
+          navigator.share({ title: title, url: url }).catch(function (error) {
+            if (error && error.name === 'AbortError') return;
+            copyLink();
+          });
+        } else {
+          copyLink();
+        }
+      });
+    })();
+  </script>
+</th:block>

@@ -1,0 +1,101 @@
+<div
+  class="post-meta"
+  th:if="${theme.config.post.post_meta?.enabled == 1}"
+  th:classappend="${#strings.toString(theme.config.post.post_meta?.item_text) == '0' ? ' post-meta-no-text' : ''}"
+  th:with="
+    createdEnabled=${theme.config.post.post_meta?.created_at == 1},
+    updatedEnabled=${theme.config.post.post_meta?.updated_at == 1},
+    anotherDay=${#strings.toString(theme.config.post.post_meta?.another_day) != '0'},
+    dateChanged=${post.spec.publishTime == null or post.status.lastModifyTime == null or #temporals.format(post.spec.publishTime, 'yyyy-MM-dd') != #temporals.format(post.status.lastModifyTime, 'yyyy-MM-dd')}
+  "
+>
+  <span
+    th:if="${createdEnabled and post.spec.publishTime != null}"
+    class="post-meta-item"
+  >
+    <span class="post-meta-item-icon">
+      <i class="far fa-calendar"></i>
+    </span>
+    <span class="post-meta-item-text" th:text="#{site.postedOn}">Posted on</span>
+    <time
+      itemprop="dateCreated datePublished"
+      th:datetime="${post.spec.publishTime}"
+      th:text="${#temporals.format(post.spec.publishTime, 'yyyy-MM-dd')}"
+    ></time>
+  </span>
+
+  <span
+    th:if="${updatedEnabled and post.status.lastModifyTime != null and (not anotherDay or not createdEnabled or dateChanged)}"
+    class="post-meta-item"
+  >
+    <span class="post-meta-item-icon">
+      <i class="far fa-calendar-check"></i>
+    </span>
+    <span class="post-meta-item-text" th:text="#{site.updatedOn}">Updated on</span>
+    <time
+      itemprop="dateModified"
+      th:datetime="${post.status.lastModifyTime}"
+      th:text="${#temporals.format(post.status.lastModifyTime, 'yyyy-MM-dd')}"
+    ></time>
+  </span>
+
+  <span
+    th:if="${theme.config.post.visitor?.enabled == 1}"
+    class="post-meta-item"
+    th:title="#{site.views}"
+  >
+    <span class="post-meta-item-icon">
+      <i class="far fa-eye"></i>
+    </span>
+    <span class="post-meta-item-text" th:text="#{site.views}">Views</span>
+    <span th:text="${post.stats?.visit ?: 0}">0</span>
+  </span>
+
+  <span
+    th:if="${theme.config.post.post_meta?.categories == 1 and post.categories != null and not #lists.isEmpty(post.categories)}"
+    class="post-meta-item"
+  >
+    <span class="post-meta-item-icon">
+      <i class="far fa-folder"></i>
+    </span>
+    <span class="post-meta-item-text" th:text="#{site.categories}">Categories</span>
+    <span
+      itemprop="about"
+      itemscope
+      itemtype="http://schema.org/Thing"
+      th:each="category : ${post.categories}"
+    >
+      <a
+        itemprop="url"
+        rel="index"
+        th:href="@{${category.status.permalink}}"
+      >
+        <span itemprop="name" th:text="${category.spec.displayName}"></span>
+      </a>
+    </span>
+  </span>
+
+  <span
+    class="post-meta-item post-reading-stats"
+    th:if="${_templateId == 'post' and theme.config.post.reading_stats?.enabled == 1 and (theme.config.post.reading_stats?.word_count != 0 or theme.config.post.reading_stats?.read_time != 0)}"
+    th:attr="
+      data-word-label=${#messages.msg('site.wordCount')},
+      data-time-label=${#messages.msg('site.readTime')},
+      data-wpm=${theme.config.post.reading_stats?.wpm ?: 300}
+    "
+  >
+    <span class="post-meta-item-icon">
+      <i class="far fa-clock"></i>
+    </span>
+    <span
+      class="post-reading-word-count"
+      th:if="${theme.config.post.reading_stats?.word_count != 0}"
+    ></span>
+    <span
+      class="post-reading-time"
+      th:if="${theme.config.post.reading_stats?.read_time != 0}"
+    ></span>
+  </span>
+
+  <span class="post-meta-break"></span>
+</div>

@@ -1,0 +1,245 @@
+<include
+  src="/partials/shell.html"
+  bodyClass="page posts-expand"
+  pageClass="page posts-expand"
+  sidebarClass="sidebar-overview-active"
+>
+  <template name="head">
+    <title th:text="|${linksTitle} - ${site.title}|">Links</title>
+  </template>
+
+  <section
+    class="post-block plugin-page animated fadeIn"
+    th:with="
+      applicationStatus=${param.applied != null and #arrays.length(param.applied) > 0 ? param.applied[0] : ''},
+      applicationField=${param.field != null and #arrays.length(param.field) > 0 ? param.field[0] : ''},
+      applicationValue=${param.value != null and #arrays.length(param.value) > 0 ? param.value[0] : ''}
+    "
+  >
+    <article class="post-content">
+      <header class="post-header animated fadeInDown">
+        <h1 class="post-title" th:text="${linksTitle}">Links</h1>
+      </header>
+
+      <div
+        class="plugin-notice"
+        th:if="${not #strings.isEmpty(applicationStatus)}"
+        th:attr="role=${applicationStatus == 'success' ? 'status' : 'alert'}"
+        aria-live="polite"
+      >
+        <p
+          th:if="${applicationStatus == 'success'}"
+          th:text="#{site.linkApplicationSuccess}"
+        >Application submitted.</p>
+        <p
+          th:if="${applicationStatus == 'error' or applicationStatus == 'disabled'}"
+          th:text="${param.message != null and #arrays.length(param.message) > 0 ? param.message[0] : #messages.msg('site.linkApplicationError')}"
+        ></p>
+      </div>
+
+      <nav class="module-tabs" th:attr="aria-label=#{site.links}">
+        <a
+          th:href="@{/links}"
+          th:classappend="${group == null} ? 'is-active'"
+          th:text="#{site.all}"
+        ></a>
+        <a
+          th:each="item : ${simpleGroups}"
+          th:href="@{/links(group=${item.metadata.name})}"
+          th:classappend="${group == item.metadata.name} ? 'is-active'"
+          th:text="${item.spec.displayName}"
+        ></a>
+      </nav>
+
+      <div th:if="${group == null and not #lists.isEmpty(groups)}">
+        <section
+          class="link-group"
+          th:each="linkGroup : ${groups}"
+          th:with="groupName=${linkGroup.spec.displayName ?: #messages.msg('site.ungrouped')}"
+        >
+          <h2 class="link-group__title" th:text="${groupName}">Group</h2>
+          <div class="links-grid" th:if="${not #lists.isEmpty(linkGroup.links)}">
+            <th:block th:each="link : ${linkGroup.links}">
+              <include src="/partials/link-card.html"></include>
+            </th:block>
+          </div>
+        </section>
+      </div>
+
+      <div class="links-grid" th:if="${group != null and not #lists.isEmpty(links)}">
+        <th:block th:each="link : ${links}">
+          <include src="/partials/link-card.html"></include>
+        </th:block>
+      </div>
+
+      <p
+        class="post-empty"
+        th:if="${(group == null and #lists.isEmpty(groups)) or (group != null and #lists.isEmpty(links))}"
+        th:text="#{site.noLinks}"
+      >No links yet.</p>
+
+      <details
+        class="link-application"
+        th:if="${linkApplicationEnabled}"
+        th:open="${applicationStatus == 'error' or applicationStatus == 'disabled'}"
+      >
+        <summary th:text="#{site.applyLink}">Apply for a link</summary>
+        <p class="link-application__intro" th:text="#{site.linkApplicationIntro}">
+          Fill in your site information. Your application will be reviewed by an administrator.
+        </p>
+        <form
+          id="link-application-form"
+          method="post"
+          th:action="@{/links/apply/submit}"
+          class="link-application__form"
+          th:attr="data-error-field=${applicationStatus == 'error' ? applicationField : ''}"
+        >
+          <label>
+            <span th:text="#{site.linkUrl}">URL</span>
+            <input
+              name="url"
+              type="url"
+              required
+              autocomplete="url"
+              placeholder="https://example.com"
+              th:value="${applicationField == 'url' ? applicationValue : ''}"
+            />
+          </label>
+          <label>
+            <span th:text="#{site.linkName}">Name</span>
+            <input
+              name="displayName"
+              required
+              autocomplete="organization"
+              th:value="${applicationField == 'displayName' ? applicationValue : ''}"
+            />
+          </label>
+          <label>
+            <span th:text="#{site.linkLogo}">Logo</span>
+            <input
+              name="logo"
+              type="url"
+              placeholder="https://example.com/logo.png"
+              th:value="${applicationField == 'logo' ? applicationValue : ''}"
+            />
+          </label>
+          <label>
+            <span th:text="#{site.linkDescription}">Description</span>
+            <textarea
+              name="description"
+              th:text="${applicationField == 'description' ? applicationValue : ''}"
+            ></textarea>
+          </label>
+          <label>
+            <span th:text="#{site.linkEmail}">Email</span>
+            <input
+              name="email"
+              type="email"
+              autocomplete="email"
+              th:value="${applicationField == 'email' ? applicationValue : ''}"
+            />
+          </label>
+          <label>
+            <span th:text="#{site.linkBacklink}">Backlink</span>
+            <input
+              name="backlink"
+              type="url"
+              placeholder="https://example.com/links"
+              th:value="${applicationField == 'backlink' ? applicationValue : ''}"
+            />
+          </label>
+          <label class="link-application__wide">
+            <span th:text="#{site.linkFeeds}">Feed URLs</span>
+            <textarea
+              name="feedUrls"
+              placeholder="https://example.com/feed.xml"
+              th:text="${applicationField == 'feedUrls' ? applicationValue : ''}"
+            ></textarea>
+            <small class="link-application__help" th:text="#{site.linkFeedsHelp}">
+              One RSS or Atom URL per line.
+            </small>
+          </label>
+          <div class="link-application__captcha">
+            <img
+              id="link-application-captcha"
+              th:src="@{/links/apply/captcha}"
+              th:attr="data-refresh-url=@{/links/apply/captcha}"
+              th:alt="#{site.captcha}"
+              width="160"
+              height="48"
+            />
+            <button
+              type="button"
+              class="btn"
+              id="link-captcha-refresh"
+              th:text="#{site.refreshCaptcha}"
+            >
+              Refresh
+            </button>
+          </div>
+          <label>
+            <span th:text="#{site.captcha}">Captcha</span>
+            <input
+              name="captchaCode"
+              required
+              minlength="5"
+              maxlength="5"
+              autocomplete="off"
+            />
+            <small class="link-application__help" th:text="#{site.linkCaptchaHelp}">
+              Enter the five-character code shown above. It is not case-sensitive.
+            </small>
+          </label>
+          <div class="link-application__actions">
+            <button
+              type="submit"
+              class="btn"
+              th:text="#{site.submitLink}"
+              th:attr="data-pending-text=#{site.linkSubmitting}"
+            >
+              Submit
+            </button>
+          </div>
+        </form>
+      </details>
+
+      <div class="comments" th:if="${haloCommentEnabled}">
+        <h2 class="comments-title" th:text="#{site.comments}">Comments</h2>
+        <halo:comment group="plugin.halo.run" kind="Plugin" th:attr="name=${pluginName}" />
+      </div>
+    </article>
+  </section>
+
+  <script th:if="${linkApplicationEnabled}">
+    (function () {
+      var image = document.getElementById('link-application-captcha');
+      var button = document.getElementById('link-captcha-refresh');
+      var form = document.getElementById('link-application-form');
+      if (!image || !button || !form) return;
+
+      var captchaInput = form.querySelector('[name="captchaCode"]');
+      button.addEventListener('click', function () {
+        image.src = (image.getAttribute('data-refresh-url') || '/links/apply/captcha') + '?t=' + Date.now();
+        if (captchaInput) {
+          captchaInput.value = '';
+          captchaInput.focus();
+        }
+      });
+
+      form.addEventListener('submit', function () {
+        var submit = form.querySelector('[type="submit"]');
+        if (!submit) return;
+        submit.disabled = true;
+        submit.textContent = submit.getAttribute('data-pending-text') || submit.textContent;
+      });
+
+      var errorField = form.getAttribute('data-error-field');
+      if (errorField) {
+        var field = form.elements[errorField];
+        if (field && typeof field.focus === 'function') {
+          field.focus();
+        }
+      }
+    })();
+  </script>
+</include>

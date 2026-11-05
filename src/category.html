@@ -1,14 +1,40 @@
-<include src="layout.html">
+<include
+  src="/partials/shell.html"
+  bodyClass="category posts-collapse"
+  pageClass="category posts-collapse"
+  sidebarClass="sidebar-overview-active"
+>
   <template name="head">
-    <title th:text="|${category.spec.displayName} - ${site.title}|">Category Archive</title>
+    <title th:text="|${category.spec.displayName} - ${site.title}|">Category</title>
   </template>
 
-  <h1 th:text="|Category: ${category.spec.displayName}|"></h1>
-  <p th:if="${category.spec.description}" th:text="${category.spec.description}"></p>
+  <div class="post-block animated fadeIn">
+    <div class="post-content">
+      <div class="collection-title">
+        <h1 class="collection-header animated fadeInLeft">
+          <span th:text="${category.spec.displayName}"></span>
+          <small th:text="#{site.category}">Category</small>
+        </h1>
+        <p
+          class="collection-description"
+          th:if="${not #strings.isEmpty(category.spec.description)}"
+          th:text="${category.spec.description}"
+        ></p>
+      </div>
 
-  <ul class="post-list">
-    <include src="post-card.html"></include>
-  </ul>
+      <th:block th:each="post : ${posts.items}">
+        <include src="/partials/compact-post.html"></include>
+      </th:block>
 
-  <include src="pagination.html"></include>
+      <p
+        class="post-empty"
+        th:if="${#lists.isEmpty(posts.items)}"
+        th:text="#{site.empty}"
+      >
+        No posts yet.
+      </p>
+    </div>
+  </div>
+
+  <include src="/partials/pagination.html"></include>
 </include>

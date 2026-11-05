@@ -1,12 +1,50 @@
-<include src="layout.html">
+<include
+  src="/partials/shell.html"
+  bodyClass="index posts-expand"
+  pageClass="index posts-expand"
+  sidebarClass="sidebar-overview-active"
+>
   <template name="head">
-    <title th:text="${site.title}">Home</title>
-    <script type="module" src="./js/index.ts"></script>
+    <title
+      th:with="
+        siteTitle=${theme.config.basic.site?.type == 1 ? site.title : (theme.config.basic.site?.title ?: site.title)},
+        siteSubtitle=${theme.config.basic.site?.type == 1 ? (site.subtitle ?: '') : (theme.config.basic.site?.subtitle ?: '')}
+      "
+      th:text="${theme.config.basic.index_with_subtitle == 1 and not #strings.isEmpty(siteSubtitle) ? siteTitle + ' - ' + siteSubtitle : siteTitle}"
+    >Home</title>
   </template>
 
-  <ul class="post-list">
-    <include src="post-card.html"></include>
-  </ul>
+  <template name="pageConfig">
+    <script
+      class="next-config"
+      data-name="page"
+      type="application/json"
+      th:inline="javascript"
+    >
+      {
+        "sidebar": "",
+        "isHome": true,
+        "isPost": false,
+        "lang": /*[[${#locale.toLanguageTag}]]*/ "en",
+        "comments": false,
+        "permalink": "/",
+        "path": "/",
+        "title": /*[[${site.title}]]*/ ""
+      }
+    </script>
+  </template>
 
-  <include src="pagination.html"></include>
+  <th:block th:each="post : ${posts.items}">
+    <include src="/partials/post-card.html"></include>
+  </th:block>
+
+  <p
+    class="post-empty"
+    th:if="${#lists.isEmpty(posts.items)}"
+    th:text="#{site.empty}"
+  >
+    No posts yet.
+  </p>
+
+  <include src="/partials/pagination.html"></include>
 </include>

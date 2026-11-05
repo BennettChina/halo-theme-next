@@ -1,0 +1,36 @@
+<th:block
+  th:if="${theme.config.post.reward?.enabled == 1 and post != null}"
+  th:with="
+    rewardComment=${theme.config.post.reward?.comment ?: ''},
+    wechatpay=${theme.config.post.reward?.wechatpay ?: ''},
+    alipay=${theme.config.post.reward?.alipay ?: ''},
+    paypal=${theme.config.post.reward?.paypal ?: ''},
+    bitcoin=${theme.config.post.reward?.bitcoin ?: ''}
+  "
+>
+  <div
+    class="reward-container"
+    th:if="${not #strings.isEmpty(wechatpay) or not #strings.isEmpty(alipay) or not #strings.isEmpty(paypal) or not #strings.isEmpty(bitcoin)}"
+  >
+    <div th:if="${not #strings.isEmpty(rewardComment)}" th:text="${rewardComment}"></div>
+    <button type="button" th:text="#{site.rewardDonate}">Donate</button>
+    <div class="post-reward">
+      <div th:if="${not #strings.isEmpty(wechatpay)}">
+        <img th:src="${wechatpay}" th:alt="#{site.rewardWechatpay}" />
+        <span th:text="#{site.rewardWechatpay}">WeChat Pay</span>
+      </div>
+      <div th:if="${not #strings.isEmpty(alipay)}">
+        <img th:src="${alipay}" th:alt="#{site.rewardAlipay}" />
+        <span th:text="#{site.rewardAlipay}">Alipay</span>
+      </div>
+      <div th:if="${not #strings.isEmpty(paypal)}">
+        <img th:src="${paypal}" th:alt="#{site.rewardPaypal}" />
+        <span th:text="#{site.rewardPaypal}">PayPal</span>
+      </div>
+      <div th:if="${not #strings.isEmpty(bitcoin)}">
+        <img th:src="${bitcoin}" th:alt="#{site.rewardBitcoin}" />
+        <span th:text="#{site.rewardBitcoin}">Bitcoin</span>
+      </div>
+    </div>
+  </div>
+</th:block>

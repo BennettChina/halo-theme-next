@@ -1,5 +1,27 @@
-<nav class="pagination" th:if="${posts.hasPrevious() || posts.hasNext()}">
-  <a th:if="${posts.hasPrevious()}" th:href="@{${posts.prevUrl}}">Previous</a>
-  <span th:text="|${posts.page} / ${posts.totalPages}|"></span>
-  <a th:if="${posts.hasNext()}" th:href="@{${posts.nextUrl}}">Next</a>
+<nav
+  class="pagination animated fadeIn"
+  th:if="${posts.hasPrevious() or posts.hasNext()}"
+>
+  <a
+    class="extend prev"
+    rel="prev"
+    th:if="${posts.hasPrevious()}"
+    th:href="@{${posts.prevUrl}}"
+    th:title="#{site.previousPage}"
+    th:attr="aria-label=${#messages.msg('site.previousPage')}"
+  >
+    <i class="fa fa-angle-left"></i>
+  </a>
+  <span class="page-number current" th:text="${posts.page}">1</span>
+  <span class="page-number" th:text="|/ ${posts.totalPages}|">/ 1</span>
+  <a
+    class="extend next"
+    rel="next"
+    th:if="${posts.hasNext()}"
+    th:href="@{${posts.nextUrl}}"
+    th:title="#{site.nextPage}"
+    th:attr="aria-label=${#messages.msg('site.nextPage')}"
+  >
+    <i class="fa fa-angle-right"></i>
+  </a>
 </nav>

@@ -1,0 +1,36 @@
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"
+  integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY="
+  crossorigin="anonymous"
+></script>
+<script th:src="@{/assets/js/utils.js?v={version}(version=${theme.spec.version})}"></script>
+<script th:src="@{/assets/js/motion.js?v={version}(version=${theme.spec.version})}"></script>
+<script th:src="@{/assets/js/sidebar.js?v={version}(version=${theme.spec.version})}"></script>
+<script th:src="@{/assets/js/next-boot.js?v={version}(version=${theme.spec.version})}"></script>
+<th:block th:if="${theme.config.sidebar.toc?.enabled == 1 and (_templateId == 'post' or _templateId == 'page')}">
+  <script th:src="@{/assets/js/tocbot.js?v={version}(version=${theme.spec.version})}"></script>
+  <script th:inline="javascript">
+    (function () {
+      var content = document.querySelector('.post-body');
+      var toc = document.querySelector('.post-toc');
+      if (!content || !toc || typeof tocbot === 'undefined') return;
+      var maxDepth = /*[[${theme.config.sidebar.toc?.max_depth ?: 6}]]*/ 6;
+      var expandAll = /*[[${theme.config.sidebar.toc?.expand_all == 1}]]*/ false;
+      var level = Math.max(1, Math.min(6, Number(maxDepth) || 6));
+      var headings = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].slice(0, level).join(', ');
+      tocbot.init({
+        tocSelector: '.post-toc',
+        contentSelector: '.post-body',
+        headingSelector: headings,
+        hasInnerContainers: true,
+        orderedList: true,
+        collapseDepth: expandAll ? level + 1 : 0,
+        scrollSmooth: false,
+        listClass: 'nav',
+        listItemClass: 'nav-item',
+        linkClass: 'nav-link',
+        extraListClasses: 'nav-child'
+      });
+    })();
+  </script>
+</th:block>

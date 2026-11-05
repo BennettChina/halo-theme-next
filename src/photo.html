@@ -1,0 +1,118 @@
+<include
+  src="/partials/shell.html"
+  bodyClass="page posts-expand"
+  pageClass="page posts-expand"
+  sidebarClass="sidebar-overview-active"
+>
+  <template name="head">
+    <title th:text="|${title} - ${site.title}|">Photo</title>
+  </template>
+
+  <section class="post-block plugin-page photo-detail animated fadeIn">
+    <article class="post-content">
+      <a class="photo-back" th:href="${backUrl}">
+        <i class="fa fa-angle-left"></i>
+        <span th:text="#{site.backToGallery}">Back to gallery</span>
+      </a>
+
+      <figure class="photo-figure">
+        <img
+          class="photo-detail__image"
+          th:src="${photo.spec.url}"
+          th:alt="${photo.spec.displayName}"
+        />
+        <figcaption class="photo-caption">
+          <h1 class="post-title" th:text="${title}">Photo</h1>
+          <p
+            class="photo-description"
+            th:if="${not #strings.isEmpty(photo.spec.description)}"
+            th:text="${photo.spec.description}"
+          ></p>
+          <p class="photo-position">
+            <span th:text="${#messages.msg('site.photoPosition', position, total)}">1 / 1</span>
+          </p>
+          <ul class="tag-list" th:if="${not #lists.isEmpty(photo.spec.tags)}">
+            <li th:each="tag : ${photo.spec.tags}" th:text="${tag}"></li>
+          </ul>
+        </figcaption>
+      </figure>
+
+      <dl class="photo-meta" th:if="${photo.exif != null or photo.metadata.creationTimestamp != null}">
+        <th:block th:if="${photo.metadata.creationTimestamp != null}">
+          <dt th:text="#{site.photoAddedAt}">Added</dt>
+          <dd>
+            <time
+              th:datetime="${photo.metadata.creationTimestamp}"
+              th:text="${#temporals.format(photo.metadata.creationTimestamp, 'yyyy-MM-dd HH:mm')}"
+            ></time>
+          </dd>
+        </th:block>
+        <th:block th:if="${photo.exif != null}">
+          <th:block th:if="${not #strings.isEmpty(photo.exif.make)}">
+            <dt th:text="#{site.photoCameraMake}">Camera</dt>
+            <dd th:text="${photo.exif.make}"></dd>
+          </th:block>
+          <th:block th:if="${not #strings.isEmpty(photo.exif.model)}">
+            <dt th:text="#{site.photoCameraModel}">Model</dt>
+            <dd th:text="${photo.exif.model}"></dd>
+          </th:block>
+          <th:block th:if="${not #strings.isEmpty(photo.exif.lensModel)}">
+            <dt th:text="#{site.photoLens}">Lens</dt>
+            <dd th:text="${photo.exif.lensModel}"></dd>
+          </th:block>
+          <th:block th:if="${photo.exif.fNumber != null}">
+            <dt th:text="#{site.photoAperture}">Aperture</dt>
+            <dd th:text="|f/${photo.exif.fNumber}|"></dd>
+          </th:block>
+          <th:block th:if="${not #strings.isEmpty(photo.exif.exposureTime)}">
+            <dt th:text="#{site.photoExposure}">Exposure</dt>
+            <dd th:text="${photo.exif.exposureTime}"></dd>
+          </th:block>
+          <th:block th:if="${photo.exif.iso != null}">
+            <dt th:text="#{site.photoIso}">ISO</dt>
+            <dd th:text="${photo.exif.iso}"></dd>
+          </th:block>
+          <th:block th:if="${photo.exif.focalLength != null}">
+            <dt th:text="#{site.photoFocalLength}">Focal length</dt>
+            <dd th:text="|${photo.exif.focalLength} mm|"></dd>
+          </th:block>
+        </th:block>
+      </dl>
+
+      <nav class="photo-nav" th:if="${prev != null or next != null}">
+        <a class="photo-nav__item" th:if="${prev != null}" th:href="${photoUrl.detail(prev)}">
+          <small th:text="#{site.previousPhoto}">Previous photo</small>
+          <strong th:text="${prev.spec.displayName}">Previous</strong>
+        </a>
+        <a
+          class="photo-nav__item photo-nav__item--next"
+          th:if="${next != null}"
+          th:href="${photoUrl.detail(next)}"
+        >
+          <small th:text="#{site.nextPhoto}">Next photo</small>
+          <strong th:text="${next.spec.displayName}">Next</strong>
+        </a>
+      </nav>
+
+      <div class="photo-neighbors" th:if="${not #lists.isEmpty(neighbors)}">
+        <a
+          th:each="neighbor : ${neighbors}"
+          class="photo-neighbor"
+          th:classappend="${neighbor.metadata.name == photo.metadata.name} ? 'is-active'"
+          th:href="${photoUrl.detail(neighbor)}"
+        >
+          <img
+            th:src="${#strings.isEmpty(neighbor.spec.cover) ? neighbor.spec.url : neighbor.spec.cover}"
+            th:alt="${neighbor.spec.displayName}"
+            loading="lazy"
+          />
+        </a>
+      </div>
+
+      <div class="comments" th:if="${haloCommentEnabled}">
+        <h2 class="comments-title" th:text="#{site.comments}">Comments</h2>
+        <halo:comment group="core.halo.run" kind="Photo" th:attr="name=${photo.metadata.name}" />
+      </div>
+    </article>
+  </section>
+</include>

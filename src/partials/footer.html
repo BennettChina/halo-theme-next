@@ -1,0 +1,62 @@
+<div
+  class="beian"
+  th:if="${theme.config.footer.beian?.enabled == 1 and (not #strings.isEmpty(theme.config.footer.beian?.icp) or not #strings.isEmpty(theme.config.footer.beian?.gongan_num))}"
+>
+  <a
+    th:if="${not #strings.isEmpty(theme.config.footer.beian?.icp)}"
+    href="https://beian.miit.gov.cn/"
+    rel="noopener"
+    target="_blank"
+    th:text="${theme.config.footer.beian?.icp}"
+  ></a>
+  <img
+    class="beian-icon"
+    th:if="${not #strings.isEmpty(theme.config.footer.beian?.gongan_icon_url)}"
+    th:src="@{${theme.config.footer.beian?.gongan_icon_url}}"
+    alt=""
+  />
+  <a
+    th:if="${not #strings.isEmpty(theme.config.footer.beian?.gongan_num)}"
+    th:href="|https://beian.mps.gov.cn/#/query/webSearch?code=${theme.config.footer.beian?.gongan_id}|"
+    rel="noopener"
+    target="_blank"
+    th:text="${theme.config.footer.beian?.gongan_num}"
+  ></a>
+</div>
+
+<div
+  class="copyright"
+  th:if="${theme.config.footer.copyright?.enabled == 1}"
+  th:with="
+    currentYear=${#temporals.format(#temporals.createNow(), 'yyyy')},
+    since=${theme.config.footer.copyright?.since},
+    copyright=${theme.config.footer.copyright?.copyright}
+  "
+>
+  © <span th:text="${#strings.isEmpty(since) ? currentYear : since}"></span>
+  <span th:if="${not #strings.isEmpty(since) and since != currentYear}">
+    – <span th:text="${currentYear}"></span>
+  </span>
+  <span
+    class="with-love"
+    th:if="${theme.config.footer.copyright?.icon?.enabled == 1}"
+  >
+    <i
+      th:class="${(theme.config.footer.copyright?.icon?.name ?: 'fa fa-heart') + (theme.config.footer.copyright?.icon?.animated == 1 ? ' animated heartBeat' : '')}"
+      th:style="|color: ${theme.config.footer.copyright?.icon?.color ?: '#ff0000'}|"
+    ></i>
+  </span>
+  <span
+    class="author"
+    itemprop="copyrightHolder"
+    th:text="${#strings.isEmpty(copyright) ? site.title : copyright}"
+  ></span>
+</div>
+
+<div class="powered-by">
+  Powered by
+  <a href="https://www.halo.run/" rel="noopener" target="_blank">Halo</a>
+  · Theme
+  <a href="https://theme-next.js.org" rel="noopener" target="_blank">NexT</a>
+  <span th:text="|v${theme.spec.version}|"></span>
+</div>

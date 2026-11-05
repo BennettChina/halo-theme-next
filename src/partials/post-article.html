@@ -1,0 +1,56 @@
+<div class="post-block animated fadeIn">
+  <article
+    class="post-content"
+    itemscope
+    itemtype="http://schema.org/Article"
+  >
+    <header class="post-header animated fadeInDown">
+      <h1 class="post-title" itemprop="name headline">
+        <span th:if="${post.spec.pinned}" class="post-sticky-flag" title="Sticky">
+          <i class="fa fa-thumbtack"></i>
+        </span>
+        <a
+          class="post-title-link"
+          itemprop="url"
+          th:href="@{${post.status.permalink}}"
+          th:text="${post.spec.title}"
+        ></a>
+      </h1>
+      <div class="post-meta-container">
+        <include src="/partials/post-meta.html"></include>
+      </div>
+    </header>
+
+    <div
+      class="post-body animated fadeInDown"
+      itemprop="articleBody"
+      th:dir="${#annotations.get(post, 'direction')}"
+      th:utext="${post.content.content}"
+    ></div>
+
+    <footer class="post-footer">
+      <include src="/partials/reward.html"></include>
+      <include src="/partials/copyright.html"></include>
+      <include src="/partials/followme.html"></include>
+      <div
+        class="post-tags"
+        th:if="${post.tags != null and not #lists.isEmpty(post.tags)}"
+      >
+        <a
+          th:each="tag : ${post.tags}"
+          rel="tag"
+          th:href="@{${tag.status.permalink}}"
+        >
+          <i
+            th:if="${theme.config.post.tag_icon == 1}"
+            class="fa fa-tag fa-fw"
+          ></i>
+          <span th:text="${tag.spec.displayName}">Tag</span>
+        </a>
+      </div>
+      <include src="/partials/share.html"></include>
+      <include src="/partials/related-posts.html"></include>
+      <include src="/partials/post-nav.html"></include>
+    </footer>
+  </article>
+</div>

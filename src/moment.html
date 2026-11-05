@@ -1,0 +1,78 @@
+<include
+  src="/partials/shell.html"
+  bodyClass="page posts-expand"
+  pageClass="page posts-expand"
+  sidebarClass="sidebar-overview-active"
+>
+  <template name="head">
+    <title th:text="|${title ?: #messages.msg('site.moments')} - ${site.title}|">Moment</title>
+  </template>
+
+  <section class="post-block plugin-page moments-page animated fadeIn">
+    <article class="post-content">
+      <a class="photo-back" th:href="@{/moments}">
+        <i class="fa fa-angle-left"></i>
+        <span th:text="#{site.backToMoments}">Back to moments</span>
+      </a>
+
+      <article
+        class="moment-card moment-card--detail"
+        th:with="
+          content=${moment.spec.content},
+          releaseTime=${moment.spec.releaseTime ?: moment.metadata.creationTimestamp},
+          contentHtml=${content?.html ?: ''}
+        "
+      >
+        <header class="moment-card__header">
+          <span class="moment-card__owner" th:if="${moment.owner != null}">
+            <img
+              th:if="${not #strings.isEmpty(moment.owner.avatar)}"
+              th:src="${moment.owner.avatar}"
+              th:alt="${moment.owner.displayName}"
+            />
+            <strong th:text="${moment.owner.displayName}">Owner</strong>
+          </span>
+          <time
+            class="moment-card__time"
+            th:if="${releaseTime != null}"
+            th:datetime="${releaseTime}"
+            th:text="${#temporals.format(releaseTime, 'yyyy-MM-dd HH:mm')}"
+          ></time>
+        </header>
+
+        <div
+          class="moment-card__content"
+          th:if="${not #strings.isEmpty(contentHtml)}"
+          th:utext="${contentHtml}"
+        ></div>
+
+        <div class="moment-card__media" th:if="${not #lists.isEmpty(content.medium)}">
+          <th:block th:each="medium : ${content.medium}">
+            <img th:if="${medium.type.name == 'PHOTO'}" th:src="${medium.url}" th:alt="#{site.momentImage}" />
+            <video th:if="${medium.type.name == 'VIDEO'}" th:src="${medium.url}" controls></video>
+            <audio th:if="${medium.type.name == 'AUDIO'}" th:src="${medium.url}" controls></audio>
+            <a
+              th:if="${medium.type.name == 'POST'}"
+              th:href="${medium.url}"
+              class="moment-card__link"
+              th:text="#{site.readPost}"
+            ></a>
+          </th:block>
+        </div>
+
+        <footer class="moment-card__footer" th:if="${not #lists.isEmpty(moment.spec.tags)}">
+          <a
+            th:each="momentTag : ${moment.spec.tags}"
+            th:href="@{/moments(tag=${momentTag})}"
+            th:text="|#${momentTag}|"
+          ></a>
+        </footer>
+      </article>
+
+      <div class="comments" th:if="${haloCommentEnabled}">
+        <h2 class="comments-title" th:text="#{site.comments}">Comments</h2>
+        <halo:comment group="moment.halo.run" kind="Moment" th:attr="name=${moment.metadata.name}" />
+      </div>
+    </article>
+  </section>
+</include>

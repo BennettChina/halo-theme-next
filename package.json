@@ -1,20 +1,28 @@
 {
+  "name": "halo-theme-next",
+  "version": "1.0.0-alpha.1",
+  "private": true,
+  "description": "NexT theme for Halo 2, rebuilt with Vite and Thymeleaf.",
   "type": "module",
   "scripts": {
     "build": "tsc && vp build && theme-package",
     "build-only": "tsc && vp build",
+    "package": "theme-package",
     "dev": "vp build --watch",
     "check": "vp check --fix",
+    "check:config": "node scripts/check-config.mjs",
+    "smoke": "node scripts/smoke.mjs",
     "prepare": "vp config",
     "skills:update": "npx skills update"
   },
   "devDependencies": {
-    "@halo-dev/theme-package-cli": "^1.0.1",
+    "@halo-dev/theme-package-cli": "^1.1.1",
     "@halo-dev/vite-plugin-halo-theme": "^1.0.3",
     "@types/node": "18.11.9",
     "typescript": "^5.9.3",
     "vite": "npm:@voidzero-dev/vite-plus-core@latest",
-    "vite-plus": "latest"
+    "vite-plus": "latest",
+    "yaml": "^2.8.3"
   },
   "packageManager": "pnpm@10.33.0",
   "pnpm": {

@@ -1,0 +1,41 @@
+<div class="post-block animated fadeIn">
+  <article
+    class="post-content"
+    itemscope
+    itemtype="http://schema.org/Article"
+  >
+    <header class="post-header animated fadeInDown">
+      <h1 class="post-title" itemprop="name headline">
+        <a
+          class="post-title-link"
+          itemprop="url"
+          th:href="@{${singlePage.status.permalink}}"
+          th:text="${singlePage.spec.title}"
+        ></a>
+      </h1>
+      <div class="post-meta-container">
+        <div class="post-meta">
+          <span
+            th:if="${singlePage.status.lastModifyTime != null}"
+            class="post-meta-item"
+          >
+            <span class="post-meta-item-icon">
+              <i class="far fa-calendar-check"></i>
+            </span>
+            <span class="post-meta-item-text" th:text="#{site.updatedOn}">Updated on</span>
+            <time
+              th:datetime="${singlePage.status.lastModifyTime}"
+              th:text="${#temporals.format(singlePage.status.lastModifyTime, 'yyyy-MM-dd')}"
+            ></time>
+          </span>
+        </div>
+      </div>
+    </header>
+
+    <div
+      class="post-body animated fadeInDown"
+      itemprop="articleBody"
+      th:utext="${singlePage.content.content}"
+    ></div>
+  </article>
+</div>

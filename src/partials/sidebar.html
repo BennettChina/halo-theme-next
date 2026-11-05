@@ -1,0 +1,146 @@
+<aside class="sidebar">
+  <div
+    class="sidebar-inner animated fadeInUp"
+    th:classappend="${theme.config.sidebar.toc?.enabled == 1 and (_templateId == 'post' or _templateId == 'page') ? ' sidebar-nav-active sidebar-toc-active' : ' sidebar-overview-active'}"
+  >
+    <ul class="sidebar-nav">
+      <li class="sidebar-nav-toc" th:text="#{site.toc}">Contents</li>
+      <li class="sidebar-nav-overview" th:text="#{site.overview}">Overview</li>
+    </ul>
+
+    <div class="sidebar-panel-container">
+      <div class="post-toc-wrap sidebar-panel">
+        <div
+          class="post-toc animated"
+          th:classappend="${#strings.toString(theme.config.sidebar.toc?.number) != '0' ? ' toc-numbered' : ''}"
+        ></div>
+      </div>
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div
+          class="site-author animated"
+          itemprop="author"
+          itemscope
+          itemtype="http://schema.org/Person"
+        >
+          <th:block th:with="avatar=${theme.config.sidebar.avatar?.url ?: site.logo}">
+            <img
+              th:if="${not #strings.isEmpty(avatar)}"
+              class="site-author-image"
+              th:classappend="${(theme.config.sidebar.avatar?.rounded == 1 ? ' site-author-image-rounded' : ' site-author-image-square') + (theme.config.sidebar.avatar?.rotated == 1 ? ' site-author-image-rotated' : ' site-author-image-static')}"
+              itemprop="image"
+              th:src="${avatar}"
+              th:alt="${site.title}"
+            />
+          </th:block>
+          <p
+            class="site-author-name"
+            itemprop="name"
+            th:text="${theme.config.sidebar.author?.name ?: site.title}"
+          >
+            Author
+          </p>
+          <div
+            class="site-description"
+            itemprop="description"
+            th:text="${theme.config.sidebar.author?.desc ?: (site.subtitle ?: '')}"
+          ></div>
+        </div>
+
+        <div
+          class="site-state-wrap animated"
+          th:if="${theme.config.sidebar.site_state == 1}"
+          th:with="stats=${siteStatsFinder.getStats()}, tagCount=${tagFinder.list(1, 1).total}"
+        >
+          <nav class="site-state" th:if="${stats.post > 0 or stats.category > 0 or tagCount > 0}">
+            <div class="site-state-item site-state-posts" th:if="${stats.post > 0}">
+              <a th:href="@{${site.routes?.archivesUri ?: '/archives'}}">
+                <span class="site-state-item-count" th:text="${stats.post}">0</span>
+                <span class="site-state-item-name" th:text="#{site.posts}">Posts</span>
+              </a>
+            </div>
+            <div class="site-state-item site-state-categories" th:if="${stats.category > 0}">
+              <a th:href="@{${site.routes?.categoriesUri ?: '/categories'}}">
+                <span class="site-state-item-count" th:text="${stats.category}">0</span>
+                <span class="site-state-item-name" th:text="#{site.categories}">Categories</span>
+              </a>
+            </div>
+            <div class="site-state-item site-state-tags" th:if="${tagCount > 0}">
+              <a th:href="@{${site.routes?.tagsUri ?: '/tags'}}">
+                <span class="site-state-item-count" th:text="${tagCount}">0</span>
+                <span class="site-state-item-name" th:text="#{site.tags}">Tags</span>
+              </a>
+            </div>
+          </nav>
+        </div>
+
+        <div
+          class="links-of-author animated"
+          th:if="${theme.config.sidebar.social?.enabled == 1 and not #lists.isEmpty(theme.config.sidebar.social?.account)}"
+          th:with="
+            socialIconEnabled=${theme.config.sidebar.social_icons?.enable != 0 and theme.config.sidebar.social_icons?.enable != false and theme.config.sidebar.social_icons?.enable != '0'},
+            socialIconsOnly=${theme.config.sidebar.social_icons?.icons_only == 1 or theme.config.sidebar.social_icons?.icons_only == true or theme.config.sidebar.social_icons?.icons_only == '1'},
+            socialShowText=${not socialIconEnabled or not socialIconsOnly},
+            socialTransition=${theme.config.sidebar.social_icons?.transition == 1 or theme.config.sidebar.social_icons?.transition == true or theme.config.sidebar.social_icons?.transition == '1'}
+          "
+          th:classappend="${(socialShowText ? ' links-of-author-with-text' : '') + (socialTransition ? ' links-of-author-transition' : '')}"
+        >
+          <span
+            class="links-of-author-item"
+            th:each="account : ${theme.config.sidebar.social?.account}"
+          >
+            <a
+              th:href="@{${account.url}}"
+              th:title="|${account.name} → ${account.url}|"
+              rel="noopener me"
+              target="_blank"
+            >
+              <i
+                th:if="${socialIconEnabled and not #strings.isEmpty(account.icon)}"
+                th:class="${account.icon} + ' fa-fw'"
+              ></i>
+              <span
+                th:if="${socialShowText}"
+                th:text="${account.name}"
+              ></span>
+            </a>
+          </span>
+        </div>
+
+        <div
+          class="cc-license animated"
+          th:if="${theme.config.basic.creative_commons?.enabled == 1 and theme.config.basic.creative_commons?.sidebar == 1}"
+          th:with="
+            license=${theme.config.basic.creative_commons?.license ?: 'by-nc-sa'},
+            language=${theme.config.basic.creative_commons?.language ?: ''},
+            size=${theme.config.basic.creative_commons?.size == 'big' ? 'big' : 'small'},
+            licenseUrl=${(license == 'cc-zero' ? 'https://creativecommons.org/publicdomain/zero/1.0/' : 'https://creativecommons.org/licenses/' + license + '/4.0/') + language}
+          "
+        >
+          <a
+            th:href="${licenseUrl}"
+            class="cc-opacity"
+            rel="noopener"
+            target="_blank"
+            th:title="${#strings.toUpperCase(license)}"
+          >
+            <img
+              th:src="|https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/${size}/${#strings.replace(license, '-', '_')}.svg|"
+              alt="Creative Commons"
+            />
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="back-to-top animated"
+      th:if="${theme.config.other?.back2top?.enable != 0 and theme.config.other?.back2top?.sidebar != 0}"
+      role="button"
+      th:attr="aria-label=${#messages.msg('site.backToTop')}"
+    >
+      <i class="fa fa-arrow-up"></i>
+      <span th:if="${theme.config.other?.back2top?.scrollpercent != 0}">0%</span>
+    </div>
+  </div>
+</aside>

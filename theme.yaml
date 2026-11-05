@@ -1,21 +1,21 @@
 apiVersion: theme.halo.run/v1alpha1
 kind: Theme
 metadata:
-  name: theme-vite-starter
+  name: theme-next
 spec:
-  displayName: Vite Starter
+  displayName: NexT
   author:
-    name: Halo
-    website: https://github.com/halo-dev
-  description: A development starter theme with Vite Ecosystem for Halo
-  logo: https://www.halo.run/logo
-  homepage: https://github.com/halo-dev/theme-vite-starter#readme
-  repo: https://github.com/halo-dev/theme-vite-starter
-  issues: https://github.com/halo-dev/theme-vite-starter/issues
-  settingName: "theme-vite-starter-setting"
-  configMapName: "theme-vite-starter-configMap"
-  version: 1.0.0
-  requires: ">=2.0.0"
+    name: Bennett
+    website: https://github.com/BennettChina
+  description: NexT 主题的 Halo 2 重写版，延续 hexo-theme-next 的视觉与交互。
+  logo: https://cdn.jsdelivr.net/gh/BennettChina/halo-theme-next@main/public/assets/imgs/default/logo.svg
+  homepage: https://github.com/BennettChina/halo-theme-next
+  repo: https://github.com/BennettChina/halo-theme-next
+  issues: https://github.com/BennettChina/halo-theme-next/issues
+  settingName: "theme-next-setting"
+  configMapName: "theme-next-configMap"
+  version: 1.0.0-alpha.1
+  requires: ">=2.26.0"
   license:
     - name: "GPL-3.0"
-      url: "https://github.com/halo-dev/theme-vite-starter/blob/main/LICENSE"
+      url: "https://github.com/BennettChina/halo-theme-next/blob/main/LICENSE"

@@ -1,0 +1,34 @@
+<th:block th:if="${theme.config.post.related?.enabled == 1 and post != null}">
+  <th:block
+    th:with="
+      relatedCount=${theme.config.post.related?.count ?: 3},
+      primaryTag=${post.tags != null and not #lists.isEmpty(post.tags) ? post.tags[0] : null},
+      primaryCategory=${post.categories != null and not #lists.isEmpty(post.categories) ? post.categories[0] : null}
+    "
+  >
+    <th:block th:if="${primaryTag != null or primaryCategory != null}">
+      <th:block
+        th:with="
+          relatedPosts=${primaryTag != null
+            ? postFinder.list({page: 1, size: relatedCount + 1, tagName: primaryTag.metadata.name})
+            : postFinder.list({page: 1, size: relatedCount + 1, categoryName: primaryCategory.metadata.name})}
+        "
+      >
+        <section
+          class="post-related"
+          th:if="${relatedPosts != null and relatedPosts.items != null and #lists.size(relatedPosts.items) > 1}"
+        >
+          <h2 class="post-related-title" th:text="#{site.relatedPosts}">Related posts</h2>
+          <ul class="post-related-list">
+            <li
+              th:each="related, iter : ${relatedPosts.items}"
+              th:if="${related.metadata.name != post.metadata.name and iter.count <= relatedCount}"
+            >
+              <a th:href="@{${related.status.permalink}}" th:text="${related.spec.title}"></a>
+            </li>
+          </ul>
+        </section>
+      </th:block>
+    </th:block>
+  </th:block>
+</th:block>

@@ -27,3 +27,6 @@ dist-ssr
 .gradle
 build
 templates
+
+# Halo 主题配置导出可能包含站点隐私信息，不纳入版本库
+export-theme-next-config-*.json

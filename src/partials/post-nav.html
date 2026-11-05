@@ -1,0 +1,36 @@
+<th:block
+  th:with="
+    cursor=${postFinder.cursor(post.metadata.name)},
+    navigation=${theme.config.post.post_navigation ?: 'left'},
+    navigationEnabled=${#strings.toString(navigation) != 'false'},
+    leftPost=${navigation == 'right' ? cursor?.next : cursor?.previous},
+    rightPost=${navigation == 'right' ? cursor?.previous : cursor?.next},
+    leftExists=${navigation == 'right' ? (cursor != null and cursor.hasNext()) : (cursor != null and cursor.hasPrevious())},
+    rightExists=${navigation == 'right' ? (cursor != null and cursor.hasPrevious()) : (cursor != null and cursor.hasNext())}
+  "
+>
+  <div class="post-nav" th:if="${cursor != null and navigationEnabled and (leftExists or rightExists)}">
+    <div class="post-nav-item">
+      <a
+        th:if="${leftExists}"
+        rel="prev"
+        th:href="@{${leftPost.status.permalink}}"
+        th:title="${leftPost.spec.title}"
+      >
+        <i class="fa fa-angle-left"></i>
+        <span th:text="${leftPost.spec.title}"></span>
+      </a>
+    </div>
+    <div class="post-nav-item">
+      <a
+        th:if="${rightExists}"
+        rel="next"
+        th:href="@{${rightPost.status.permalink}}"
+        th:title="${rightPost.spec.title}"
+      >
+        <span th:text="${rightPost.spec.title}"></span>
+        <i class="fa fa-angle-right"></i>
+      </a>
+    </div>
+  </div>
+</th:block>

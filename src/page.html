@@ -1,20 +1,33 @@
-<include src="layout.html">
+<include
+  src="/partials/shell.html"
+  bodyClass="index posts-expand"
+  pageClass="index posts-expand"
+  sidebarClass="sidebar-nav-active sidebar-toc-active"
+>
   <template name="head">
-    <title th:text="|${singlePage.spec.title} - ${site.title}|">Page Title</title>
+    <title th:text="|${singlePage.spec.title} - ${site.title}|">Page</title>
   </template>
 
-  <article>
-    <header class="article-header">
-      <h1 class="article-title" th:text="${singlePage.spec.title}"></h1>
-    </header>
-    <div class="article-content" th:utext="${singlePage.content.content}"></div>
-  </article>
+  <template name="pageConfig">
+    <script
+      class="next-config"
+      data-name="page"
+      type="application/json"
+      th:inline="javascript"
+    >
+      {
+        "sidebar": /*[[${#annotations.getOrDefault(singlePage, 'sidebar', '1') == '1'}]]*/ true,
+        "isHome": false,
+        "isPost": false,
+        "lang": /*[[${#locale.toLanguageTag}]]*/ "en",
+        "comments": /*[[${haloCommentEnabled ?: false}]]*/ false,
+        "permalink": /*[[${singlePage.status.permalink}]]*/ "",
+        "path": /*[[${singlePage.status.permalink}]]*/ "",
+        "title": /*[[${singlePage.spec.title}]]*/ ""
+      }
+    </script>
+  </template>
 
-  <div th:if="${haloCommentEnabled}">
-    <halo:comment
-      group="content.halo.run"
-      kind="SinglePage"
-      th:attr="name=${singlePage.metadata.name}"
-    />
-  </div>
+  <include src="/partials/page-article.html"></include>
+  <include src="/partials/comments-page.html"></include>
 </include>

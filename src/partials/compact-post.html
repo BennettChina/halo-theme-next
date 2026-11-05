@@ -1,0 +1,26 @@
+<article
+  class="post-block animated fadeIn"
+  itemscope
+  itemtype="http://schema.org/Article"
+>
+  <div class="post-content">
+    <header class="post-header animated fadeInDown">
+      <div class="post-meta-container">
+        <time
+          itemprop="dateCreated"
+          th:datetime="${post.spec.publishTime}"
+          th:text="${#temporals.format(post.spec.publishTime, 'MM-dd')}"
+        ></time>
+      </div>
+      <div class="post-title">
+        <a
+          class="post-title-link"
+          itemprop="url"
+          th:href="@{${post.status.permalink}}"
+        >
+          <span itemprop="name" th:text="${post.spec.title}"></span>
+        </a>
+      </div>
+    </header>
+  </div>
+</article>

@@ -1,0 +1,49 @@
+<include
+  src="/partials/shell.html"
+  bodyClass="author posts-collapse"
+  pageClass="author posts-collapse"
+  sidebarClass="sidebar-overview-active"
+>
+  <template name="head">
+    <title th:text="|${author.spec.displayName} - ${site.title}|">Author</title>
+  </template>
+
+  <div class="post-block animated fadeIn">
+    <div class="post-content">
+      <div class="author-profile">
+        <img
+          th:if="${not #strings.isEmpty(author.spec.avatar)}"
+          class="author-avatar"
+          th:src="${author.spec.avatar}"
+          th:alt="${author.spec.displayName}"
+        />
+        <div class="author-info">
+          <h1 class="author-name" th:text="${author.spec.displayName}">Author</h1>
+          <p
+            class="author-bio"
+            th:if="${not #strings.isEmpty(author.spec.bio)}"
+            th:text="${author.spec.bio}"
+          ></p>
+          <p
+            class="author-post-count"
+            th:text="#{site.totalPosts(${posts.total})}"
+          ></p>
+        </div>
+      </div>
+
+      <th:block th:each="post : ${posts.items}">
+        <include src="/partials/compact-post.html"></include>
+      </th:block>
+
+      <p
+        class="post-empty"
+        th:if="${#lists.isEmpty(posts.items)}"
+        th:text="#{site.empty}"
+      >
+        No posts yet.
+      </p>
+    </div>
+  </div>
+
+  <include src="/partials/pagination.html"></include>
+</include>

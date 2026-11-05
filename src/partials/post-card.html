@@ -1,18 +1,70 @@
-<li class="post-item" th:each="post : ${posts.items}">
-  <h2 class="post-title">
-    <a th:href="@{${post.status.permalink}}" th:text="${post.spec.title}"></a>
-  </h2>
-  <p class="post-meta">
-    <time th:text="${#temporals.format(post.spec.publishTime, 'yyyy-MM-dd')}"></time>
-    <span th:if="${not #lists.isEmpty(post.categories)}">
-      &nbsp;·&nbsp;
-      <a
-        th:each="cat : ${post.categories}"
-        th:href="@{${cat.status.permalink}}"
-        th:text="${cat.spec.displayName}"
-        class="category"
-      ></a>
-    </span>
-  </p>
-  <p class="post-excerpt" th:text="${post.status.excerpt}"></p>
-</li>
+<div class="post-block animated fadeIn">
+  <article
+    class="post-content"
+    itemscope
+    itemtype="http://schema.org/Article"
+    th:with="
+      postContent=${postFinder.content(post.metadata.name)},
+      contentHtml=${postContent?.content ?: ''},
+      indexImage=${post.spec.cover}
+    "
+  >
+    <header class="post-header animated fadeInDown">
+      <h2 class="post-title" itemprop="name headline">
+        <span th:if="${post.spec.pinned}" class="post-sticky-flag" title="Sticky">
+          <i class="fa fa-thumbtack"></i>
+        </span>
+        <a
+          class="post-title-link"
+          itemprop="url"
+          th:href="@{${post.status.permalink}}"
+          th:text="${post.spec.title}"
+        ></a>
+      </h2>
+      <div class="post-meta-container">
+        <include src="/partials/post-meta.html"></include>
+      </div>
+    </header>
+
+    <a
+      class="post-cover animated fadeIn"
+      th:if="${theme.config.post.index_image != 0 and not #strings.isEmpty(indexImage)}"
+      th:href="@{${post.status.permalink}}"
+      th:title="${post.spec.title}"
+    >
+      <img
+        th:src="${indexImage}"
+        th:alt="${post.spec.title}"
+        loading="lazy"
+      />
+    </a>
+
+    <div
+      class="post-body animated fadeInDown"
+      itemprop="articleBody"
+      th:if="${theme.config.post.excerpt_description != 0 and (not #strings.isEmpty(post.status.excerpt) or not #strings.isEmpty(contentHtml))}"
+    >
+      <div
+        class="post-list-content"
+        th:if="${theme.config.post.index_content != 'text' and not #strings.isEmpty(contentHtml)}"
+        th:utext="${contentHtml}"
+      ></div>
+      <p
+        th:if="${theme.config.post.index_content == 'text' and not #strings.isEmpty(post.status.excerpt)}"
+        th:text="${post.status.excerpt}"
+      ></p>
+      <div class="post-button" th:if="${#strings.toString(theme.config.post.read_more_btn) != '0'}">
+        <a
+          class="btn"
+          rel="contents"
+          th:href="@{${post.status.permalink}}"
+          th:text="#{site.readMore}"
+        ></a>
+      </div>
+    </div>
+
+    <footer class="post-footer">
+      <div class="post-eof"></div>
+    </footer>
+  </article>
+</div>

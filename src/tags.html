@@ -1,18 +1,48 @@
-<include src="layout.html">
+<include
+  src="/partials/shell.html"
+  bodyClass="page posts-expand"
+  pageClass="page posts-expand"
+  sidebarClass="sidebar-overview-active"
+>
   <template name="head">
-    <title th:text="|Tags - ${site.title}|">Tags</title>
+    <title th:text="|#{site.tags} - ${site.title}|">Tags</title>
   </template>
 
-  <h1>Tags</h1>
-  <ul class="tag-list">
-    <li th:each="tag : ${tags.items}">
-      <a th:href="@{${tag.status.permalink}}" th:text="${tag.spec.displayName}" class="tag"></a>
-    </li>
-  </ul>
-
-  <nav class="pagination" th:if="${tags.hasPrevious() || tags.hasNext()}">
-    <a th:if="${tags.hasPrevious()}" th:href="@{${tags.prevUrl}}">Previous</a>
-    <span th:text="|${tags.page} / ${tags.totalPages}|"></span>
-    <a th:if="${tags.hasNext()}" th:href="@{${tags.nextUrl}}">Next</a>
-  </nav>
+  <div class="post-block animated fadeIn">
+    <header class="post-header animated fadeInDown">
+      <h1 class="post-title" th:text="#{site.tags}">Tags</h1>
+    </header>
+    <div class="post-body animated fadeInDown">
+      <div
+        class="tag-cloud"
+        th:with="
+          minFont=${theme.config.post.tagcloud?.min ?: 12},
+          maxFont=${theme.config.post.tagcloud?.max ?: 30},
+          amount=${theme.config.post.tagcloud?.amount ?: 200}
+        "
+      >
+        <div
+          class="tag-cloud-title"
+          th:text="${#messages.msg('site.tagCount', #lists.size(tags))}"
+        ></div>
+        <div class="tag-cloud-tags">
+          <a
+            th:each="tag, stat : ${tags}"
+            th:if="${amount <= 0 or stat.index < amount}"
+            th:class="|tag-cloud-${(tag.postCount ?: 0) > 10 ? 10 : (tag.postCount ?: 0)}|"
+            th:href="@{${tag.status.permalink}}"
+            th:text="${tag.spec.displayName}"
+            th:style="|font-size: ${minFont + (maxFont - minFont) * ((tag.postCount ?: 0) >= 5 ? 1 : (tag.postCount ?: 0) / 5)}px;|"
+          ></a>
+        </div>
+      </div>
+      <p
+        class="post-empty"
+        th:if="${#lists.isEmpty(tags)}"
+        th:text="#{site.empty}"
+      >
+        No tags yet.
+      </p>
+    </div>
+  </div>
 </include>

@@ -1,0 +1,228 @@
+<th:block th:if="${theme.config.other?.seo?.enable_metadata != false}">
+  <th:block
+    th:if="${_templateId == 'post' and post != null}"
+    th:with="
+      seoTitle=${post.spec.title},
+      seoDescription=${post.status.excerpt ?: ''},
+      seoUrl=${site.url + post.status.permalink},
+      seoImage=${post.spec.cover ?: (site.logo ?: '')}
+    "
+  >
+    <link rel="canonical" th:href="${seoUrl}" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" th:content="${site.title}" />
+    <meta property="og:title" th:content="${seoTitle}" />
+    <meta property="og:url" th:content="${seoUrl}" />
+    <meta th:if="${not #strings.isEmpty(seoDescription)}" property="og:description" th:content="${seoDescription}" />
+    <meta th:if="${not #strings.isEmpty(seoImage)}" property="og:image" th:content="${seoImage}" />
+    <meta property="og:locale" th:content="${#strings.replace(#locale.toLanguageTag, '-', '_')}" />
+    <meta th:if="${post.spec.publishTime != null}" property="article:published_time" th:content="${#temporals.formatISO(post.spec.publishTime)}" />
+    <meta th:if="${post.status.lastModifyTime != null}" property="article:modified_time" th:content="${#temporals.formatISO(post.status.lastModifyTime)}" />
+    <th:block th:if="${post.tags != null}">
+      <meta th:each="tag : ${post.tags}" property="article:tag" th:content="${tag.spec.displayName}" />
+    </th:block>
+    <meta name="twitter:card" th:content="${not #strings.isEmpty(seoImage) ? 'summary_large_image' : 'summary'}" />
+    <meta name="twitter:title" th:content="${seoTitle}" />
+    <meta th:if="${not #strings.isEmpty(seoDescription)}" name="twitter:description" th:content="${seoDescription}" />
+    <meta th:if="${not #strings.isEmpty(seoImage)}" name="twitter:image" th:content="${seoImage}" />
+  </th:block>
+
+  <th:block
+    th:if="${_templateId == 'page' and singlePage != null}"
+    th:with="
+      seoTitle=${singlePage.spec.title},
+      seoDescription=${singlePage.status.excerpt ?: ''},
+      seoUrl=${site.url + singlePage.status.permalink},
+      seoImage=${singlePage.spec.cover ?: (site.logo ?: '')}
+    "
+  >
+    <link rel="canonical" th:href="${seoUrl}" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" th:content="${site.title}" />
+    <meta property="og:title" th:content="${seoTitle}" />
+    <meta property="og:url" th:content="${seoUrl}" />
+    <meta th:if="${not #strings.isEmpty(seoDescription)}" property="og:description" th:content="${seoDescription}" />
+    <meta th:if="${not #strings.isEmpty(seoImage)}" property="og:image" th:content="${seoImage}" />
+    <meta property="og:locale" th:content="${#strings.replace(#locale.toLanguageTag, '-', '_')}" />
+    <meta name="twitter:card" th:content="${not #strings.isEmpty(seoImage) ? 'summary_large_image' : 'summary'}" />
+    <meta name="twitter:title" th:content="${seoTitle}" />
+    <meta th:if="${not #strings.isEmpty(seoDescription)}" name="twitter:description" th:content="${seoDescription}" />
+    <meta th:if="${not #strings.isEmpty(seoImage)}" name="twitter:image" th:content="${seoImage}" />
+  </th:block>
+
+  <th:block
+    th:if="${_templateId == 'index'}"
+    th:with="
+      siteTitle=${theme.config.basic.site?.type == 1 ? site.title : (theme.config.basic.site?.title ?: site.title)},
+      siteSubtitle=${theme.config.basic.site?.type == 1 ? (site.subtitle ?: '') : (theme.config.basic.site?.subtitle ?: '')},
+      seoTitle=${theme.config.basic.index_with_subtitle == 1 and not #strings.isEmpty(siteSubtitle) ? siteTitle + ' - ' + siteSubtitle : siteTitle},
+      seoDescription=${site.seo?.description ?: ''},
+      seoImage=${site.logo ?: ''}
+    "
+  >
+    <link th:if="${posts == null or posts.page == 1}" rel="canonical" th:href="${site.url + '/'}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" th:content="${site.title}" />
+    <meta property="og:title" th:content="${seoTitle}" />
+    <meta th:if="${posts == null or posts.page == 1}" property="og:url" th:content="${site.url + '/'}" />
+    <meta th:if="${not #strings.isEmpty(seoDescription)}" property="og:description" th:content="${seoDescription}" />
+    <meta th:if="${not #strings.isEmpty(seoImage)}" property="og:image" th:content="${seoImage}" />
+    <meta property="og:locale" th:content="${#strings.replace(#locale.toLanguageTag, '-', '_')}" />
+    <meta name="twitter:card" th:content="${not #strings.isEmpty(seoImage) ? 'summary_large_image' : 'summary'}" />
+    <meta name="twitter:title" th:content="${seoTitle}" />
+    <meta th:if="${not #strings.isEmpty(seoDescription)}" name="twitter:description" th:content="${seoDescription}" />
+    <meta th:if="${not #strings.isEmpty(seoImage)}" name="twitter:image" th:content="${seoImage}" />
+  </th:block>
+
+  <th:block
+    th:if="${_templateId == 'archives'}"
+    th:with="
+      seoTitle=${#messages.msg('site.archives') + ' - ' + site.title},
+      seoDescription=${site.seo?.description ?: ''},
+      seoImage=${site.logo ?: ''}
+    "
+  >
+    <link
+      th:if="${archives == null or archives.page == 1}"
+      rel="canonical"
+      th:href="${site.url + (site.routes?.archivesUri ?: '/archives')}"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" th:content="${site.title}" />
+    <meta property="og:title" th:content="${seoTitle}" />
+    <meta th:if="${archives == null or archives.page == 1}" property="og:url" th:content="${site.url + (site.routes?.archivesUri ?: '/archives')}" />
+    <meta th:if="${not #strings.isEmpty(seoDescription)}" property="og:description" th:content="${seoDescription}" />
+    <meta th:if="${not #strings.isEmpty(seoImage)}" property="og:image" th:content="${seoImage}" />
+    <meta property="og:locale" th:content="${#strings.replace(#locale.toLanguageTag, '-', '_')}" />
+    <meta name="twitter:card" th:content="${not #strings.isEmpty(seoImage) ? 'summary_large_image' : 'summary'}" />
+    <meta name="twitter:title" th:content="${seoTitle}" />
+    <meta th:if="${not #strings.isEmpty(seoDescription)}" name="twitter:description" th:content="${seoDescription}" />
+    <meta th:if="${not #strings.isEmpty(seoImage)}" name="twitter:image" th:content="${seoImage}" />
+  </th:block>
+
+  <th:block
+    th:if="${_templateId == 'categories'}"
+    th:with="
+      seoTitle=${#messages.msg('site.categories') + ' - ' + site.title},
+      seoDescription=${site.seo?.description ?: ''},
+      seoImage=${site.logo ?: ''}
+    "
+  >
+    <link rel="canonical" th:href="${site.url + (site.routes?.categoriesUri ?: '/categories')}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" th:content="${site.title}" />
+    <meta property="og:title" th:content="${seoTitle}" />
+    <meta property="og:url" th:content="${site.url + (site.routes?.categoriesUri ?: '/categories')}" />
+    <meta th:if="${not #strings.isEmpty(seoDescription)}" property="og:description" th:content="${seoDescription}" />
+    <meta th:if="${not #strings.isEmpty(seoImage)}" property="og:image" th:content="${seoImage}" />
+    <meta name="twitter:card" th:content="${not #strings.isEmpty(seoImage) ? 'summary_large_image' : 'summary'}" />
+    <meta name="twitter:title" th:content="${seoTitle}" />
+    <meta th:if="${not #strings.isEmpty(seoImage)}" name="twitter:image" th:content="${seoImage}" />
+  </th:block>
+
+  <th:block
+    th:if="${_templateId == 'tags'}"
+    th:with="
+      seoTitle=${#messages.msg('site.tags') + ' - ' + site.title},
+      seoDescription=${site.seo?.description ?: ''},
+      seoImage=${site.logo ?: ''}
+    "
+  >
+    <link rel="canonical" th:href="${site.url + (site.routes?.tagsUri ?: '/tags')}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" th:content="${site.title}" />
+    <meta property="og:title" th:content="${seoTitle}" />
+    <meta property="og:url" th:content="${site.url + (site.routes?.tagsUri ?: '/tags')}" />
+    <meta th:if="${not #strings.isEmpty(seoDescription)}" property="og:description" th:content="${seoDescription}" />
+    <meta th:if="${not #strings.isEmpty(seoImage)}" property="og:image" th:content="${seoImage}" />
+    <meta name="twitter:card" th:content="${not #strings.isEmpty(seoImage) ? 'summary_large_image' : 'summary'}" />
+    <meta name="twitter:title" th:content="${seoTitle}" />
+    <meta th:if="${not #strings.isEmpty(seoImage)}" name="twitter:image" th:content="${seoImage}" />
+  </th:block>
+
+  <th:block
+    th:if="${_templateId == 'category' and category != null}"
+    th:with="
+      seoTitle=${category.spec.displayName + ' - ' + site.title},
+      seoDescription=${category.spec.description ?: ''},
+      seoImage=${category.spec.cover ?: (site.logo ?: '')}
+    "
+  >
+    <link th:if="${posts == null or posts.page == 1}" rel="canonical" th:href="${site.url + category.status.permalink}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" th:content="${site.title}" />
+    <meta property="og:title" th:content="${seoTitle}" />
+    <meta th:if="${posts == null or posts.page == 1}" property="og:url" th:content="${site.url + category.status.permalink}" />
+    <meta th:if="${not #strings.isEmpty(seoDescription)}" property="og:description" th:content="${seoDescription}" />
+    <meta th:if="${not #strings.isEmpty(seoImage)}" property="og:image" th:content="${seoImage}" />
+    <meta name="twitter:card" th:content="${not #strings.isEmpty(seoImage) ? 'summary_large_image' : 'summary'}" />
+    <meta name="twitter:title" th:content="${seoTitle}" />
+    <meta th:if="${not #strings.isEmpty(seoDescription)}" name="twitter:description" th:content="${seoDescription}" />
+    <meta th:if="${not #strings.isEmpty(seoImage)}" name="twitter:image" th:content="${seoImage}" />
+  </th:block>
+
+  <th:block
+    th:if="${_templateId == 'tag' and tag != null}"
+    th:with="
+      seoTitle=${tag.spec.displayName + ' - ' + site.title},
+      seoDescription=${site.seo?.description ?: ''},
+      seoImage=${tag.spec.cover ?: (site.logo ?: '')}
+    "
+  >
+    <link th:if="${posts == null or posts.page == 1}" rel="canonical" th:href="${site.url + tag.status.permalink}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" th:content="${site.title}" />
+    <meta property="og:title" th:content="${seoTitle}" />
+    <meta th:if="${posts == null or posts.page == 1}" property="og:url" th:content="${site.url + tag.status.permalink}" />
+    <meta th:if="${not #strings.isEmpty(seoDescription)}" property="og:description" th:content="${seoDescription}" />
+    <meta th:if="${not #strings.isEmpty(seoImage)}" property="og:image" th:content="${seoImage}" />
+    <meta name="twitter:card" th:content="${not #strings.isEmpty(seoImage) ? 'summary_large_image' : 'summary'}" />
+    <meta name="twitter:title" th:content="${seoTitle}" />
+    <meta th:if="${not #strings.isEmpty(seoImage)}" name="twitter:image" th:content="${seoImage}" />
+  </th:block>
+
+  <th:block
+    th:if="${_templateId == 'author' and author != null}"
+    th:with="
+      seoTitle=${author.spec.displayName + ' - ' + site.title},
+      seoDescription=${author.spec.bio ?: ''},
+      seoImage=${author.spec.avatar ?: (site.logo ?: '')}
+    "
+  >
+    <link th:if="${posts == null or posts.page == 1}" rel="canonical" th:href="${site.url + author.status.permalink}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" th:content="${site.title}" />
+    <meta property="og:title" th:content="${seoTitle}" />
+    <meta th:if="${posts == null or posts.page == 1}" property="og:url" th:content="${site.url + author.status.permalink}" />
+    <meta th:if="${not #strings.isEmpty(seoDescription)}" property="og:description" th:content="${seoDescription}" />
+    <meta th:if="${not #strings.isEmpty(seoImage)}" property="og:image" th:content="${seoImage}" />
+    <meta name="twitter:card" th:content="${not #strings.isEmpty(seoImage) ? 'summary_large_image' : 'summary'}" />
+    <meta name="twitter:title" th:content="${seoTitle}" />
+    <meta th:if="${not #strings.isEmpty(seoDescription)}" name="twitter:description" th:content="${seoDescription}" />
+    <meta th:if="${not #strings.isEmpty(seoImage)}" name="twitter:image" th:content="${seoImage}" />
+  </th:block>
+</th:block>
+
+<th:block th:if="${theme.config.other?.seo?.enable_structured_data != false and _templateId == 'post' and post != null}">
+  <script type="application/ld+json" th:inline="javascript">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": /*[[${post.spec.title}]]*/ "",
+      "description": /*[[${post.status.excerpt ?: ''}]]*/ "",
+      "url": /*[[${site.url + post.status.permalink}]]*/ "",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": /*[[${site.url + post.status.permalink}]]*/ ""
+      },
+      "datePublished": /*[[${post.spec.publishTime != null ? #temporals.formatISO(post.spec.publishTime) : null}]]*/ null,
+      "dateModified": /*[[${post.status.lastModifyTime != null ? #temporals.formatISO(post.status.lastModifyTime) : null}]]*/ null,
+      "inLanguage": /*[[${#locale.toLanguageTag}]]*/ "en",
+      "author": {
+        "@type": "Person",
+        "name": /*[[${post.owner?.displayName ?: site.title}]]*/ ""
+      },
+      "image": /*[[${post.spec.cover ?: (site.logo ?: '')}]]*/ ""
+    }
+  </script>
+</th:block>

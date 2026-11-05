@@ -1,0 +1,77 @@
+<include
+  src="/partials/shell.html"
+  bodyClass="page posts-expand"
+  pageClass="page posts-expand"
+  sidebarClass="sidebar-overview-active"
+>
+  <template name="head">
+    <title th:text="|${title} - ${site.title}|">Photos</title>
+  </template>
+
+  <section class="post-block plugin-page animated fadeIn">
+    <article class="post-content">
+      <header class="post-header animated fadeInDown">
+        <h1 class="post-title" th:text="${title}">Photos</h1>
+      </header>
+
+      <nav class="module-tabs" th:attr="aria-label=#{site.photos}">
+        <a
+          th:href="${photoUrl.list()}"
+          th:classappend="${#strings.isEmpty(group)} ? 'is-active'"
+          th:text="#{site.all}"
+        ></a>
+        <a
+          th:each="photoGroup : ${groups}"
+          th:href="${photoUrl.list(photoGroup.metadata.name)}"
+          th:classappend="${group == photoGroup.metadata.name} ? 'is-active'"
+        >
+          <span th:text="${photoGroup.spec.displayName}">Group</span>
+          <span
+            th:if="${photoGroup.status != null and photoGroup.status.photoCount != null}"
+            th:text="|(${photoGroup.status.photoCount})|"
+          ></span>
+        </a>
+      </nav>
+
+      <ul class="photo-grid" th:if="${not #lists.isEmpty(photos.items)}">
+        <li
+          class="photo-card"
+          th:each="photo : ${photos.items}"
+          th:with="photoImage=${#strings.isEmpty(photo.spec.cover) ? photo.spec.url : photo.spec.cover}"
+        >
+          <a class="photo-card__media" th:href="${photoUrl.detail(photo)}">
+            <img
+              class="photo-card__image"
+              th:src="${photoImage}"
+              th:alt="${photo.spec.displayName}"
+              loading="lazy"
+            />
+          </a>
+          <div class="photo-card__body">
+            <h2 class="photo-card__title">
+              <a th:href="${photoUrl.detail(photo)}" th:text="${photo.spec.displayName}">Photo</a>
+            </h2>
+            <p
+              class="photo-card__description"
+              th:if="${not #strings.isEmpty(photo.spec.description)}"
+              th:text="${photo.spec.description}"
+            ></p>
+            <ul class="tag-list" th:if="${not #lists.isEmpty(photo.spec.tags)}">
+              <li th:each="tag : ${photo.spec.tags}" th:text="${tag}"></li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+
+      <p class="post-empty" th:if="${#lists.isEmpty(photos.items)}" th:text="#{site.noPhotos}">
+        No photos yet.
+      </p>
+
+      <nav class="plugin-pagination" th:if="${photos.hasPrevious() or photos.hasNext()}">
+        <a th:if="${photos.hasPrevious()}" th:href="${photos.prevUrl}" th:text="#{site.previousPage}"></a>
+        <span th:text="|${photos.page} / ${photos.totalPages}|">1 / 1</span>
+        <a th:if="${photos.hasNext()}" th:href="${photos.nextUrl}" th:text="#{site.nextPage}"></a>
+      </nav>
+    </article>
+  </section>
+</include>
