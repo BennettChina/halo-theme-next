@@ -673,7 +673,7 @@ spec:
         - $formkit: radio
           name: index_image
           label: 首页文章列表显示图片
-          help: "使用文章封面作为列表图片；选择“渲染正文 HTML”时，正文图片会随内容一并显示。"
+          help: "使用文章封面作为列表图片；正文摘要中如果包含图片，也会按原样显示。"
           value: 1
           options:
             - label: 开启
@@ -683,13 +683,29 @@ spec:
         - $formkit: select
           name: index_content
           label: 首页文章内容
-          help: "选择“渲染正文 HTML”会保留 Markdown 生成的图片、标题、链接、引用等内容。"
+          help: "“正文开头”按段落截取并保留链接、行内代码等 HTML 格式；“文章摘要”使用 Halo 生成的纯文本摘要，长度受 Halo 摘要设置限制。完整内容请进入文章详情页查看。"
           value: "html"
           options:
-            - label: 渲染正文 HTML（推荐）
+            - label: 正文开头（HTML，推荐）
               value: "html"
-            - label: 纯文本摘要
+            - label: 文章摘要（纯文本）
               value: "text"
+        - $formkit: select
+          name: index_excerpt_paragraphs
+          label: 首页摘要段落数
+          help: "首页展示正文开头的段落数，默认 3 段；仅在“首页文章内容”选择“正文开头”时生效。"
+          value: 3
+          options:
+            - label: 1 段
+              value: 1
+            - label: 2 段
+              value: 2
+            - label: 3 段
+              value: 3
+            - label: 4 段
+              value: 4
+            - label: 5 段
+              value: 5
         - $formkit: radio
           name: excerpt_description
           label: 主页是否显示文章内容

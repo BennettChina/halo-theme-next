@@ -131,12 +131,13 @@ dist/                  主题包输出，禁止手改
 
 #### 首页文章流
 
-首页文章卡片不再只输出纯文本摘要，而是通过 `postFinder.content(post.metadata.name)` 获取 Halo 已渲染的正文 HTML，并使用 `th:utext` 输出。因此 Markdown 生成的标题、图片、链接、列表、引用、代码块等内容会按与文章详情一致的结构显示。
+首页文章卡片通过 `postFinder.content(post.metadata.name)` 获取 Halo 已渲染的正文，并只截取开头若干段输出，不再把完整正文放在首页。段落内容使用 `th:utext` 输出，因此链接、行内代码、强调等富文本格式会保留；其余内容需要进入文章详情页查看。
 
 相关配置：
 
-- `post.index_content=html`：渲染正文 HTML，默认值，推荐。
-- `post.index_content=text`：只显示纯文本摘要，保留给低带宽或纯摘要场景。
+- `post.index_content=html`：渲染正文开头的段落 HTML，默认值，推荐。
+- `post.index_content=text`：只显示 Halo 生成的纯文本摘要，保留给低带宽或纯摘要场景。
+- `post.index_excerpt_paragraphs`：首页展示正文开头的段落数，默认 `3`，可选 `1` 到 `5`。
 - `post.index_image`：控制文章封面。封面只读取 `post.spec.cover`，不会从正文第一张图片重复生成封面。
 - `post.excerpt_description`：缺失时按开启处理，兼容升级前已保存的主题配置。
 
