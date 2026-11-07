@@ -257,7 +257,7 @@
 
 以下差异来自 Halo 与 Hexo 的机制不同，不应直接视为缺陷：
 
-- 菜单由 Halo `MenuFinder` 提供，支持任意层级。
+- 菜单由 Halo `MenuFinder.getPrimary()` 提供，支持任意层级；主题侧不维护菜单设置。
 - 评论由 Halo 原生评论组件提供。
 - 搜索由 Halo 搜索插件提供。
 - 友链、图库、瞬间分别使用 Links、Photos、Moments 插件页面。

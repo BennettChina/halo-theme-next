@@ -213,46 +213,6 @@ spec:
         #                  value: 1
         #                - label: 关闭
         #                  value: 0
-        # 菜单设置
-        - $formkit: group
-          name: menu
-          label: 菜单设置
-          help: "菜单内容由 Halo 统一管理；图库、瞬间、友联的入口需要在 Console 的“菜单”中手动添加。"
-          value:
-            enabled: 1
-            icon_enabled: 1
-            halo_menu: "primary"
-          children:
-            # 开启状态
-            - $formkit: select
-              name: enabled
-              id: menu_enabled
-              label: 是否开启
-              value: 1
-              options:
-                - label: 启用
-                  value: 1
-                - label: 关闭
-                  value: 0
-            - $formkit: select
-              name: icon_enabled
-              id: icon_enabled
-              label: 是否开启菜单项图标
-              value: 1
-              options:
-                - label: 启用
-                  value: 1
-                - label: 关闭
-                  value: 0
-            # Halo 菜单设置
-            - $formkit: menuRadio
-              name: halo_menu
-              key: halo_menu_key
-              label: 选择 Halo 菜单
-              if: $value.enabled === 1
-              help: "菜单内容、层级和图标请在 Console → 菜单中维护；图库、瞬间、友联需手动添加 /photos、/moments、/links。"
-              value: "primary"
-
     # 侧栏设置-----------------------------------------------------------------------------------------
     - group: sidebar
       label: 侧栏设置

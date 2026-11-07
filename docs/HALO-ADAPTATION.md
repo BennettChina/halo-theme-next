@@ -151,7 +151,7 @@ dist/                  主题包输出，禁止手改
 
 ### 4.3 菜单
 
-Halo 菜单使用 `MenuFinder` 获取，`MenuItem` 通过 `children` 表达层级。
+Halo 菜单使用 `MenuFinder.getPrimary()` 获取站点主菜单，`MenuItem` 通过 `children` 表达层级。主题不提供菜单开关、菜单选择或菜单内容配置。
 
 实现位置：
 
@@ -161,9 +161,9 @@ Halo 菜单使用 `MenuFinder` 获取，`MenuItem` 通过 `children` 表达层�
 模块入口配置：
 
 - 友链、图库、瞬间没有独立的页面入口开关，统一由 Halo 菜单控制。
-- 需在 Console → 菜单中添加 `/links`、`/photos`、`/moments`，并在“基础设置 → 菜单设置”中选择该菜单。
+- 需在 Console → 菜单中添加 `/links`、`/photos`、`/moments`，并将该菜单设置为主菜单。
 - 三个入口分别依赖 Links、Photos、Moments 插件；未安装或停用时不应保留入口。
-- `halo_menu` 的默认值只对首次安装生效，升级后需在主题设置中确认已选择正确的菜单。
+- 菜单为空或未设置主菜单时，主题不渲染导航；搜索入口也随导航一起隐藏。
 
 约束：
 
@@ -221,7 +221,7 @@ th:text="${#temporals.format(post.spec.publishTime, 'yyyy-MM-dd')}"
 
 `settings.yaml` 使用 Halo 当前支持的 FormKit 字段：
 
-- Halo 菜单选择使用 `$formkit: menuRadio`。
+- 菜单完全由 Halo 管理，主题设置中不再提供菜单相关字段。
 - 站点 LOGO 和侧栏头像使用 `attachmentInput`。
 - 不在 `array` 上设置 Halo 不支持的 `insertControl`、`upControl`、`downControl`。
 
@@ -359,14 +359,14 @@ pnpm build-only
 
 `settings.yaml` 按以下分组组织：
 
-| Group     | 内容                                             |
-| --------- | ------------------------------------------------ |
-| `basic`   | 站点标题、scheme、暗色模式、LOGO、版权协议、菜单 |
-| `sidebar` | 侧栏位置、宽度、作者、站点统计、社交链接、目录   |
-| `footer`  | 备案、版权与主题署名                             |
-| `post`    | 文章元信息、摘要、阅读量、关注入口               |
-| `other`   | 主题色、动画                                     |
-| `third`   | 搜索等可选能力                                   |
+| Group     | 内容                                           |
+| --------- | ---------------------------------------------- |
+| `basic`   | 站点标题、scheme、暗色模式、LOGO、版权协议     |
+| `sidebar` | 侧栏位置、宽度、作者、站点统计、社交链接、目录 |
+| `footer`  | 备案、版权与主题署名                           |
+| `post`    | 文章元信息、摘要、阅读量、关注入口             |
+| `other`   | 主题色、动画                                   |
+| `third`   | 搜索等可选能力                                 |
 
 侧栏社交链接拆分为 `sidebar.social`（账号列表）和 `sidebar.social_icons`（`enable`、`icons_only`、`transition`），后者对应上游 `social_icons`；文章底部 Follow me 位于 `post.follow_me`，按上游规则始终显示名称，并以 `.png` / `.jpg` 后缀识别图片项。
 

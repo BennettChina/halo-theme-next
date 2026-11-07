@@ -1,7 +1,7 @@
 <th:block
   th:with="
-    menuEnabled=${theme.config.basic.menu?.enabled == 1},
-    iconEnabled=${theme.config.basic.menu?.icon_enabled == 1},
+    menu=${menuFinder.getPrimary()},
+    hasMenu=${menu != null and menu.menuItems != null and not #lists.isEmpty(menu.menuItems)},
     siteTitle=${theme.config.basic.site?.type == 1 ? site.title : (theme.config.basic.site?.title ?: site.title)},
     siteSubtitle=${theme.config.basic.site?.type == 1 ? (site.subtitle ?: '') : (theme.config.basic.site?.subtitle ?: '')},
     logoUrl=${theme.config.basic.custom_logo?.custom_enabled == 1 ? (theme.config.basic.custom_logo?.url ?: site.logo) : site.logo},
@@ -11,7 +11,7 @@
   <div class="site-brand-container">
     <div class="site-nav-toggle">
       <div class="toggle" role="button" aria-label="Toggle navigation">
-        <th:block th:if="${menuEnabled}">
+        <th:block th:if="${hasMenu}">
           <span class="toggle-line"></span>
           <span class="toggle-line"></span>
           <span class="toggle-line"></span>
@@ -54,22 +54,13 @@
     <div class="site-nav-right"></div>
   </div>
 
-  <nav class="site-nav" th:if="${menuEnabled}">
+  <nav class="site-nav" th:if="${hasMenu}">
     <ul class="main-menu menu">
-      <th:block th:with="menu=${menuFinder.getByName(theme.config.basic.menu?.halo_menu)}">
-        <th:block th:if="${menu != null}">
-          <th:block
-            th:replace="~{modules/menu-tree :: items(menuItems=${menu.menuItems}, iconEnabled=${iconEnabled})}"
-          ></th:block>
-        </th:block>
-      </th:block>
+      <th:block th:replace="~{modules/menu-tree :: items(menuItems=${menu.menuItems})}"></th:block>
 
-      <li
-        class="menu-item menu-item-search animated fadeInDown"
-        th:if="${searchEnabled}"
-      >
+      <li class="menu-item menu-item-search animated fadeInDown" th:if="${searchEnabled}">
         <a role="button" class="popup-trigger" href="javascript:SearchWidget.open()">
-          <i th:if="${iconEnabled}" class="fa fa-search fa-fw"></i>
+          <i class="fa fa-search fa-fw"></i>
           <span th:text="#{site.search}">Search</span>
         </a>
       </li>

@@ -11,21 +11,11 @@ const REMOVED_FIELDS = new Map([
     "旧版遗留字段，模板从未读取；Halo 已通过系统设置自动注入 favicon，此字段会被忽略。",
   ],
   [
-    "basic.menu.type",
-    "主题已移除自定义菜单，菜单统一使用 Halo 菜单；此字段不再读取。",
+    "basic.menu",
+    "主题不再提供菜单设置，导航统一读取 Halo 主菜单；请在 Console 的“菜单”中维护内容并设置为主菜单。",
   ],
-  [
-    "basic.menu.custom_menu",
-    "主题已移除自定义菜单，菜单内容请在 Console 的“菜单”中维护；此字段不再读取。",
-  ],
-  [
-    "sidebar.social.icons_only",
-    "已迁移到 sidebar.social_icons.icons_only；请在新字段中设置。",
-  ],
-  [
-    "post.follow_me.icons_only",
-    "上游 Follow me 始终显示名称，此字段已移除，账号名称会正常显示。",
-  ],
+  ["sidebar.social.icons_only", "已迁移到 sidebar.social_icons.icons_only；请在新字段中设置。"],
+  ["post.follow_me.icons_only", "上游 Follow me 始终显示名称，此字段已移除，账号名称会正常显示。"],
 ]);
 
 function usage() {

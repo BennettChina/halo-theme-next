@@ -1,4 +1,4 @@
-<th:block th:fragment="items(menuItems, iconEnabled)">
+<th:block th:fragment="items(menuItems)">
   <li
     th:each="item : ${menuItems}"
     class="menu-item animated fadeInDown"
@@ -6,7 +6,7 @@
   >
     <a th:href="@{${item.status.href}}" th:target="${item.spec.target?.value}" rel="section">
       <th:block th:with="iconClass=${#annotations.getOrDefault(item, 'icon_class', '')}">
-        <th:block th:if="${iconEnabled and not #strings.isEmpty(iconClass)}">
+        <th:block th:if="${not #strings.isEmpty(iconClass)}">
           <span
             th:if="${#strings.startsWith(#strings.trim(iconClass), '<svg')}"
             class="theme-icon-svg menu-icon-svg"
@@ -22,9 +22,7 @@
     </a>
     <th:block th:if="${item.children != null and not #lists.isEmpty(item.children)}">
       <ul class="sub-menu menu">
-        <th:block
-          th:replace="~{modules/menu-tree :: items(menuItems=${item.children}, iconEnabled=${iconEnabled})}"
-        ></th:block>
+        <th:block th:replace="~{modules/menu-tree :: items(menuItems=${item.children})}"></th:block>
       </ul>
     </th:block>
   </li>
