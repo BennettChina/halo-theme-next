@@ -7,8 +7,6 @@
 延续 hexo-theme-next 克制的排版、清晰的层次与安静的阅读体验，
 同时接入 Halo 的菜单、评论与插件生态。
 
-> 面向用户和市场展示的名称是 `Next 8+`；主题技术标识仍为 `theme-halo-next`，以兼容已安装实例。
-
 [![Halo](https://img.shields.io/badge/Halo-2.26%2B-blue?style=flat-square)](https://halo.run)
 [![Version](https://img.shields.io/badge/Version-1.0.0-orange?style=flat-square)](./theme.yaml)
 [![License](https://img.shields.io/badge/License-AGPL--3.0--only-green?style=flat-square)](./LICENSE)
