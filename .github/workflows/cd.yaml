@@ -9,9 +9,12 @@ jobs:
   cd:
     # https://github.com/halo-sigs/reusable-workflows?tab=readme-ov-file#theme
     uses: halo-sigs/reusable-workflows/.github/workflows/theme-cd.yaml@v5
+    secrets:
+      halo-pat: ${{ secrets.HALO_PAT }}
     permissions:
       contents: write
     with:
-      skip-appstore-release: true
+      skip-appstore-release: false
+      app-id: app-euz6mevj
       pnpm-version: ""
       node-version: 24

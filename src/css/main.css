@@ -92,7 +92,7 @@
   color: var(--text-color);
   font-size: 0.9rem;
   letter-spacing: 0.08em;
-  margin: 1.25rem 0 0.35rem;
+  margin: 1.25rem 0 0.35rem 20px;
 }
 
 .collection-description {
@@ -475,6 +475,95 @@
   opacity: 0.65;
 }
 
+.link-toast {
+  --link-toast-accent: var(--theme-color);
+  align-items: flex-start;
+  background: var(--content-bg-color);
+  border: 1px solid var(--btn-default-border-color);
+  border-left: 3px solid var(--link-toast-accent);
+  border-radius: 4px;
+  box-sizing: border-box;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+  display: flex;
+  gap: 0.75rem;
+  max-width: calc(100vw - 2rem);
+  opacity: 0;
+  padding: 0.95rem 1rem;
+  position: fixed;
+  right: 1.5rem;
+  top: 1.5rem;
+  transform: translateX(calc(100% + 2rem));
+  transition:
+    opacity 0.25s ease,
+    transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0.3s;
+  visibility: hidden;
+  width: 21rem;
+  z-index: 120;
+}
+
+.link-toast.is-visible {
+  opacity: 1;
+  transform: translateX(0);
+  visibility: visible;
+}
+
+.link-toast--success {
+  --link-toast-accent: #27ae60;
+}
+
+.link-toast--error {
+  --link-toast-accent: #e74c3c;
+}
+
+.link-toast__icon {
+  color: var(--link-toast-accent);
+  flex: 0 0 auto;
+  font-size: 1.05rem;
+  line-height: 1.5;
+}
+
+.link-toast__body {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.link-toast__title {
+  color: var(--link-hover-color);
+  display: block;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-bottom: 0.2rem;
+}
+
+.link-toast__message {
+  color: var(--text-color);
+  font-size: 0.84rem;
+  line-height: 1.55;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.link-toast__close {
+  background: transparent;
+  border: 0;
+  color: var(--text-color);
+  cursor: pointer;
+  flex: 0 0 auto;
+  font-family: inherit;
+  font-size: 0.9rem;
+  line-height: 1;
+  margin-left: auto;
+  opacity: 0.65;
+  padding: 0.15rem;
+  transition: opacity 0.2s ease;
+}
+
+.link-toast__close:hover,
+.link-toast__close:focus-visible {
+  opacity: 1;
+}
+
 .photo-grid {
   display: grid;
   gap: 1.25rem;
@@ -751,6 +840,22 @@
 
   .link-application__form {
     grid-template-columns: 1fr;
+  }
+
+  .link-toast {
+    left: 1rem;
+    right: 1rem;
+    top: 1rem;
+    width: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .link-toast {
+    transition:
+      opacity 0.15s ease,
+      visibility 0.15s;
+    transform: none;
   }
 }
 

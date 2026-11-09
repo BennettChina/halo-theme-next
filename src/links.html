@@ -13,28 +13,14 @@
     th:with="
       applicationStatus=${param.applied != null and #arrays.length(param.applied) > 0 ? param.applied[0] : ''},
       applicationField=${param.field != null and #arrays.length(param.field) > 0 ? param.field[0] : ''},
-      applicationValue=${param.value != null and #arrays.length(param.value) > 0 ? param.value[0] : ''}
+      applicationValue=${param.value != null and #arrays.length(param.value) > 0 ? param.value[0] : ''},
+      applicationMessage=${param.message != null and #arrays.length(param.message) > 0 ? param.message[0] : #messages.msg('site.linkApplicationErrorDetail')}
     "
   >
     <article class="post-content">
       <header class="post-header animated fadeInDown">
         <h1 class="post-title" th:text="${linksTitle}">Links</h1>
       </header>
-
-      <div
-        class="plugin-notice"
-        th:if="${not #strings.isEmpty(applicationStatus)}"
-        th:attr="role=${applicationStatus == 'success' ? 'status' : 'alert'}"
-        aria-live="polite"
-      >
-        <p th:if="${applicationStatus == 'success'}" th:text="#{site.linkApplicationSuccess}">
-          Application submitted.
-        </p>
-        <p
-          th:if="${applicationStatus == 'error' or applicationStatus == 'disabled'}"
-          th:text="${param.message != null and #arrays.length(param.message) > 0 ? param.message[0] : #messages.msg('site.linkApplicationError')}"
-        ></p>
-      </div>
 
       <nav class="module-tabs" th:attr="aria-label=#{site.links}">
         <a
@@ -203,10 +189,79 @@
         <halo:comment group="plugin.halo.run" kind="Plugin" th:attr="name=${pluginName}" />
       </div>
     </article>
+
+    <aside
+      class="link-toast"
+      th:if="${applicationStatus == 'success' or applicationStatus == 'error' or applicationStatus == 'disabled'}"
+      th:classappend="${applicationStatus == 'success' ? 'link-toast--success' : 'link-toast--error'}"
+      th:attr="
+        role=${applicationStatus == 'success' ? 'status' : 'alert'},
+        aria-live=${applicationStatus == 'success' ? 'polite' : 'assertive'}
+      "
+      aria-atomic="true"
+    >
+      <span class="link-toast__icon" aria-hidden="true">
+        <i
+          th:classappend="${applicationStatus == 'success' ? 'fa fa-check-circle' : 'fa fa-exclamation-circle'}"
+        ></i>
+      </span>
+      <div class="link-toast__body">
+        <strong
+          class="link-toast__title"
+          th:text="${applicationStatus == 'success' ? #messages.msg('site.linkApplicationSuccessTitle') : #messages.msg('site.linkApplicationErrorTitle')}"
+        >
+          Submission failed
+        </strong>
+        <p
+          class="link-toast__message"
+          th:if="${applicationStatus == 'success'}"
+          th:text="#{site.linkApplicationSuccess}"
+        >
+          Application submitted.
+        </p>
+        <p
+          class="link-toast__message"
+          th:unless="${applicationStatus == 'success'}"
+          th:text="${applicationMessage}"
+        ></p>
+      </div>
+      <button type="button" class="link-toast__close" th:attr="aria-label=#{site.close}">
+        <i class="fa fa-times" aria-hidden="true"></i>
+      </button>
+    </aside>
   </section>
 
-  <script th:if="${linkApplicationEnabled}">
+  <script>
     (function () {
+      var toast = document.querySelector(".link-toast");
+      if (toast) {
+        var hideToast = function () {
+          toast.classList.remove("is-visible");
+          window.setTimeout(function () {
+            if (toast.parentNode) {
+              toast.parentNode.removeChild(toast);
+            }
+          }, 350);
+        };
+        var closeToast = toast.querySelector(".link-toast__close");
+        if (closeToast) {
+          closeToast.addEventListener("click", hideToast);
+        }
+        document.addEventListener("keydown", function (event) {
+          if (event.key === "Escape" && toast.parentNode) {
+            hideToast();
+          }
+        });
+        window.requestAnimationFrame(function () {
+          window.requestAnimationFrame(function () {
+            toast.classList.add("is-visible");
+          });
+        });
+        if (toast.classList.contains("link-toast--success")) {
+          window.setTimeout(hideToast, 5000);
+        }
+      }
+
       var image = document.getElementById("link-application-captcha");
       var button = document.getElementById("link-captcha-refresh");
       var form = document.getElementById("link-application-form");
