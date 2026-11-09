@@ -1,11 +1,13 @@
 <div align="center">
 
-# NexT
+# Next 8+
 
 **为 Halo 2 重写的经典 NexT 主题。**
 
 延续 hexo-theme-next 克制的排版、清晰的层次与安静的阅读体验，
 同时接入 Halo 的菜单、评论与插件生态。
+
+> 面向用户和市场展示的名称是 `Next 8+`；主题技术标识仍为 `theme-halo-next`，以兼容已安装实例。
 
 [![Halo](https://img.shields.io/badge/Halo-2.26%2B-blue?style=flat-square)](https://halo.run)
 [![Version](https://img.shields.io/badge/Version-1.0.0-orange?style=flat-square)](./theme.yaml)
@@ -78,13 +80,13 @@ pnpm build
 **卸载**
 
 1. 先将站点切换到其他可用主题
-2. 在 Console → 主题中卸载 NexT
+2. 在 Console → 主题中卸载 Next 8+
 
 卸载主题不会删除文章、页面、评论、菜单、图库、瞬间或友链等数据，这些内容由 Halo 和对应插件管理。
 
 ## ⚙️ 主题设置
 
-启用主题后，进入 **Console → 主题 → NexT → 设置**。主题设置按以下分组组织：
+启用主题后，进入 **Console → 主题 → Next 8+ → 设置**。主题设置按以下分组组织：
 
 | 分组       | 可以配置                                                           |
 | ---------- | ------------------------------------------------------------------ |

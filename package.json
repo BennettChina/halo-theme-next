@@ -2,7 +2,7 @@
   "name": "halo-theme-next",
   "version": "1.0.0",
   "private": true,
-  "description": "NexT theme for Halo 2, rebuilt with Vite and Thymeleaf.",
+  "description": "Next 8+, a NexT theme for Halo 2 rebuilt with Vite and Thymeleaf.",
   "license": "AGPL-3.0-only",
   "type": "module",
   "scripts": {
