@@ -1,9 +1,5 @@
 <div class="post-block animated fadeIn">
-  <article
-    class="post-content"
-    itemscope
-    itemtype="http://schema.org/Article"
-  >
+  <article class="post-content" itemscope itemtype="http://schema.org/Article">
     <header class="post-header animated fadeInDown">
       <h1 class="post-title" itemprop="name headline">
         <a
@@ -15,10 +11,7 @@
       </h1>
       <div class="post-meta-container">
         <div class="post-meta">
-          <span
-            th:if="${singlePage.status.lastModifyTime != null}"
-            class="post-meta-item"
-          >
+          <span th:if="${singlePage.status.lastModifyTime != null}" class="post-meta-item">
             <span class="post-meta-item-icon">
               <i class="far fa-calendar-check"></i>
             </span>

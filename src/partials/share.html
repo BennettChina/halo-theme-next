@@ -18,10 +18,10 @@
   </div>
   <script>
     (function () {
-      var button = document.querySelector('.post-share-button');
+      var button = document.querySelector(".post-share-button");
       if (!button) return;
-      var container = button.closest('.post-share');
-      var status = container.querySelector('.post-share-status');
+      var container = button.closest(".post-share");
+      var status = container.querySelector(".post-share-status");
       var timer;
       var title = button.dataset.title || document.title;
       var url = new URL(button.dataset.url || window.location.href, window.location.href).href;
@@ -30,7 +30,7 @@
         window.clearTimeout(timer);
         status.textContent = message;
         timer = window.setTimeout(function () {
-          status.textContent = '';
+          status.textContent = "";
         }, 2500);
       }
 
@@ -48,24 +48,24 @@
           return;
         }
 
-        var textarea = document.createElement('textarea');
+        var textarea = document.createElement("textarea");
         textarea.value = url;
-        textarea.style.position = 'fixed';
-        textarea.style.opacity = '0';
+        textarea.style.position = "fixed";
+        textarea.style.opacity = "0";
         document.body.appendChild(textarea);
         textarea.select();
         try {
-          document.execCommand('copy') ? done() : failed();
+          document.execCommand("copy") ? done() : failed();
         } catch (error) {
           failed();
         }
         document.body.removeChild(textarea);
       }
 
-      button.addEventListener('click', function () {
+      button.addEventListener("click", function () {
         if (navigator.share) {
           navigator.share({ title: title, url: url }).catch(function (error) {
-            if (error && error.name === 'AbortError') return;
+            if (error && error.name === "AbortError") return;
             copyLink();
           });
         } else {

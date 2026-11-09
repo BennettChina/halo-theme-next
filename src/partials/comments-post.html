@@ -1,8 +1,4 @@
 <div class="comments animated fadeIn" id="comments" th:if="${haloCommentEnabled}">
   <h2 class="comments-title" th:text="#{site.comments}">Comments</h2>
-  <halo:comment
-    group="content.halo.run"
-    kind="Post"
-    th:attr="name=${post.metadata.name}"
-  />
+  <halo:comment group="content.halo.run" kind="Post" th:attr="name=${post.metadata.name}" />
 </div>

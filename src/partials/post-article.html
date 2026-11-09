@@ -1,9 +1,5 @@
 <div class="post-block animated fadeIn">
-  <article
-    class="post-content"
-    itemscope
-    itemtype="http://schema.org/Article"
-  >
+  <article class="post-content" itemscope itemtype="http://schema.org/Article">
     <header class="post-header animated fadeInDown">
       <h1 class="post-title" itemprop="name headline">
         <span th:if="${post.spec.pinned}" class="post-sticky-flag" title="Sticky">
@@ -32,19 +28,9 @@
       <include src="/partials/reward.html"></include>
       <include src="/partials/copyright.html"></include>
       <include src="/partials/followme.html"></include>
-      <div
-        class="post-tags"
-        th:if="${post.tags != null and not #lists.isEmpty(post.tags)}"
-      >
-        <a
-          th:each="tag : ${post.tags}"
-          rel="tag"
-          th:href="@{${tag.status.permalink}}"
-        >
-          <i
-            th:if="${theme.config.post.tag_icon == 1}"
-            class="fa fa-tag fa-fw"
-          ></i>
+      <div class="post-tags" th:if="${post.tags != null and not #lists.isEmpty(post.tags)}">
+        <a th:each="tag : ${post.tags}" rel="tag" th:href="@{${tag.status.permalink}}">
+          <i th:if="${theme.config.post.tag_icon == 1}" class="fa fa-tag fa-fw"></i>
           <span th:text="${tag.spec.displayName}">Tag</span>
         </a>
       </div>

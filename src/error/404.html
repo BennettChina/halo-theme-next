@@ -13,10 +13,7 @@
       <header class="post-header animated fadeInDown">
         <h1 class="post-title">404</h1>
       </header>
-      <div
-        class="post-body animated fadeInDown"
-        th:with="message=#{site.notFound}"
-      >
+      <div class="post-body animated fadeInDown" th:with="message=#{site.notFound}">
         <p th:text="${#strings.defaultString(error?.title, message)}"></p>
         <p
           th:if="${error?.detail != null and not #strings.isEmpty(error.detail)}"

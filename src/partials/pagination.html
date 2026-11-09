@@ -1,7 +1,4 @@
-<nav
-  class="pagination animated fadeIn"
-  th:if="${posts.hasPrevious() or posts.hasNext()}"
->
+<nav class="pagination animated fadeIn" th:if="${posts.hasPrevious() or posts.hasNext()}">
   <a
     class="extend prev"
     rel="prev"

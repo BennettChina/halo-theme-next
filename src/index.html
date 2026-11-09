@@ -11,16 +11,13 @@
         siteSubtitle=${theme.config.basic.site?.type == 1 ? (site.subtitle ?: '') : (theme.config.basic.site?.subtitle ?: '')}
       "
       th:text="${theme.config.basic.index_with_subtitle == 1 and not #strings.isEmpty(siteSubtitle) ? siteTitle + ' - ' + siteSubtitle : siteTitle}"
-    >Home</title>
+    >
+      Home
+    </title>
   </template>
 
   <template name="pageConfig">
-    <script
-      class="next-config"
-      data-name="page"
-      type="application/json"
-      th:inline="javascript"
-    >
+    <script class="next-config" data-name="page" type="application/json" th:inline="javascript">
       {
         "sidebar": "",
         "isHome": true,
@@ -38,11 +35,7 @@
     <include src="/partials/post-card.html"></include>
   </th:block>
 
-  <p
-    class="post-empty"
-    th:if="${#lists.isEmpty(posts.items)}"
-    th:text="#{site.empty}"
-  >
+  <p class="post-empty" th:if="${#lists.isEmpty(posts.items)}" th:text="#{site.empty}">
     No posts yet.
   </p>
 

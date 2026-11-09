@@ -37,7 +37,10 @@
         </figcaption>
       </figure>
 
-      <dl class="photo-meta" th:if="${photo.exif != null or photo.metadata.creationTimestamp != null}">
+      <dl
+        class="photo-meta"
+        th:if="${photo.exif != null or photo.metadata.creationTimestamp != null}"
+      >
         <th:block th:if="${photo.metadata.creationTimestamp != null}">
           <dt th:text="#{site.photoAddedAt}">Added</dt>
           <dd>

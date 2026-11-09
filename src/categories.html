@@ -26,11 +26,7 @@
           ></th:block>
         </ul>
 
-        <p
-          class="post-empty"
-          th:if="${#lists.isEmpty(categories)}"
-          th:text="#{site.empty}"
-        >
+        <p class="post-empty" th:if="${#lists.isEmpty(categories)}" th:text="#{site.empty}">
           No categories yet.
         </p>
       </div>

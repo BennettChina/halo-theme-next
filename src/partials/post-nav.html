@@ -9,7 +9,10 @@
     rightExists=${navigation == 'right' ? (cursor != null and cursor.hasPrevious()) : (cursor != null and cursor.hasNext())}
   "
 >
-  <div class="post-nav" th:if="${cursor != null and navigationEnabled and (leftExists or rightExists)}">
+  <div
+    class="post-nav"
+    th:if="${cursor != null and navigationEnabled and (leftExists or rightExists)}"
+  >
     <div class="post-nav-item">
       <a
         th:if="${leftExists}"

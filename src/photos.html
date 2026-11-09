@@ -68,7 +68,11 @@
       </p>
 
       <nav class="plugin-pagination" th:if="${photos.hasPrevious() or photos.hasNext()}">
-        <a th:if="${photos.hasPrevious()}" th:href="${photos.prevUrl}" th:text="#{site.previousPage}"></a>
+        <a
+          th:if="${photos.hasPrevious()}"
+          th:href="${photos.prevUrl}"
+          th:text="#{site.previousPage}"
+        ></a>
         <span th:text="|${photos.page} / ${photos.totalPages}|">1 / 1</span>
         <a th:if="${photos.hasNext()}" th:href="${photos.nextUrl}" th:text="#{site.nextPage}"></a>
       </nav>

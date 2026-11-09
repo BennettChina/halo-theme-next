@@ -9,10 +9,7 @@
     dateChanged=${post.spec.publishTime == null or post.status.lastModifyTime == null or #temporals.format(post.spec.publishTime, 'yyyy-MM-dd') != #temporals.format(post.status.lastModifyTime, 'yyyy-MM-dd')}
   "
 >
-  <span
-    th:if="${createdEnabled and post.spec.publishTime != null}"
-    class="post-meta-item"
-  >
+  <span th:if="${createdEnabled and post.spec.publishTime != null}" class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="far fa-calendar"></i>
     </span>
@@ -65,11 +62,7 @@
       itemtype="http://schema.org/Thing"
       th:each="category : ${post.categories}"
     >
-      <a
-        itemprop="url"
-        rel="index"
-        th:href="@{${category.status.permalink}}"
-      >
+      <a itemprop="url" rel="index" th:href="@{${category.status.permalink}}">
         <span itemprop="name" th:text="${category.spec.displayName}"></span>
       </a>
     </span>

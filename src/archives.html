@@ -19,10 +19,7 @@
 
       <th:block th:each="archive : ${archives.items}">
         <div class="collection-year">
-          <span
-            class="collection-header animated fadeInLeft"
-            th:text="${archive.year}"
-          ></span>
+          <span class="collection-header animated fadeInLeft" th:text="${archive.year}"></span>
         </div>
         <th:block th:each="month : ${archive.months}">
           <div class="collection-month" th:text="${month.month}"></div>
@@ -32,11 +29,7 @@
         </th:block>
       </th:block>
 
-      <p
-        class="post-empty"
-        th:if="${#lists.isEmpty(archives.items)}"
-        th:text="#{site.empty}"
-      >
+      <p class="post-empty" th:if="${#lists.isEmpty(archives.items)}" th:text="#{site.empty}">
         No posts yet.
       </p>
     </div>

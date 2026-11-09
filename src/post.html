@@ -9,12 +9,7 @@
   </template>
 
   <template name="pageConfig">
-    <script
-      class="next-config"
-      data-name="page"
-      type="application/json"
-      th:inline="javascript"
-    >
+    <script class="next-config" data-name="page" type="application/json" th:inline="javascript">
       {
         "sidebar": /*[[${#annotations.getOrDefault(post, 'sidebar', '1') == '1'}]]*/ true,
         "isHome": false,

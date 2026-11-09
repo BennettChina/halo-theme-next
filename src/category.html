@@ -26,11 +26,7 @@
         <include src="/partials/compact-post.html"></include>
       </th:block>
 
-      <p
-        class="post-empty"
-        th:if="${#lists.isEmpty(posts.items)}"
-        th:text="#{site.empty}"
-      >
+      <p class="post-empty" th:if="${#lists.isEmpty(posts.items)}" th:text="#{site.empty}">
         No posts yet.
       </p>
     </div>

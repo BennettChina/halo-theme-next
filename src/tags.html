@@ -36,13 +36,7 @@
           ></a>
         </div>
       </div>
-      <p
-        class="post-empty"
-        th:if="${#lists.isEmpty(tags)}"
-        th:text="#{site.empty}"
-      >
-        No tags yet.
-      </p>
+      <p class="post-empty" th:if="${#lists.isEmpty(tags)}" th:text="#{site.empty}">No tags yet.</p>
     </div>
   </div>
 </include>

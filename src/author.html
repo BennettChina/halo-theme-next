@@ -24,10 +24,7 @@
             th:if="${not #strings.isEmpty(author.spec.bio)}"
             th:text="${author.spec.bio}"
           ></p>
-          <p
-            class="author-post-count"
-            th:text="#{site.totalPosts(${posts.total})}"
-          ></p>
+          <p class="author-post-count" th:text="#{site.totalPosts(${posts.total})}"></p>
         </div>
       </div>
 
@@ -35,11 +32,7 @@
         <include src="/partials/compact-post.html"></include>
       </th:block>
 
-      <p
-        class="post-empty"
-        th:if="${#lists.isEmpty(posts.items)}"
-        th:text="#{site.empty}"
-      >
+      <p class="post-empty" th:if="${#lists.isEmpty(posts.items)}" th:text="#{site.empty}">
         No posts yet.
       </p>
     </div>

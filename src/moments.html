@@ -14,7 +14,11 @@
         <h1 class="post-title" th:text="${title ?: #messages.msg('site.moments')}">Moments</h1>
       </header>
 
-      <nav class="module-tabs" th:if="${not #lists.isEmpty(tags)}" th:attr="aria-label=#{site.moments}">
+      <nav
+        class="module-tabs"
+        th:if="${not #lists.isEmpty(tags)}"
+        th:attr="aria-label=#{site.moments}"
+      >
         <a
           th:href="@{/moments}"
           th:classappend="${param.tag == null or #arrays.length(param.tag) == 0} ? 'is-active'"
@@ -74,16 +78,8 @@
                 th:alt="#{site.momentImage}"
                 loading="lazy"
               />
-              <video
-                th:if="${medium.type.name == 'VIDEO'}"
-                th:src="${medium.url}"
-                controls
-              ></video>
-              <audio
-                th:if="${medium.type.name == 'AUDIO'}"
-                th:src="${medium.url}"
-                controls
-              ></audio>
+              <video th:if="${medium.type.name == 'VIDEO'}" th:src="${medium.url}" controls></video>
+              <audio th:if="${medium.type.name == 'AUDIO'}" th:src="${medium.url}" controls></audio>
               <a
                 th:if="${medium.type.name == 'POST'}"
                 th:href="${medium.url}"
@@ -108,7 +104,11 @@
       </p>
 
       <nav class="plugin-pagination" th:if="${moments.hasPrevious() or moments.hasNext()}">
-        <a th:if="${moments.hasPrevious()}" th:href="${moments.prevUrl}" th:text="#{site.previousPage}"></a>
+        <a
+          th:if="${moments.hasPrevious()}"
+          th:href="${moments.prevUrl}"
+          th:text="#{site.previousPage}"
+        ></a>
         <span th:text="|${moments.page} / ${moments.totalPages}|">1 / 1</span>
         <a th:if="${moments.hasNext()}" th:href="${moments.nextUrl}" th:text="#{site.nextPage}"></a>
       </nav>
