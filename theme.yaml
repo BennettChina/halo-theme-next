@@ -7,7 +7,7 @@ spec:
   author:
     name: Bennett
     website: https://github.com/BennettChina
-  description: Next 8+，为 Halo 2 独立重写的经典 NexT 主题，延续 hexo-theme-next 的视觉与交互。
+  description: Next 8+，基于 hexo-theme-next@8.x，为 Halo 2 独立重写的经典 NexT 主题，延续 hexo-theme-next 的视觉与交互。
   logo: /themes/theme-halo-next/assets/imgs/default/logo.svg
   homepage: https://github.com/BennettChina/halo-theme-next
   repo: https://github.com/BennettChina/halo-theme-next
