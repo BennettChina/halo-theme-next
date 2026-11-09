@@ -4,7 +4,8 @@
   th:with="
     license=${theme.config.basic.creative_commons?.license ?: 'by-nc-sa'},
     language=${theme.config.basic.creative_commons?.language ?: ''},
-    licenseUrl=${(license == 'cc-zero' ? 'https://creativecommons.org/publicdomain/zero/1.0/' : 'https://creativecommons.org/licenses/' + license + '/4.0/') + language}
+    licenseUrl=${(license == 'cc-zero' ? 'https://creativecommons.org/publicdomain/zero/1.0/' : 'https://creativecommons.org/licenses/' + license + '/4.0/') + language},
+    siteBaseUrl=${#strings.endsWith(site.url, '/') ? #strings.substring(site.url, 0, #strings.length(site.url) - 1) : site.url}
   "
 >
   <ul>
@@ -16,7 +17,7 @@
       <strong th:text="#{site.articleLink}">Link</strong>
       <a
         th:href="@{${post.status.permalink}}"
-        th:text="${site.url + post.status.permalink}"
+        th:text="${siteBaseUrl + post.status.permalink}"
         th:title="${post.spec.title}"
       ></a>
     </li>
