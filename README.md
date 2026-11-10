@@ -8,15 +8,21 @@
 同时接入 Halo 的菜单、评论与插件生态。
 
 [![Halo](https://img.shields.io/badge/Halo-2.26%2B-blue?style=flat-square)](https://halo.run)
-[![Version](https://img.shields.io/badge/Version-1.0.0-orange?style=flat-square)](./theme.yaml)
+[![Version](https://img.shields.io/badge/Version-1.0.1-orange?style=flat-square)](./theme.yaml)
 [![License](https://img.shields.io/badge/License-AGPL--3.0--only-green?style=flat-square)](./LICENSE)
 [![GitHub Stars](https://img.shields.io/github/stars/BennettChina/halo-theme-next?style=flat-square&label=Stars)](https://github.com/BennettChina/halo-theme-next)
 
-[功能特性](#-功能特性) · [安装](#-安装) · [主题设置](#-主题设置) · [插件支持](#-插件支持) · [常见问题](#-常见问题)
+[主题区别](#-与市场内其他-next-主题的区别) · [功能特性](#-功能特性) · [安装](#-安装) · [主题设置](#-主题设置) · [插件支持](#-插件支持) · [常见问题](#-常见问题)
 
 </div>
 
 ---
+
+## 🔍 与市场内其他 NexT 主题的区别
+
+Halo 应用市场中原有的两款 NexT 主题均已停止维护。其中，`NexT` 仅支持 Halo 1.x，`NexT for Halo 2+` 则存在较多已知问题，已不适合作为新站的长期选择。
+
+因此，Next 8+ 选择新开项目，并使用 Halo 主题模板重新实现 NexT。项目基于 `hexo-theme-next@8.x` 进行适配，已基本完成上游 Next 的绝大多数功能；同时新增了 Links、Photos、Moments 等插件支持，并持续按 Halo 2.26+ 的主题规范维护。
 
 ## ✨ 功能特性
 

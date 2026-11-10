@@ -2,6 +2,8 @@ apiVersion: theme.halo.run/v1alpha1
 kind: Theme
 metadata:
   name: theme-halo-next
+  annotations:
+    "store.halo.run/app-id": "app-euz6mevj"
 spec:
   displayName: Next 8+
   author:
@@ -14,7 +16,7 @@ spec:
   issues: https://github.com/BennettChina/halo-theme-next/issues
   settingName: "theme-halo-next-setting"
   configMapName: "theme-halo-next-configMap"
-  version: 1.0.0
+  version: 1.0.1
   requires: ">=2.26.0"
   license:
     - name: "AGPL-3.0-only"
